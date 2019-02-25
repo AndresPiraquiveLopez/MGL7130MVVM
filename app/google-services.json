@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "401406389889",
+    "firebase_url": "https://recettes-bb215.firebaseio.com",
+    "project_id": "recettes-bb215",
+    "storage_bucket": "recettes-bb215.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:401406389889:android:16356bf17786cf1f",
+        "android_client_info": {
+          "package_name": "com.example.andrespiraquive.recettes"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "401406389889-1vhjiquf0uvb9dkkm4ibk049rrbqcsrp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCpbkohzY-cgJN1zVUhlMfVSFhg7h0vUTo"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
