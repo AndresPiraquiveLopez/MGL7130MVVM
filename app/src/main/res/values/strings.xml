@@ -3,4 +3,8 @@
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
+    <string name="title_search_recipe">Search</string>
+    <string name="error">Error</string>
+    <string name="minimum_password">You need to enter minimum 6 characters!</string>
+    <string name="auth_failed">uthentication failed, check your email and password</string>
 </resources>
