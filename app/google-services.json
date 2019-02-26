@@ -8,9 +8,53 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:401406389889:android:16356bf17786cf1f",
+        "mobilesdk_app_id": "1:401406389889:android:74159884858fb5bf",
         "android_client_info": {
           "package_name": "com.example.andrespiraquive.recettes"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "401406389889-4m50omcp5lh88iej03d1q6bjf5fm1d0e.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.andrespiraquive.recettes",
+            "certificate_hash": "443aee41550ecf8d71658db5762ddabcd8e46a62"
+          }
+        },
+        {
+          "client_id": "401406389889-1vhjiquf0uvb9dkkm4ibk049rrbqcsrp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCpbkohzY-cgJN1zVUhlMfVSFhg7h0vUTo"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "401406389889-1vhjiquf0uvb9dkkm4ibk049rrbqcsrp.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:401406389889:android:16356bf17786cf1f",
+        "android_client_info": {
+          "package_name": "recettes.uqam.com"
         }
       },
       "oauth_client": [

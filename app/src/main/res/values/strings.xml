@@ -1,10 +1,13 @@
 <resources>
-    <string name="app_name">Recipes</string>
+    <string name="app_name">World Recipes</string>
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
-    <string name="title_search_recipe">Search</string>
+    <string name="title_add_recipe">Add Recipe</string>
+    <string name="title_search_recipe">Search Recipes</string>
+    <string name="title_user_settings">User Settings</string>
+    <string name="title_login">Login</string>
     <string name="error">Error</string>
     <string name="minimum_password">You need to enter minimum 6 characters!</string>
-    <string name="auth_failed">uthentication failed, check your email and password</string>
+    <string name="auth_failed">Authentication failed, check your email and password</string>
 </resources>

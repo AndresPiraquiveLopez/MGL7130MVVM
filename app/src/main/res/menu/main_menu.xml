@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/add_recipe"
+        android:title="@string/title_add_recipe" />
+
+    <item
+        android:id="@+id/search_recipe"
+        android:title="@string/title_search_recipe" />
+
+    <item
+        android:id="@+id/user_settings"
+        android:title="@string/title_user_settings" />
+
+
+</menu>
