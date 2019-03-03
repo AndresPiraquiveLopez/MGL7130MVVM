@@ -5,6 +5,7 @@
     <string name="title_notifications">Notifications</string>
     <string name="title_add_recipe">Add Recipe</string>
     <string name="title_search_recipe">Search Recipes</string>
+    <string name="search">Search</string>
     <string name="title_user_settings">User Settings</string>
     <string name="title_login">Login</string>
     <string name="error">Error</string>
