@@ -116,6 +116,11 @@ public class SearchActivity extends AppCompatActivity {
             startActivity(searchActivity);
             finish();
         }
+        if(item.getItemId()==R.id.list_recipes){
+            Intent recipeActivity = new Intent(getApplicationContext(),GridViewActivity.class);
+            startActivity(recipeActivity);
+            finish();
+        }
         return super.onOptionsItemSelected(item);
     }
 
