@@ -7,6 +7,8 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -81,7 +83,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         });
 
         if (firebaseAuth.getCurrentUser() != null) {
-            startActivity(new Intent(LoginActivity.this, MainActivity.class));
+            startActivity(new Intent(LoginActivity.this, GridViewActivity.class));
             finish();
         }
 
@@ -116,7 +118,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                                         Toast.makeText(LoginActivity.this, getString(R.string.auth_failed), Toast.LENGTH_LONG).show();
                                     }
                                 } else {
-                                    Intent intent = new Intent(LoginActivity.this, AddRecipe.class);
+                                    Intent intent = new Intent(LoginActivity.this, GridViewActivity.class);
                                     startActivity(intent);
                                     finish();
                                 }
@@ -162,5 +164,37 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
 
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_menu,menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.list_recipes) {
+            Intent listRecipes = new Intent(getApplicationContext(), GridViewActivity.class);
+            startActivity(listRecipes);
+            finish();
+        }
+
+        if(item.getItemId()==R.id.add_recipe){
+            Intent addRecipe = new Intent(getApplicationContext(),AddRecipe.class);
+            startActivity(addRecipe);
+            finish();
+        }
+        if(item.getItemId()==R.id.search_recipe){
+            Intent searchActivity = new Intent(getApplicationContext(),SearchActivity.class);
+            startActivity(searchActivity);
+            finish();
+        }
+        if(item.getItemId()==R.id.user_settings){
+            Intent searchActivity = new Intent(getApplicationContext(),MainActivity.class);
+            startActivity(searchActivity);
+            finish();
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

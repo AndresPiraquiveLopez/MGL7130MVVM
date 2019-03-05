@@ -99,6 +99,12 @@ public class AddRecipe extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.list_recipes) {
+            Intent listRecipes = new Intent(getApplicationContext(), GridViewActivity.class);
+            startActivity(listRecipes);
+            finish();
+        }
+
         if(item.getItemId()==R.id.add_recipe){
             Intent addRecipe = new Intent(getApplicationContext(),AddRecipe.class);
             startActivity(addRecipe);

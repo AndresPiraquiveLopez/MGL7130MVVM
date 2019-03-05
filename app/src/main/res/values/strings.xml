@@ -3,6 +3,7 @@
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
+    <string name="title_list_recipes">Recipes</string>
     <string name="title_add_recipe">Add Recipe</string>
     <string name="title_search_recipe">Search Recipes</string>
     <string name="search">Search</string>
