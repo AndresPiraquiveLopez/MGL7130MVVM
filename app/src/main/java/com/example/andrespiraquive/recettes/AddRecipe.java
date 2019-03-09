@@ -65,18 +65,22 @@ public class AddRecipe extends AppCompatActivity {
 
 
     private void addNewRecipe() {
-        Map<String, Object> newRecipe = new HashMap<>();
-        newRecipe.put(TITRE_KEY, editTitre.getText().toString());
-        newRecipe.put(INGREDIENT_KEY, editIngredient.getText().toString());
-        newRecipe.put(DESCRIPTION_KEY, editDescription.getText().toString());
-        newRecipe.put(PREPARATION_KEY, editPreparation.getText().toString());
-        newRecipe.put(POSITION_KEY, "45.462252,-73.437309");
+        //Map<String, Object> newRecipe = new HashMap<>();
+        //newRecipe.put(TITRE_KEY, editTitre.getText().toString());
+        //newRecipe.put(INGREDIENT_KEY, editIngredient.getText().toString());
+        //newRecipe.put(DESCRIPTION_KEY, editDescription.getText().toString());
+        //newRecipe.put(PREPARATION_KEY, editPreparation.getText().toString());
+        //newRecipe.put(POSITION_KEY, "45.462252,-73.437309");
 
-        db.collection("Recipes")
-                .add(newRecipe)
-                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+        Recipes recetteAjouter = new Recipes("IMAGE", editTitre.getText().toString(),
+                editIngredient.getText().toString(), editDescription.getText().toString(),
+                editPreparation.getText().toString(), "45.462252,-73.437309");
+
+        DocumentReference newRecipeRef = db.collection("Recipes").document();
+                newRecipeRef.set(recetteAjouter)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
-                    public void onSuccess(DocumentReference documentReference) {
+                    public void onSuccess(Void aVoid) {
                         Toast.makeText(AddRecipe.this, "Recipe Registered",
                                 Toast.LENGTH_SHORT).show();
                     }

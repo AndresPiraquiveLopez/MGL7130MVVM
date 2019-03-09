@@ -4,57 +4,71 @@ import android.graphics.Point;
 
 public class Recipes {
 
-    private String image;
+    private String imageId;
     private String title;
-    private String [] ingredients;
-    private String [] preparations;
-     Point position;
+    private String ingredients;
 
-    public Recipes(String image, String title, String[] ingredients, String[] preparations, Point position) {
-        this.image = image;
+
+
+    private String description;
+    private String preparations;
+    private float note;
+    private String position;
+
+    public Recipes(String imageId, String title, String ingredients, String description, String preparations, float note, String position) {
+        this.imageId = imageId;
         this.title = title;
         this.ingredients = ingredients;
+        this.description = description;
+        this.preparations = preparations;
+        this.note = note;
+        this.position = position;
+    }
+
+    public Recipes(String imageId, String title, String ingredients, String description, String preparations, String position) {
+        this.imageId = imageId;
+        this.title = title;
+        this.ingredients = ingredients;
+        this.description = description;
         this.preparations = preparations;
         this.position = position;
     }
 
-    public String getImage() {
-        return image;
-    }
+    public String getImage() { return imageId; }
 
     public String getTitle() {
         return title;
     }
 
-    public String[] getIngredients() {
+    public String getIngredients() {
         return ingredients;
     }
 
-    public String[] getPreparations() {
+    public String getPreparations() {
         return preparations;
     }
 
-    public Point getPosition() {
-        return position;
-    }
+    public String getPosition() { return position; }
 
-    public void setImage(String image) {
-        this.image = image;
+    public String getDescription() { return description; }
+
+    public void setDescription(String description) { description = description; }
+
+    public void setImage(String imageId) {
+        this.imageId = imageId;
     }
 
     public void setTitle(String title) {
         this.title = title;
     }
 
-    public void setIngredients(String[] ingredients) {
+    public void setIngredients(String ingredients) {
         this.ingredients = ingredients;
     }
 
-    public void setPreparations(String[] preparations) {
+    public void setPreparations(String preparations) {
         this.preparations = preparations;
     }
 
-    public void setPosition(Point position) {
-        this.position = position;
-    }
+    public void setPosition(String position) { this.position = position; }
 }
