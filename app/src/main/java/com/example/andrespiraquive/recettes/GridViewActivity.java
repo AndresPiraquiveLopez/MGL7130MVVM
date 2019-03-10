@@ -62,11 +62,21 @@ public class GridViewActivity extends AppCompatActivity {
                             RecyclerView myrv = findViewById(R.id.recycle_view_id);
                             GridViewAdapter myAdapter = new GridViewAdapter(lsRecipe, getApplicationContext());
                             if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
-                                myrv.setLayoutManager(new GridLayoutManager(getApplicationContext(), 2));
+                                if(getResources().getConfiguration().screenWidthDp >= 600){
+                                    myrv.setLayoutManager(new GridLayoutManager (getApplicationContext(), 3));
+                                }
+                                else{
+                                    myrv.setLayoutManager(new GridLayoutManager (getApplicationContext(), 2));
+                                }
                             }
                             else
                             if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE){
-                                myrv.setLayoutManager(new GridLayoutManager(getApplicationContext(), 4));
+                                if(getResources().getConfiguration().screenWidthDp >= 921){
+                                    myrv.setLayoutManager(new GridLayoutManager(getApplicationContext(), 5));
+                                }
+                                else{
+                                    myrv.setLayoutManager(new GridLayoutManager(getApplicationContext(), 4));
+                                }
                             }
                             myrv.setAdapter(myAdapter);
                         }else {
@@ -74,27 +84,6 @@ public class GridViewActivity extends AppCompatActivity {
                         }
                     }
                 });
-
-
-        /**
-        lsRecipe.add(new RecipeResponse(R.drawable.add_photo_512,"Recipe 1"));
-        lsRecipe.add(new RecipeResponse(R.drawable.add_photo_512,"Recipe 2",(float) 2, "Difficult"));
-        lsRecipe.add(new RecipeResponse(R.drawable.add_photo_512,"Recipe 3",(float) 3, "Traditional"));
-        lsRecipe.add(new RecipeResponse(R.drawable.add_photo_512,"Recipe 4", (float)1, "Traditional"));
-        lsRecipe.add(new RecipeResponse(R.drawable.add_photo_512,"Recipe 5",(float) 4, "Traditional"));
-        lsRecipe.add(new RecipeResponse(R.drawable.add_photo_512,"Recipe 6",(float) 2, "Traditional"));
-        lsRecipe.add(new RecipeResponse(R.drawable.add_photo_512,"Recipe 7",(float) 3, "Traditional"));
-        lsRecipe.add(new RecipeResponse(R.drawable.add_photo_512,"Recipe 8",(float) 1, "Traditional"));
-        lsRecipe.add(new RecipeResponse(R.drawable.add_photo_512,"Recipe 1",(float) 4, "Traditional"));
-        lsRecipe.add(new RecipeResponse(R.drawable.add_photo_512,"Recipe 2",(float) 2, "Traditional"));
-        lsRecipe.add(new RecipeResponse(R.drawable.add_photo_512,"Recipe 3",(float) 3, "Traditional"));
-        lsRecipe.add(new RecipeResponse(R.drawable.add_photo_512,"Recipe 4",(float) 1, "Traditional"));
-        lsRecipe.add(new RecipeResponse(R.drawable.add_photo_512,"Recipe 5",(float) 4, "Traditional"));
-        lsRecipe.add(new RecipeResponse(R.drawable.add_photo_512,"Recipe 6",(float) 2, "Traditional"));
-        lsRecipe.add(new RecipeResponse(R.drawable.add_photo_512,"Recipe 7",(float) 3, "Traditional"));
-        lsRecipe.add(new RecipeResponse(R.drawable.add_photo_512,"Recipe 8",(float) 1, "Traditional"));
-*/
-
     }
 
     @Override
