@@ -16,7 +16,8 @@ public class RecipeResponse {
         this.PictureId = pictureId;
         this.Title = title;
         this.Note = Note;
-        Description = description;
+        this.Description = description;
+
     }
     public RecipeResponse(int pictureId, String title) {
         this.PictureId = pictureId;

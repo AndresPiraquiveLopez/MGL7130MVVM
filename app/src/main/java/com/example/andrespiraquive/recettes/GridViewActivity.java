@@ -32,12 +32,14 @@ public class GridViewActivity extends AppCompatActivity {
 
     private static final String TITRE_KEY = "titre";
     private static final String DESCRIPTION_KEY = "description";
+    private static final String INGREDIENT_KEY = "ingredient";
+    private static final String PREPARATION_KEY = "preparation";
 
     private RecyclerView recyclerView;
 
     private GridViewAdapter adapter;
 
-    List<RecipeResponse> lsRecipe;
+    List<Recipes> lsRecipe;
 
     FirebaseFirestore db;
 
@@ -57,7 +59,7 @@ public class GridViewActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
-                                lsRecipe.add(new RecipeResponse(R.drawable.add_photo_512,document.get(TITRE_KEY).toString(),(float) 2, document.get(DESCRIPTION_KEY).toString()));
+                                lsRecipe.add(new Recipes(document.get(TITRE_KEY).toString(),(float) 2, document.get(DESCRIPTION_KEY).toString(), document.get(INGREDIENT_KEY).toString(), document.get(PREPARATION_KEY).toString()));
                             }
                             RecyclerView myrv = findViewById(R.id.recycle_view_id);
                             GridViewAdapter myAdapter = new GridViewAdapter(lsRecipe, getApplicationContext());

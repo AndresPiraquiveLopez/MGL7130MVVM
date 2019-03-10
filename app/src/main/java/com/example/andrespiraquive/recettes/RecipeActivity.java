@@ -13,8 +13,7 @@ import com.squareup.picasso.Picasso;
 
 public class RecipeActivity extends AppCompatActivity {
 
-    private TextView tvtitle,
-            tvdescription;
+    private TextView tvtitle, tvdescription, tvingredient, tvpreparation;
     private ImageView img;
     private RatingBar note;
 
@@ -27,6 +26,8 @@ public class RecipeActivity extends AppCompatActivity {
         tvtitle = (TextView) findViewById(R.id.recipe_details_title_id);
         note = (RatingBar) findViewById(R.id.recipe_details_raiting_id);
         tvdescription = (TextView) findViewById(R.id.recipe_details_description_id);
+        tvingredient = (TextView) findViewById(R.id.recipe_details_ingredient_id);
+        tvpreparation = (TextView) findViewById(R.id.recipe_details_preparation_id);
 
         Picasso.get()
                 .load("https://firebasestorage.googleapis.com/v0/b/recettes-bb215.appspot.com/o/image_plat_base.jpg?alt=media&token=c2ab783a-4d54-4234-a621-9ec0cd43bf07")
@@ -38,12 +39,15 @@ public class RecipeActivity extends AppCompatActivity {
         String Title = intent.getExtras().getString("Title");
         Float Note = intent.getExtras().getFloat("Note");
         String Description = intent.getExtras().getString("Description");
-
+        String Ingredient = intent.getExtras().getString("Ingredient");
+        String Preparation = intent.getExtras().getString("Preparation");
         //settings values
         //img.setImageResource(Image);
         tvtitle.setText(Title);
         note.setRating(Note);
         tvdescription.setText(Description);
+        tvingredient.setText(Ingredient);
+        tvpreparation.setText(Preparation);
     }
 
     @Override

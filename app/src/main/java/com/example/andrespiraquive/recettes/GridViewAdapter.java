@@ -18,11 +18,11 @@ import java.util.List;
 
 public class GridViewAdapter extends RecyclerView.Adapter <GridViewAdapter.MyViewHolder> {
 
-    private List<RecipeResponse> mData;
+    private List<Recipes> mData;
 
     private Context mContext;
 
-    public GridViewAdapter(List<RecipeResponse> mData, Context mContext) {
+    public GridViewAdapter(List<Recipes> mData, Context mContext) {
         this.mData = mData;
         this.mContext = mContext;
     }
@@ -40,7 +40,7 @@ public class GridViewAdapter extends RecyclerView.Adapter <GridViewAdapter.MyVie
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, final int position) {
-        holder.img_recipe_thumbnaild.setImageResource(mData.get(position).getPictureId());
+        //holder.img_recipe_thumbnaild.setImageResource(mData.get(position).getPictureId());
         holder.tv_recipe_title.setText(mData.get(position).getTitle());
 
 
@@ -49,10 +49,12 @@ public class GridViewAdapter extends RecyclerView.Adapter <GridViewAdapter.MyVie
             public void onClick(View v) {
                 Intent intent = new Intent(mContext, RecipeActivity.class);
 
-                intent.putExtra("Image",mData.get(position).getPictureId());
+                //intent.putExtra("Image",mData.get(position).getPictureId());
                 intent.putExtra("Title",mData.get(position).getTitle());
                 intent.putExtra("Note",mData.get(position).getNote());
                 intent.putExtra("Description",mData.get(position).getDescription());
+                intent.putExtra("Ingredient",mData.get(position).getIngredients());
+                intent.putExtra("Preparation",mData.get(position).getPreparations());
                 mContext.startActivity(intent);
             }
         });
@@ -65,14 +67,14 @@ public class GridViewAdapter extends RecyclerView.Adapter <GridViewAdapter.MyVie
 
     public static class MyViewHolder extends RecyclerView.ViewHolder{
 
-        ImageView img_recipe_thumbnaild;
+        //ImageView img_recipe_thumbnaild;
         TextView tv_recipe_title;
         CardView cardView;
 
         public MyViewHolder(View itemView){
             super(itemView);
 
-            img_recipe_thumbnaild = (ImageView) itemView.findViewById(R.id.recipe_image_id);
+            //img_recipe_thumbnaild = (ImageView) itemView.findViewById(R.id.recipe_image_id);
             tv_recipe_title = (TextView) itemView.findViewById(R.id.recipe_title_id);
             cardView = (CardView) itemView.findViewById(R.id.cardView_id);
         }

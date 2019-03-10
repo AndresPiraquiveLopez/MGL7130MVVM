@@ -7,9 +7,6 @@ public class Recipes {
     private String imageId;
     private String title;
     private String ingredients;
-
-
-
     private String description;
     private String preparations;
     private float note;
@@ -34,6 +31,14 @@ public class Recipes {
         this.position = position;
     }
 
+    public Recipes(String title, float note, String ingredients, String description, String preparations) {
+        this.title = title;
+        this.note = note;
+        this.ingredients = ingredients;
+        this.description = description;
+        this.preparations = preparations;
+    }
+
     public String getImage() { return imageId; }
 
     public String getTitle() {
@@ -51,6 +56,10 @@ public class Recipes {
     public String getPosition() { return position; }
 
     public String getDescription() { return description; }
+
+    public float getNote() { return note; }
+
+    public void setNote(float note) { this.note = note; }
 
     public void setDescription(String description) { description = description; }
 
