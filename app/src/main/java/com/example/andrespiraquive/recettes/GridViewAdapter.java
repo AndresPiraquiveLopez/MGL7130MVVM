@@ -68,7 +68,7 @@ public class GridViewAdapter extends RecyclerView.Adapter <GridViewAdapter.MyVie
 
     public static class MyViewHolder extends RecyclerView.ViewHolder{
 
-        //ImageView img_recipe_thumbnaild;
+        ImageView img_recipe_thumbnaild;
         TextView tv_recipe_title;
         CardView cardView;
 
