@@ -65,12 +65,6 @@ public class AddRecipe extends AppCompatActivity {
 
 
     private void addNewRecipe() {
-        //Map<String, Object> newRecipe = new HashMap<>();
-        //newRecipe.put(TITRE_KEY, editTitre.getText().toString());
-        //newRecipe.put(INGREDIENT_KEY, editIngredient.getText().toString());
-        //newRecipe.put(DESCRIPTION_KEY, editDescription.getText().toString());
-        //newRecipe.put(PREPARATION_KEY, editPreparation.getText().toString());
-        //newRecipe.put(POSITION_KEY, "45.462252,-73.437309");
 
         Recipes recetteAjouter = new Recipes("IMAGE", editTitre.getText().toString(),
                 editIngredient.getText().toString(), editDescription.getText().toString(),

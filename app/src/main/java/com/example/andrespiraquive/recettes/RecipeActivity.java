@@ -9,6 +9,8 @@ import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
 public class RecipeActivity extends AppCompatActivity {
 
     private TextView tvtitle,
@@ -26,15 +28,19 @@ public class RecipeActivity extends AppCompatActivity {
         note = (RatingBar) findViewById(R.id.recipe_details_raiting_id);
         tvdescription = (TextView) findViewById(R.id.recipe_details_description_id);
 
+        Picasso.get()
+                .load("https://firebasestorage.googleapis.com/v0/b/recettes-bb215.appspot.com/o/image_plat_base.jpg?alt=media&token=c2ab783a-4d54-4234-a621-9ec0cd43bf07")
+                .into(img);
+
         //Recieve data
         Intent intent = getIntent();
-        int Image = intent.getExtras().getInt("Image");
+        //int Image = intent.getExtras().getInt("Image");
         String Title = intent.getExtras().getString("Title");
         Float Note = intent.getExtras().getFloat("Note");
         String Description = intent.getExtras().getString("Description");
 
         //settings values
-        img.setImageResource(Image);
+        //img.setImageResource(Image);
         tvtitle.setText(Title);
         note.setRating(Note);
         tvdescription.setText(Description);

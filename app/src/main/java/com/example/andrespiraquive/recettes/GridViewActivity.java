@@ -2,6 +2,7 @@ package com.example.andrespiraquive.recettes;
 
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -14,12 +15,15 @@ import android.view.MenuItem;
 
 import com.example.andrespiraquive.recettes.Models.RecipeResponse;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,7 +40,6 @@ public class GridViewActivity extends AppCompatActivity {
     List<RecipeResponse> lsRecipe;
 
     FirebaseFirestore db;
-    FirebaseStorage storage;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -44,12 +47,8 @@ public class GridViewActivity extends AppCompatActivity {
         setContentView(R.layout.activity_grid_view);
 
         db = FirebaseFirestore.getInstance();
-        storage = FirebaseStorage.getInstance();
         lsRecipe = new ArrayList<>();
 
-        //Image from firebase storage
-        StorageReference httpsReference = storage.getReferenceFromUrl("https://firebasestorage.googleapis.com/v0/b/recettes-bb215.appspot.com/o/image_plat_base.jpg?alt=media&token=c2ab783a-4d54-4234-a621-9ec0cd43bf07");
-        
         //Data from firestore
         db.collection("Recipes")
                 .get()
