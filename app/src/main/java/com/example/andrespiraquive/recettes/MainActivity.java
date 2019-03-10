@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        textView = (TextView) findViewById(R.id.textView1);
+        textView = (TextView) findViewById(R.id.userLoginNameView);
         btnDeleteUser =(Button) findViewById(R.id.kullaniciSil);
         btnLogout =(Button) findViewById(R.id.cikis_yap);
 
@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
         };
 
         final FirebaseUser user  = firebaseAuth.getCurrentUser();
-        textView.setText("Hello!" + " " + user.getEmail());
+        textView.setText(user.getEmail());
 
         btnDeleteUser.setOnClickListener(new View.OnClickListener() {
             @Override

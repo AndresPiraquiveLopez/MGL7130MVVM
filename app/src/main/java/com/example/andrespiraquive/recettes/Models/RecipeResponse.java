@@ -18,6 +18,10 @@ public class RecipeResponse {
         this.Note = Note;
         Description = description;
     }
+    public RecipeResponse(int pictureId, String title) {
+        this.PictureId = pictureId;
+        this.Title = title;
+    }
 
     public int getPictureId() {
         return PictureId;

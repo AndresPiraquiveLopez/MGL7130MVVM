@@ -1,18 +1,23 @@
 package com.example.andrespiraquive.recettes;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.example.andrespiraquive.recettes.Models.RecipeResponse;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -25,7 +30,9 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class SearchActivity extends AppCompatActivity {
@@ -41,8 +48,10 @@ public class SearchActivity extends AppCompatActivity {
 
 
     FirebaseFirestore db;
-    TextView affichageRecette;
+    RecyclerView affichageRecette;
     EditText searchLine;
+
+    List<RecipeResponse> lsRecipe;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,20 +59,25 @@ public class SearchActivity extends AppCompatActivity {
         setContentView(R.layout.activity_search);
 
         db = FirebaseFirestore.getInstance();
-        affichageRecette = findViewById(R.id.result);
+        affichageRecette = findViewById(R.id.search_recycle_view);
         searchLine = findViewById(R.id.editSearch);
 
-        final Button button = findViewById(R.id.searchButton);
+        Button button = findViewById(R.id.searchButton);
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 // Code here executes on main thread after user presses button
                 ReadRecipes();
+                closeKeyboard();
             }
+
         });
 
     }
 
     private void ReadRecipes() {
+
+        lsRecipe = new ArrayList<>();
+
         db.collection("Recipes")
         .whereEqualTo("titre", searchLine.getText().toString())
                 .get()
@@ -72,19 +86,26 @@ public class SearchActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
-                                StringBuilder fields = new StringBuilder("");
-                                fields.append("Titre: ").append(document.get(TITRE_KEY));
-                                fields.append("\nIngredient: ").append(document.get(INGREDIENT_KEY));
-                                fields.append("\nDescription: ").append(document.get(DESCRIPTION_KEY));
-                                fields.append("\nPreparation: ").append(document.get(PREPARATION_KEY));
-                                fields.append("\n\n");
-                                affichageRecette.append(fields.toString());
+                                lsRecipe.add(new RecipeResponse(R.drawable.add_photo_512,document.get(TITRE_KEY).toString(),(float) 2, document.get(DESCRIPTION_KEY).toString()));
                             }
+                            RecyclerView resultSearchView = affichageRecette;
+                            GridViewAdapter myAdapter = new GridViewAdapter(lsRecipe, getApplicationContext());
+                            resultSearchView.setLayoutManager(new GridLayoutManager(getApplicationContext(),2));
+                            resultSearchView.setAdapter(myAdapter);
                         }else {
                             Log.d("TAG", "Error getting documents: ", task.getException());
                         }
                     }
                 });
+
+    }
+
+    private void closeKeyboard() {
+        View view = this.getCurrentFocus();
+        if (view != null) {
+            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
     }
 
     @Override

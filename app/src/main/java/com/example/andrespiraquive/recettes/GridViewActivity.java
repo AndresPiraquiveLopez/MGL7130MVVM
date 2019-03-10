@@ -1,20 +1,33 @@
 package com.example.andrespiraquive.recettes;
 
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.example.andrespiraquive.recettes.Models.RecipeResponse;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class GridViewActivity extends AppCompatActivity {
+
+    private static final String TITRE_KEY = "titre";
+    private static final String DESCRIPTION_KEY = "description";
 
     private RecyclerView recyclerView;
 
@@ -22,13 +35,50 @@ public class GridViewActivity extends AppCompatActivity {
 
     List<RecipeResponse> lsRecipe;
 
+    FirebaseFirestore db;
+    FirebaseStorage storage;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_grid_view);
 
+        db = FirebaseFirestore.getInstance();
+        storage = FirebaseStorage.getInstance();
         lsRecipe = new ArrayList<>();
-        lsRecipe.add(new RecipeResponse(R.drawable.add_photo_512,"Recipe 1", (float) 4, "Easy"));
+
+        //Image from firebase storage
+        StorageReference httpsReference = storage.getReferenceFromUrl("https://firebasestorage.googleapis.com/v0/b/recettes-bb215.appspot.com/o/image_plat_base.jpg?alt=media&token=c2ab783a-4d54-4234-a621-9ec0cd43bf07");
+        
+        //Data from firestore
+        db.collection("Recipes")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                lsRecipe.add(new RecipeResponse(R.drawable.add_photo_512,document.get(TITRE_KEY).toString(),(float) 2, document.get(DESCRIPTION_KEY).toString()));
+                            }
+                            RecyclerView myrv = findViewById(R.id.recycle_view_id);
+                            GridViewAdapter myAdapter = new GridViewAdapter(lsRecipe, getApplicationContext());
+                            if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+                                myrv.setLayoutManager(new GridLayoutManager(getApplicationContext(), 2));
+                            }
+                            else
+                            if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE){
+                                myrv.setLayoutManager(new GridLayoutManager(getApplicationContext(), 4));
+                            }
+                            myrv.setAdapter(myAdapter);
+                        }else {
+                            Log.d("TAG", "Error getting documents: ", task.getException());
+                        }
+                    }
+                });
+
+
+        /**
+        lsRecipe.add(new RecipeResponse(R.drawable.add_photo_512,"Recipe 1"));
         lsRecipe.add(new RecipeResponse(R.drawable.add_photo_512,"Recipe 2",(float) 2, "Difficult"));
         lsRecipe.add(new RecipeResponse(R.drawable.add_photo_512,"Recipe 3",(float) 3, "Traditional"));
         lsRecipe.add(new RecipeResponse(R.drawable.add_photo_512,"Recipe 4", (float)1, "Traditional"));
@@ -44,11 +94,8 @@ public class GridViewActivity extends AppCompatActivity {
         lsRecipe.add(new RecipeResponse(R.drawable.add_photo_512,"Recipe 6",(float) 2, "Traditional"));
         lsRecipe.add(new RecipeResponse(R.drawable.add_photo_512,"Recipe 7",(float) 3, "Traditional"));
         lsRecipe.add(new RecipeResponse(R.drawable.add_photo_512,"Recipe 8",(float) 1, "Traditional"));
+*/
 
-        RecyclerView myrv = (RecyclerView) findViewById(R.id.recycle_view_id);
-        GridViewAdapter myAdapter = new GridViewAdapter(lsRecipe, this);
-        myrv.setLayoutManager(new GridLayoutManager(this,3));
-        myrv.setAdapter(myAdapter);
     }
 
     @Override
