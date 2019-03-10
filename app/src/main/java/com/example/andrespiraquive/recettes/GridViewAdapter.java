@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 
 import com.example.andrespiraquive.recettes.Models.RecipeResponse;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -74,7 +75,10 @@ public class GridViewAdapter extends RecyclerView.Adapter <GridViewAdapter.MyVie
         public MyViewHolder(View itemView){
             super(itemView);
 
-            //img_recipe_thumbnaild = (ImageView) itemView.findViewById(R.id.recipe_image_id);
+            img_recipe_thumbnaild = (ImageView) itemView.findViewById(R.id.recipe_image_id);
+            Picasso.get()
+                    .load("https://firebasestorage.googleapis.com/v0/b/recettes-bb215.appspot.com/o/image_plat_base.jpg?alt=media&token=c2ab783a-4d54-4234-a621-9ec0cd43bf07")
+                    .into(img_recipe_thumbnaild);
             tv_recipe_title = (TextView) itemView.findViewById(R.id.recipe_title_id);
             cardView = (CardView) itemView.findViewById(R.id.cardView_id);
         }
