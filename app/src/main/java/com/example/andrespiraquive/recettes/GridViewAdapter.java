@@ -49,7 +49,7 @@ public class GridViewAdapter extends RecyclerView.Adapter <GridViewAdapter.MyVie
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(mContext, RecipeActivity.class);
-
+                intent.setFlags (Intent.FLAG_ACTIVITY_NEW_TASK);
                 //intent.putExtra("Image",mData.get(position).getPictureId());
                 intent.putExtra("Title",mData.get(position).getTitle());
                 intent.putExtra("Note",mData.get(position).getNote());

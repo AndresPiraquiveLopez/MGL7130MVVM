@@ -45,7 +45,7 @@ public class SearchActivity extends AppCompatActivity {
     private static final String DESCRIPTION_KEY = "description";
     private static final String INGREDIENTS_KEY = "ingredients";
     private static final String PREPARATIONS_KEY = "preparations";
-    private static final String POSITION_KEY = "position";;
+    private static final String POSITION_KEY = "position";
 
 
 
