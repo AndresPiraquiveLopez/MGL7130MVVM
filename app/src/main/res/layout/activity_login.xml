@@ -3,16 +3,23 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/login_background">
+    android:layout_height="match_parent">
 
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#FFF"
-        android:gravity="center"
+        android:gravity="top"
         android:orientation="vertical">
+
+
+        <ImageView
+            android:id="@+id/logo_id"
+            android:layout_width="match_parent"
+            android:layout_height="123dp"
+            android:adjustViewBounds="false"
+            android:scaleType="centerInside"
+            app:srcCompat="@drawable/World_Recipes_logo_color" />
 
 
         <android.support.design.widget.TextInputLayout
