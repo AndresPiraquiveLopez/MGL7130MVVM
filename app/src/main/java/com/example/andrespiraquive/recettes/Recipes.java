@@ -9,10 +9,13 @@ public class Recipes {
     private String ingredients;
     private String description;
     private String preparations;
-    private float note;
+    private double note;
     private String position;
 
-    public Recipes(String imageId, String title, String ingredients, String description, String preparations, float note, String position) {
+
+    private String test;
+
+    public Recipes(String imageId, String title, String ingredients, String description, String preparations, double note, String position) {
         this.imageId = imageId;
         this.title = title;
         this.ingredients = ingredients;
@@ -39,6 +42,14 @@ public class Recipes {
         this.preparations = preparations;
     }
 
+    public Recipes(String title, String ingredients, String description, String preparations, String position) {
+        this.title = title;
+        this.position = position;
+        this.ingredients = ingredients;
+        this.description = description;
+        this.preparations = preparations;
+    }
+
     public String getImage() { return imageId; }
 
     public String getTitle() {
@@ -57,7 +68,7 @@ public class Recipes {
 
     public String getDescription() { return description; }
 
-    public float getNote() { return note; }
+    public double getNote() { return note; }
 
     public void setNote(float note) { this.note = note; }
 

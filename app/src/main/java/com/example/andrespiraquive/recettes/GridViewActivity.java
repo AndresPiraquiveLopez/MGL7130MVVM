@@ -30,10 +30,13 @@ import java.util.List;
 
 public class GridViewActivity extends AppCompatActivity {
 
-    private static final String TITRE_KEY = "titre";
+    private static final String IMAGE_KEY = "image";
+    private static final String TITLE_KEY = "title";
+    private static final String NOTE_KEY = "note";
     private static final String DESCRIPTION_KEY = "description";
-    private static final String INGREDIENT_KEY = "ingredient";
-    private static final String PREPARATION_KEY = "preparation";
+    private static final String INGREDIENTS_KEY = "ingredients";
+    private static final String PREPARATIONS_KEY = "preparations";
+    private static final String POSITION_KEY = "position";
 
     private RecyclerView recyclerView;
 
@@ -59,7 +62,10 @@ public class GridViewActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
-                                lsRecipe.add(new Recipes(document.get(TITRE_KEY).toString(),(float) 2, document.get(DESCRIPTION_KEY).toString(), document.get(INGREDIENT_KEY).toString(), document.get(PREPARATION_KEY).toString()));
+                                lsRecipe.add(new Recipes(document.get(IMAGE_KEY).toString(),
+                                        document.get(TITLE_KEY).toString(), document.get(INGREDIENTS_KEY).toString(),
+                                        document.get(DESCRIPTION_KEY).toString(), document.get(PREPARATIONS_KEY).toString(),
+                                        (double) document.get(NOTE_KEY), document.get(POSITION_KEY).toString()));
                             }
                             RecyclerView myrv = findViewById(R.id.recycle_view_id);
                             GridViewAdapter myAdapter = new GridViewAdapter(lsRecipe, getApplicationContext());
