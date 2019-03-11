@@ -1,54 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:background="@drawable/login_background">
 
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:orientation="vertical" android:layout_width="match_parent"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="#FFF"
         android:gravity="center"
-        android:background="#FFF">
+        android:orientation="vertical">
 
 
         <android.support.design.widget.TextInputLayout
-            android:layout_height="wrap_content"
-            android:layout_width="match_parent">
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
             <EditText
+                android:id="@+id/girisEmail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textEmailAddress"
                 android:layout_marginTop="10dp"
                 android:hint="E-mail"
-                android:id="@+id/girisEmail" />
+                android:inputType="textEmailAddress" />
 
         </android.support.design.widget.TextInputLayout>
 
 
-
         <android.support.design.widget.TextInputLayout
-            android:layout_height="wrap_content"
-            android:layout_width="match_parent">
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
             <EditText
+                android:id="@+id/password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textPassword"
-                android:ems="10"
                 android:layout_marginTop="10dp"
-                android:id="@+id/password"
-                android:hint="Password" />
+                android:ems="10"
+                android:hint="Password"
+                android:inputType="textPassword" />
 
         </android.support.design.widget.TextInputLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="100dp"
-            android:orientation="horizontal"
-            android:gravity="center">
+            android:gravity="center"
+            android:orientation="horizontal">
 
             <Button
                 android:id="@+id/loginButton"
@@ -73,29 +74,30 @@
         </LinearLayout>
 
         <Button
-            android:text="I forgot password"
+            android:id="@+id/newPasswordButton"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
-            android:textAllCaps="false"
-            android:id="@+id/newPasswordButton"
-            android:background="@null"
-            android:textColor="@color/colorPrimary"
             android:layout_marginBottom="8dp"
-            />
+            android:background="@null"
+            android:text="I forgot password"
+            android:textAllCaps="false"
+            android:textColor="@color/colorPrimary"
+            android:visibility="invisible"/>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="OR"
             android:gravity="center"
-            android:textColor="@color/colorPrimary"/>
+            android:text="OR"
+            android:textColor="@color/colorPrimary"
+            android:visibility="invisible"/>
 
         <com.google.android.gms.common.SignInButton
             android:id="@+id/sign_in_button"
             android:layout_width="300dp"
             android:layout_height="55dp"
             android:layout_marginTop="15dp"
-            />
+            android:visibility="invisible"/>
     </LinearLayout>
 
     <ProgressBar
