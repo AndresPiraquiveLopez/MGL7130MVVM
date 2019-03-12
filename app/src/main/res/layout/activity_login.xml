@@ -10,16 +10,19 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="top"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="32dp"
+        android:background="#fafbfd">
 
 
         <ImageView
             android:id="@+id/logo_id"
             android:layout_width="match_parent"
-            android:layout_height="123dp"
+            android:layout_height="232dp"
             android:adjustViewBounds="false"
-            android:scaleType="centerInside"
-            app:srcCompat="@drawable/World_Recipes_logo_color" />
+            android:scaleType="centerCrop"
+            app:srcCompat="@drawable/world_recipes_logo_free" />
 
 
         <android.support.design.widget.TextInputLayout
@@ -89,7 +92,7 @@
             android:text="I forgot password"
             android:textAllCaps="false"
             android:textColor="@color/colorPrimary"
-            android:visibility="invisible"/>
+            android:visibility="invisible" />
 
         <TextView
             android:layout_width="match_parent"
@@ -97,14 +100,14 @@
             android:gravity="center"
             android:text="OR"
             android:textColor="@color/colorPrimary"
-            android:visibility="invisible"/>
+            android:visibility="invisible" />
 
         <com.google.android.gms.common.SignInButton
             android:id="@+id/sign_in_button"
             android:layout_width="300dp"
             android:layout_height="55dp"
             android:layout_marginTop="15dp"
-            android:visibility="invisible"/>
+            android:visibility="invisible" />
     </LinearLayout>
 
     <ProgressBar

@@ -1,5 +1,6 @@
 package com.example.andrespiraquive.recettes;
 
+import android.app.ActionBar;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -47,6 +48,10 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        // Hide ActionBar
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().hide();
+        }
 
         loginEmail = (EditText) findViewById(R.id.girisEmail);
         loginPassword = (EditText) findViewById(R.id.password);
