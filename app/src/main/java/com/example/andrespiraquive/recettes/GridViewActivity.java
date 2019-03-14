@@ -49,6 +49,7 @@ public class GridViewActivity extends AppCompatActivity {
 
         //Data from firestore
         db.collection("Recipes")
+                .orderBy (TITLE_KEY)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
