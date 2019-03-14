@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 
@@ -42,6 +43,7 @@ public class GridViewAdapter extends RecyclerView.Adapter <GridViewAdapter.MyVie
     public void onBindViewHolder(@NonNull MyViewHolder holder, final int position) {
         //holder.img_recipe_thumbnaild.setImageResource(mData.get(position).getPictureId());
         holder.tv_recipe_title.setText(mData.get(position).getTitle());
+        holder.note.setRating ((float) mData.get(position).getNote ());
 
 
         holder.cardView.setOnClickListener(new View.OnClickListener() {
@@ -69,6 +71,7 @@ public class GridViewAdapter extends RecyclerView.Adapter <GridViewAdapter.MyVie
 
         ImageView img_recipe_thumbnaild;
         TextView tv_recipe_title;
+        RatingBar note;
         CardView cardView;
 
         public MyViewHolder(View itemView){
@@ -80,6 +83,7 @@ public class GridViewAdapter extends RecyclerView.Adapter <GridViewAdapter.MyVie
                     .into(img_recipe_thumbnaild);
             tv_recipe_title = (TextView) itemView.findViewById(R.id.recipe_title_id);
             cardView = (CardView) itemView.findViewById(R.id.cardView_id);
+            note = (RatingBar) itemView.findViewById (R.id.recipe_ratingBar_id);
         }
     }
 }
