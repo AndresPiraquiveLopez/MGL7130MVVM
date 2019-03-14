@@ -58,6 +58,8 @@ public class RecipeActivity extends AppCompatActivity {
         String Description = intent.getExtras ().getString ("Description");
         String Ingredient = intent.getExtras ().getString ("Ingredient");
         String Preparation = intent.getExtras ().getString ("Preparation");
+        String Document = intent.getExtras ().getString ("Document");
+
 
         //settings values
         //img.setImageResource(Image);
@@ -66,17 +68,17 @@ public class RecipeActivity extends AppCompatActivity {
         tvdescription.setText (Description);
         tvingredient.setText (Ingredient);
         tvpreparation.setText (Preparation);
-        addListenerOnRatingBar ();
+        addListenerOnRatingBar (Document);
     }
 
-    public void addListenerOnRatingBar() {
+    public void addListenerOnRatingBar(final String documentId) {
 
         ratingBar = (RatingBar) findViewById (R.id.recipe_details_raiting_id);
 
         ratingBar.setOnRatingBarChangeListener (new RatingBar.OnRatingBarChangeListener () {
             public void onRatingChanged(RatingBar ratingBar, float rating,
                                         boolean fromUser) {
-                addRating (rating);
+                addRating (rating,documentId);
             }
         });
     }
@@ -85,13 +87,11 @@ public class RecipeActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater ().inflate (R.menu.main_menu, menu);
         return super.onCreateOptionsMenu (menu);
-
     }
 
-    private Task<Void> addRating(
-            final float rating) {
+    private Task<Void> addRating(final float rating, String documentId) {
 
-        DocumentReference newRecipeRef = db.collection ("Recipes").document ("5py6doS79LqjKkDWzpSc");
+        DocumentReference newRecipeRef = db.collection ("Recipes").document (documentId);
         newRecipeRef.update("note", rating)
                 .addOnSuccessListener(new OnSuccessListener < Void > () {
                     @Override

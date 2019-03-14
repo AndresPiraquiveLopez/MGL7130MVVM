@@ -68,7 +68,7 @@ public class AddRecipe extends AppCompatActivity {
 
         Recipes recetteAjouter = new Recipes("IMAGE", editTitre.getText().toString(),
                 editIngredient.getText().toString(), editDescription.getText().toString(),
-                editPreparation.getText().toString(),0.0, "45.462252,-73.437309");
+                editPreparation.getText().toString(),0.0, "45.462252,-73.437309","");
 
         DocumentReference newRecipeRef = db.collection("Recipes").document();
                 newRecipeRef.set(recetteAjouter)

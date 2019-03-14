@@ -54,6 +54,7 @@ public class GridViewAdapter extends RecyclerView.Adapter <GridViewAdapter.MyVie
                 intent.putExtra("Description",mData.get(position).getDescription());
                 intent.putExtra("Ingredient",mData.get(position).getIngredients());
                 intent.putExtra("Preparation",mData.get(position).getPreparations());
+                intent.putExtra ("Document",mData.get(position).getDocument ());
                 mContext.startActivity(intent);
             }
         });

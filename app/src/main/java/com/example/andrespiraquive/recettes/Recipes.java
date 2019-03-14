@@ -11,11 +11,12 @@ public class Recipes {
     private String preparations;
     private double note;
     private String position;
+    private String document;
 
 
     private String test;
 
-    public Recipes(String imageId, String title, String ingredients, String description, String preparations, double note, String position) {
+    public Recipes(String imageId, String title, String ingredients, String description, String preparations, double note, String position,String document) {
         this.imageId = imageId;
         this.title = title;
         this.ingredients = ingredients;
@@ -23,6 +24,7 @@ public class Recipes {
         this.preparations = preparations;
         this.note = note;
         this.position = position;
+        this.document = document;
     }
 
     public Recipes(String imageId, String title, String ingredients, String description, String preparations, String position) {
@@ -70,6 +72,8 @@ public class Recipes {
 
     public double getNote() { return note; }
 
+    public String getDocument() { return document; }
+
     public void setNote(float note) { this.note = note; }
 
     public void setDescription(String description) { description = description; }
@@ -91,4 +95,6 @@ public class Recipes {
     }
 
     public void setPosition(String position) { this.position = position; }
+
+    public void setDocument(String document) { this.document = document; }
 }
