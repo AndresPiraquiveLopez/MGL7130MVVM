@@ -41,23 +41,23 @@ public class AddRecipe extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_recipe);
+        super.onCreate (savedInstanceState);
+        setContentView (R.layout.activity_add_recipe);
 
-        db = FirebaseFirestore.getInstance();
-        editTitre = findViewById(R.id.titre);
-        editIngredient = findViewById(R.id.editIngredient);
-        editDescription = findViewById(R.id.editDescription);
-        editPreparation = findViewById(R.id.editPreparation);
+        db = FirebaseFirestore.getInstance ();
+        editTitre = findViewById (R.id.titre);
+        editIngredient = findViewById (R.id.editIngredient);
+        editDescription = findViewById (R.id.editDescription);
+        editPreparation = findViewById (R.id.editPreparation);
 
 
-        final Button buttonSave = findViewById(R.id.saveRecipeButton);
-        final Button buttonCancel = findViewById(R.id.cancelRecipeButton);
+        final Button buttonSave = findViewById (R.id.saveRecipeButton);
+        final Button buttonCancel = findViewById (R.id.cancelRecipeButton);
 
-        buttonSave.setOnClickListener(new View.OnClickListener() {
+        buttonSave.setOnClickListener (new View.OnClickListener () {
             public void onClick(View v) {
                 // Code here executes on main thread after user presses button
-                addNewRecipe();
+                addNewRecipe ();
             }
         });
 
@@ -66,63 +66,67 @@ public class AddRecipe extends AppCompatActivity {
 
     private void addNewRecipe() {
 
-        Recipes recetteAjouter = new Recipes("IMAGE", editTitre.getText().toString(),
-                editIngredient.getText().toString(), editDescription.getText().toString(),
-                editPreparation.getText().toString(),0.0, "45.462252,-73.437309","");
+        Recipes recetteAjouter = new Recipes ("IMAGE", editTitre.getText ().toString (),
+                editIngredient.getText ().toString (), editDescription.getText ().toString (),
+                editPreparation.getText ().toString (), 0.0, "45.462252,-73.437309", "");
 
-        DocumentReference newRecipeRef = db.collection("Recipes").document();
-                newRecipeRef.set(recetteAjouter)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
+        DocumentReference newRecipeRef = db.collection ("Recipes").document ();
+        newRecipeRef.set (recetteAjouter)
+                .addOnSuccessListener (new OnSuccessListener<Void> () {
                     @Override
                     public void onSuccess(Void aVoid) {
-                        Toast.makeText(AddRecipe.this, "Recipe Registered",
-                                Toast.LENGTH_SHORT).show();
+                        Toast.makeText (AddRecipe.this, "Recipe Registered",
+                                Toast.LENGTH_SHORT).show ();
+
+                        Intent intent = new Intent (AddRecipe.this, GridViewActivity.class);
+                        startActivity (intent);
+                        finish ();
                     }
                 })
-                .addOnFailureListener(new OnFailureListener() {
+                .addOnFailureListener (new OnFailureListener () {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(AddRecipe.this, "ERROR" + e.toString(),
-                                Toast.LENGTH_SHORT).show();
-                        Log.d("TAG", e.toString());
+                        Toast.makeText (AddRecipe.this, "ERROR" + e.toString (),
+                                Toast.LENGTH_SHORT).show ();
+                        Log.d ("TAG", e.toString ());
                     }
                 });
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main_menu,menu);
-        return super.onCreateOptionsMenu(menu);
+        getMenuInflater ().inflate (R.menu.main_menu, menu);
+        return super.onCreateOptionsMenu (menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.list_recipes) {
-            Intent listRecipes = new Intent(getApplicationContext(), GridViewActivity.class);
-            startActivity(listRecipes);
-            finish();
+        if (item.getItemId () == R.id.list_recipes) {
+            Intent listRecipes = new Intent (getApplicationContext (), GridViewActivity.class);
+            startActivity (listRecipes);
+            finish ();
         }
 
-        if(item.getItemId()==R.id.add_recipe){
-            Intent addRecipe = new Intent(getApplicationContext(),AddRecipe.class);
-            startActivity(addRecipe);
-            finish();
+        if (item.getItemId () == R.id.add_recipe) {
+            Intent addRecipe = new Intent (getApplicationContext (), AddRecipe.class);
+            startActivity (addRecipe);
+            finish ();
         }
-        if(item.getItemId()==R.id.search_recipe){
-            Intent searchActivity = new Intent(getApplicationContext(),SearchActivity.class);
-            startActivity(searchActivity);
-            finish();
+        if (item.getItemId () == R.id.search_recipe) {
+            Intent searchActivity = new Intent (getApplicationContext (), SearchActivity.class);
+            startActivity (searchActivity);
+            finish ();
         }
-        if(item.getItemId()==R.id.user_settings){
-            Intent searchActivity = new Intent(getApplicationContext(),MainActivity.class);
-            startActivity(searchActivity);
-            finish();
+        if (item.getItemId () == R.id.user_settings) {
+            Intent searchActivity = new Intent (getApplicationContext (), MainActivity.class);
+            startActivity (searchActivity);
+            finish ();
         }
-        if(item.getItemId()==R.id.list_recipes){
-            Intent recipeActivity = new Intent(getApplicationContext(),GridViewActivity.class);
-            startActivity(recipeActivity);
-            finish();
+        if (item.getItemId () == R.id.list_recipes) {
+            Intent recipeActivity = new Intent (getApplicationContext (), GridViewActivity.class);
+            startActivity (recipeActivity);
+            finish ();
         }
-        return super.onOptionsItemSelected(item);
+        return super.onOptionsItemSelected (item);
     }
 }
