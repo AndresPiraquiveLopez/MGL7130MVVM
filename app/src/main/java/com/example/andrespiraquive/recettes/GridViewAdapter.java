@@ -12,7 +12,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 
-import com.example.andrespiraquive.recettes.Models.RecipeResponse;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
