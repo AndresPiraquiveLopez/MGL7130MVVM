@@ -127,6 +127,11 @@ public class SearchActivity extends AppCompatActivity {
             startActivity(searchActivity);
             finish();
         }
+        if(item.getItemId()==R.id.user_favoris){
+            Intent Recipes_list = new Intent(getApplicationContext(), Liste_favoris.class);
+            startActivity(Recipes_list);
+            finish();
+        }
         if(item.getItemId()==R.id.user_settings){
             Intent searchActivity = new Intent(getApplicationContext(),MainActivity.class);
             startActivity(searchActivity);

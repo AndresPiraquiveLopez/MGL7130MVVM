@@ -40,7 +40,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     private SignInButton signInButton;
     FirebaseAuth firebaseAuth;
     GoogleApiClient mGoogleApiClient;
-    private ProgressBar progressBar;
+    //private ProgressBar progressBar;
     private static final String TAG = "";
 
     @Override
@@ -59,7 +59,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         registerButton = (Button) findViewById(R.id.registerButton);
         signInButton = (SignInButton) findViewById(R.id.sign_in_button);
         newPassButton = (Button) findViewById(R.id.newPasswordButton);
-        
+
 
         firebaseAuth = FirebaseAuth.getInstance();
 
@@ -105,7 +105,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                     Toast.makeText(getApplicationContext(), "Enter Password", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                progressBar.setVisibility(View.VISIBLE);
+                //progressBar.setVisibility(View.VISIBLE);
                 //authenticate user
                 firebaseAuth.signInWithEmailAndPassword(email, password)
                         .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
@@ -114,7 +114,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                                 // If sign in fails, display a message to the user. If sign in succeeds
                                 // the auth state listener will be notified and logic to handle the
                                 // signed in user can be handled in the listener.
-                                progressBar.setVisibility(View.GONE);
+                                //progressBar.setVisibility(View.GONE);
                                 if (!task.isSuccessful()) {
                                     // there was an error
                                     if (password.length() < 6) {
@@ -193,6 +193,11 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         if(item.getItemId()==R.id.search_recipe){
             Intent searchActivity = new Intent(getApplicationContext(),SearchActivity.class);
             startActivity(searchActivity);
+            finish();
+        }
+        if(item.getItemId()==R.id.user_favoris){
+            Intent Recipes_list = new Intent(getApplicationContext(), Liste_favoris.class);
+            startActivity(Recipes_list);
             finish();
         }
         if(item.getItemId()==R.id.user_settings){

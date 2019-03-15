@@ -1,6 +1,8 @@
 package com.example.andrespiraquive.recettes;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.media.Rating;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -8,7 +10,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -23,6 +28,7 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Transaction;
 import com.squareup.picasso.Picasso;
 
+import java.io.ByteArrayOutputStream;
 import java.util.Map;
 
 public class RecipeActivity extends AppCompatActivity {
@@ -32,12 +38,15 @@ public class RecipeActivity extends AppCompatActivity {
     private RatingBar note;
     private RatingBar ratingBar;
     FirebaseFirestore db;
-
+    Button btnAjoutFavoris;
+    ImageButton btnAImage;
+    DataBase baseRecette;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate (savedInstanceState);
         setContentView (R.layout.activity_recipe);
+        baseRecette=new DataBase(this);
 
         db = FirebaseFirestore.getInstance ();
         img = (ImageView) findViewById (R.id.recipe_details_thumbnail_id);
@@ -46,6 +55,7 @@ public class RecipeActivity extends AppCompatActivity {
         tvdescription = (TextView) findViewById (R.id.recipe_details_description_id);
         tvingredient = (TextView) findViewById (R.id.recipe_details_ingredient_id);
         tvpreparation = (TextView) findViewById (R.id.recipe_details_preparation_id);
+        btnAImage=(ImageButton )findViewById(R.id.btnImage);
 
         Picasso.get ()
                 .load ("https://firebasestorage.googleapis.com/v0/b/recettes-bb215.appspot.com/o/image_plat_base_free.jpg?alt=media&token=29c46ebf-a107-45f8-9957-25b103108dd1")
@@ -69,6 +79,8 @@ public class RecipeActivity extends AppCompatActivity {
         tvingredient.setText (Ingredient);
         tvpreparation.setText (Preparation);
         addListenerOnRatingBar (Document);
+
+        AjoutBaseDonnees();
     }
 
     public void addListenerOnRatingBar(final String documentId) {
@@ -81,6 +93,40 @@ public class RecipeActivity extends AppCompatActivity {
                 addRating (rating,documentId);
             }
         });
+    }
+
+    public void AjoutBaseDonnees()
+    {
+        // btnAjoutFavoris.setOnClickListener(
+        btnAImage.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        boolean isInserted=baseRecette.insertData(tvtitle.getText().toString(),
+                                tvingredient.getText().toString(),
+                                tvpreparation.getText().toString(),tvdescription.getText().toString(),
+                                imageViewToByte(img));
+
+                        if(isInserted==true) {
+                            Toast.makeText(RecipeActivity.this, "Sauvegarde effectuée!!", Toast.LENGTH_LONG).show();
+
+                        }
+                        else
+                            Toast.makeText(RecipeActivity.this , "Sauvegarde non effectuée!", Toast.LENGTH_LONG).show();
+                    }
+                }
+
+        );
+
+    }
+    private byte[] imageViewToByte(ImageView image)
+    {
+        Bitmap bitmap=((BitmapDrawable)image.getDrawable()).getBitmap();
+        ByteArrayOutputStream stream=new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG,100, stream);
+        byte[] byteArray=stream.toByteArray();
+        return  byteArray;
+
     }
 
     @Override
@@ -122,6 +168,11 @@ public class RecipeActivity extends AppCompatActivity {
             Intent searchActivity = new Intent (getApplicationContext (), SearchActivity.class);
             startActivity (searchActivity);
             finish ();
+        }
+        if(item.getItemId()==R.id.user_favoris){
+            Intent Recipes_list = new Intent(getApplicationContext(), Liste_favoris.class);
+            startActivity(Recipes_list);
+            finish();
         }
         if (item.getItemId () == R.id.user_settings) {
             Intent searchActivity = new Intent (getApplicationContext (), MainActivity.class);

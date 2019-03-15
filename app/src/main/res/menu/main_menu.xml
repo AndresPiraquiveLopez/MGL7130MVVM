@@ -8,7 +8,9 @@
     <item
         android:id="@+id/add_recipe"
         android:title="@string/title_add_recipe" />
-
+    <item
+        android:id="@+id/user_favoris"
+        android:title="Favoris" />
     <item
         android:id="@+id/search_recipe"
         android:title="@string/title_search_recipe" />
