@@ -59,7 +59,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         registerButton = (Button) findViewById(R.id.registerButton);
         signInButton = (SignInButton) findViewById(R.id.sign_in_button);
         newPassButton = (Button) findViewById(R.id.newPasswordButton);
-        progressBar = (ProgressBar) findViewById(R.id.progressBar);
+        
 
         firebaseAuth = FirebaseAuth.getInstance();
 
