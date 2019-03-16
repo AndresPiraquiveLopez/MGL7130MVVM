@@ -8,7 +8,11 @@ MGL7130
 
 Nom : World Recipes
 
+1.0) Repos sur GitHub au besoin : https://github.com/AndresPiraquiveLopez/MGL7130.git
+
 1) Pour ouvrir l'application cliquer sur l'icon de cuillière et fourchette
+
+2.0 ) Assuerez vous d'avoir une connexion sur Internet pour vous connecter.
 
 2)Gestion d'identification
 	2.1)Pour vous connecter
@@ -39,6 +43,7 @@ Parcourir l'application
 
 6)À partir du détail du recette "Recipe"
 	Cliquersur l'étoile pour ajouter au "Favoris"
+	Donnez une note de 1 - 5, puis clicuer sur le menu "Recipes" pour mettre à jour la liste de recettes
 	
 7)Pour ajouter une nouvelle recette
 	Cliquer sur le 3 points en haut à droite et sur "Add recipes"
