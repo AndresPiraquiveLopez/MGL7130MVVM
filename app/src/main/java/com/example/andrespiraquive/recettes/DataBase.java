@@ -8,7 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class DataBase extends SQLiteOpenHelper {
 
-    public  static final String DATABASE_NAME="Recipes.db";
+    public  static final String DATABASE_NAME="RecipesTP2.db";
     public  static final String Table_Name="Rece_Table";
     public  static final String col_1="ID";
     public  static final String col_2="Titre";
@@ -16,6 +16,7 @@ public class DataBase extends SQLiteOpenHelper {
     public  static final String col_4="Preparation";
     public  static final String col_5="Description";
     public static  final String col_6="Image";
+    public static  final String col_7="Note";
 
 
 
@@ -25,7 +26,7 @@ public class DataBase extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("create table " + Table_Name + "(ID integer primary key autoincrement, Titre TEXT, Ingredient TEXT, Preparation TEXT, Description TEXT, Image BLOB)" );
+        db.execSQL("create table " + Table_Name + "(ID integer primary key autoincrement, Titre TEXT, Ingredient TEXT, Preparation TEXT, Description TEXT, Image BLOB, Note String)" );
 
     }
 
@@ -45,7 +46,7 @@ public class DataBase extends SQLiteOpenHelper {
      *
      * @return
      */
-    public boolean insertData( String titre, String ingredient, String preparation, String description, byte[]image){
+    public boolean insertData( String titre, String ingredient, String preparation, String description, byte[]image, String note){
 
         SQLiteDatabase db=this.getWritableDatabase();
 
@@ -55,6 +56,7 @@ public class DataBase extends SQLiteOpenHelper {
         contentValues.put(col_4,preparation);
         contentValues.put(col_5,description);
         contentValues.put(col_6,image);
+        contentValues.put(col_7,note);
         long result=db.insert( Table_Name, null,contentValues );
         if(result==-1)
             return false;

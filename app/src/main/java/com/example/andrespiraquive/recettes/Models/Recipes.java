@@ -17,7 +17,7 @@ public class Recipes {
 
     private String test;
 
-    public Recipes(String imageId, String title, String ingredients, String description, String preparations, double note, String position,String document) {
+    public Recipes(String imageId, String title, String ingredients, String description, String preparations, double note, String position, String document) {
         this.imageId = imageId;
         this.title = title;
         this.ingredients = ingredients;
@@ -54,12 +54,17 @@ public class Recipes {
         this.preparations = preparations;
     }
 
-    public Recipes(String title, String images) {
+    public Recipes(String imageID, String title, String ingredients, String description, String preparation, String note, String position) {
         this.title = title;
-        this.imageId = images;
+        this.note = Double.parseDouble (note);
+        this.ingredients = ingredients;
+        this.description = description;
+        this.preparations = preparation;
     }
 
-    public String getImage() { return imageId; }
+    public String getImage() {
+        return imageId;
+    }
 
     public String getTitle() {
         return title;
@@ -73,17 +78,29 @@ public class Recipes {
         return preparations;
     }
 
-    public String getPosition() { return position; }
+    public String getPosition() {
+        return position;
+    }
 
-    public String getDescription() { return description; }
+    public String getDescription() {
+        return description;
+    }
 
-    public double getNote() { return note; }
+    public double getNote() {
+        return note;
+    }
 
-    public String getDocument() { return document; }
+    public String getDocument() {
+        return document;
+    }
 
-    public void setNote(float note) { this.note = note; }
+    public void setNote(float note) {
+        this.note = note;
+    }
 
-    public void setDescription(String description) { description = description; }
+    public void setDescription(String description) {
+        description = description;
+    }
 
     public void setImage(String imageId) {
         this.imageId = imageId;
@@ -101,7 +118,11 @@ public class Recipes {
         this.preparations = preparations;
     }
 
-    public void setPosition(String position) { this.position = position; }
+    public void setPosition(String position) {
+        this.position = position;
+    }
 
-    public void setDocument(String document) { this.document = document; }
+    public void setDocument(String document) {
+        this.document = document;
+    }
 }

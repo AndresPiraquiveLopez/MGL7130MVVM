@@ -95,7 +95,7 @@ public class RecipeActivity extends AppCompatActivity {
                         boolean isInserted=baseRecette.insertData(tvtitle.getText().toString(),
                                 tvingredient.getText().toString(),
                                 tvpreparation.getText().toString(),tvdescription.getText().toString(),
-                                imageViewToByte(img));
+                                imageViewToByte(img), String.valueOf (note.getNumStars ()));
 
                         if(isInserted==true) {
                             Toast.makeText(RecipeActivity.this, "Sauvegarde effectuée!!", Toast.LENGTH_LONG).show();
