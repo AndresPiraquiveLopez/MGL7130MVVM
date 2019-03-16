@@ -1,6 +1,8 @@
 README.txt
 
 PROJET DÉVELOPPEMENT D'APPLICATION MOBILE
+APPAREILS EN CHARGE : Téléphone Samsung et Tablette Nexus 7.
+
 
 UQAM
 
