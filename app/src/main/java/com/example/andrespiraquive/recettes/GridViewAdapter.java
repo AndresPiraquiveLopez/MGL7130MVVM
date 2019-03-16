@@ -13,6 +13,7 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 
 
+import com.example.andrespiraquive.recettes.Models.Recipes;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -41,7 +42,6 @@ public class GridViewAdapter extends RecyclerView.Adapter <GridViewAdapter.MyVie
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, final int position) {
-        //holder.img_recipe_thumbnaild.setImageResource(mData.get(position).getPictureId());
         holder.tv_recipe_title.setText(mData.get(position).getTitle());
         holder.note.setRating ((float) mData.get(position).getNote ());
 

@@ -43,7 +43,7 @@
             android:name=".RecipeActivity"
             android:label="@string/title_recipe"></activity>
 
-        <activity android:name=".Liste_favoris"
+        <activity android:name=".favorisActivity"
             android:label="Favoris" />
     </application>
 

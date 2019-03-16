@@ -15,6 +15,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.example.andrespiraquive.recettes.Models.Recipes;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -128,7 +129,7 @@ public class SearchActivity extends AppCompatActivity {
             finish();
         }
         if(item.getItemId()==R.id.user_favoris){
-            Intent Recipes_list = new Intent(getApplicationContext(), Liste_favoris.class);
+            Intent Recipes_list = new Intent(getApplicationContext(), favorisActivity.class);
             startActivity(Recipes_list);
             finish();
         }

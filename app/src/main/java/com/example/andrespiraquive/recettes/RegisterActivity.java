@@ -28,7 +28,6 @@ public class RegisterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_register);
 
         FirebaseApp.initializeApp(this);
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
 
         emaill = (EditText) findViewById(R.id.uyeEmail);
         passwordd = (EditText) findViewById(R.id.password);

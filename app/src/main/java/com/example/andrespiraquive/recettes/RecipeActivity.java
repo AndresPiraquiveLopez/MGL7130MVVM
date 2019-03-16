@@ -3,33 +3,25 @@ package com.example.andrespiraquive.recettes;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
-import android.media.Rating;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
-import com.google.firebase.firestore.Transaction;
 import com.squareup.picasso.Picasso;
 
 import java.io.ByteArrayOutputStream;
-import java.util.Map;
 
 public class RecipeActivity extends AppCompatActivity {
 
@@ -38,7 +30,6 @@ public class RecipeActivity extends AppCompatActivity {
     private RatingBar note;
     private RatingBar ratingBar;
     FirebaseFirestore db;
-    Button btnAjoutFavoris;
     ImageButton btnAImage;
     DataBase baseRecette;
 
@@ -72,7 +63,6 @@ public class RecipeActivity extends AppCompatActivity {
 
 
         //settings values
-        //img.setImageResource(Image);
         tvtitle.setText (Title);
         note.setRating ((float) Note);
         tvdescription.setText (Description);
@@ -97,7 +87,7 @@ public class RecipeActivity extends AppCompatActivity {
 
     public void AjoutBaseDonnees()
     {
-        // btnAjoutFavoris.setOnClickListener(
+
         btnAImage.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
@@ -170,7 +160,7 @@ public class RecipeActivity extends AppCompatActivity {
             finish ();
         }
         if(item.getItemId()==R.id.user_favoris){
-            Intent Recipes_list = new Intent(getApplicationContext(), Liste_favoris.class);
+            Intent Recipes_list = new Intent(getApplicationContext(), favorisActivity.class);
             startActivity(Recipes_list);
             finish();
         }

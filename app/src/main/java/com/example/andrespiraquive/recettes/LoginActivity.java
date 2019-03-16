@@ -1,19 +1,16 @@
 package com.example.andrespiraquive.recettes;
 
-import android.app.ActionBar;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.android.gms.auth.api.Auth;
@@ -25,13 +22,10 @@ import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.FirebaseApp;
-import com.google.firebase.FirebaseOptions;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.GoogleAuthProvider;
-import com.google.firebase.firestore.FirebaseFirestore;
 
 public class LoginActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
     EditText loginEmail, loginPassword;
@@ -40,7 +34,6 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     private SignInButton signInButton;
     FirebaseAuth firebaseAuth;
     GoogleApiClient mGoogleApiClient;
-    //private ProgressBar progressBar;
     private static final String TAG = "";
 
     @Override
@@ -105,18 +98,12 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                     Toast.makeText(getApplicationContext(), "Enter Password", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                //progressBar.setVisibility(View.VISIBLE);
                 //authenticate user
                 firebaseAuth.signInWithEmailAndPassword(email, password)
                         .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
-                                // If sign in fails, display a message to the user. If sign in succeeds
-                                // the auth state listener will be notified and logic to handle the
-                                // signed in user can be handled in the listener.
-                                //progressBar.setVisibility(View.GONE);
                                 if (!task.isSuccessful()) {
-                                    // there was an error
                                     if (password.length() < 6) {
                                         loginButton.setError(getString(R.string.minimum_password));
                                     } else {
@@ -196,7 +183,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             finish();
         }
         if(item.getItemId()==R.id.user_favoris){
-            Intent Recipes_list = new Intent(getApplicationContext(), Liste_favoris.class);
+            Intent Recipes_list = new Intent(getApplicationContext(), favorisActivity.class);
             startActivity(Recipes_list);
             finish();
         }

@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.example.andrespiraquive.recettes.Models.Recipes;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -41,48 +42,44 @@ public class GridViewActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_grid_view);
+        super.onCreate (savedInstanceState);
+        setContentView (R.layout.activity_grid_view);
 
-        db = FirebaseFirestore.getInstance();
-        lsRecipe = new ArrayList<>();
+        db = FirebaseFirestore.getInstance ();
+        lsRecipe = new ArrayList<> ();
 
         //Data from firestore
-        db.collection("Recipes")
+        db.collection ("Recipes")
                 .orderBy (TITLE_KEY)
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                .get ()
+                .addOnCompleteListener (new OnCompleteListener<QuerySnapshot> () {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                lsRecipe.add(new Recipes(document.get(IMAGE_KEY).toString(),
-                                        document.get(TITLE_KEY).toString(), document.get(INGREDIENTS_KEY).toString(),
-                                        document.get(DESCRIPTION_KEY).toString(), document.get(PREPARATIONS_KEY).toString(),
-                                        (double) document.get(NOTE_KEY), document.get(POSITION_KEY).toString(),document.getId ()));
+                        if (task.isSuccessful ()) {
+                            for (QueryDocumentSnapshot document : task.getResult ()) {
+                                lsRecipe.add (new Recipes (document.get (IMAGE_KEY).toString (),
+                                        document.get (TITLE_KEY).toString (), document.get (INGREDIENTS_KEY).toString (),
+                                        document.get (DESCRIPTION_KEY).toString (), document.get (PREPARATIONS_KEY).toString (),
+                                        (double) document.get (NOTE_KEY), document.get (POSITION_KEY).toString (), document.getId ()));
                             }
-                            RecyclerView myrv = findViewById(R.id.recycle_view_id);
-                            GridViewAdapter myAdapter = new GridViewAdapter(lsRecipe, getApplicationContext());
-                            if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
-                                if(getResources().getConfiguration().screenWidthDp >= 600){
-                                    myrv.setLayoutManager(new GridLayoutManager (getApplicationContext(), 3));
+                            RecyclerView myrv = findViewById (R.id.recycle_view_id);
+                            GridViewAdapter myAdapter = new GridViewAdapter (lsRecipe, getApplicationContext ());
+                            if (getResources ().getConfiguration ().orientation == Configuration.ORIENTATION_PORTRAIT) {
+                                if (getResources ().getConfiguration ().screenWidthDp >= 600) {
+                                    myrv.setLayoutManager (new GridLayoutManager (getApplicationContext (), 3));
+                                } else {
+                                    myrv.setLayoutManager (new GridLayoutManager (getApplicationContext (), 2));
                                 }
-                                else{
-                                    myrv.setLayoutManager(new GridLayoutManager (getApplicationContext(), 2));
-                                }
-                            }
-                            else
-                            if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE){
-                                if(getResources().getConfiguration().screenWidthDp >= 921){
-                                    myrv.setLayoutManager(new GridLayoutManager(getApplicationContext(), 5));
-                                }
-                                else{
-                                    myrv.setLayoutManager(new GridLayoutManager(getApplicationContext(), 4));
+                            } else if (getResources ().getConfiguration ().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+                                if (getResources ().getConfiguration ().screenWidthDp >= 921) {
+                                    myrv.setLayoutManager (new GridLayoutManager (getApplicationContext (), 5));
+                                } else {
+                                    myrv.setLayoutManager (new GridLayoutManager (getApplicationContext (), 4));
                                 }
                             }
-                            myrv.setAdapter(myAdapter);
-                        }else {
-                            Log.d("TAG", "Error getting documents: ", task.getException());
+                            myrv.setAdapter (myAdapter);
+                        } else {
+                            Log.d ("TAG", "Error getting documents: ", task.getException ());
                         }
                     }
                 });
@@ -90,38 +87,38 @@ public class GridViewActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main_menu,menu);
-        return super.onCreateOptionsMenu(menu);
+        getMenuInflater ().inflate (R.menu.main_menu, menu);
+        return super.onCreateOptionsMenu (menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.list_recipes) {
-            Intent listRecipes = new Intent(getApplicationContext(), GridViewActivity.class);
-            startActivity(listRecipes);
-            finish();
+        if (item.getItemId () == R.id.list_recipes) {
+            Intent listRecipes = new Intent (getApplicationContext (), GridViewActivity.class);
+            startActivity (listRecipes);
+            finish ();
         }
 
-        if(item.getItemId()==R.id.add_recipe){
-            Intent addRecipe = new Intent(getApplicationContext(),AddRecipe.class);
-            startActivity(addRecipe);
-            finish();
+        if (item.getItemId () == R.id.add_recipe) {
+            Intent addRecipe = new Intent (getApplicationContext (), AddRecipe.class);
+            startActivity (addRecipe);
+            finish ();
         }
-        if(item.getItemId()==R.id.search_recipe){
-            Intent searchActivity = new Intent(getApplicationContext(),SearchActivity.class);
-            startActivity(searchActivity);
-            finish();
+        if (item.getItemId () == R.id.search_recipe) {
+            Intent searchActivity = new Intent (getApplicationContext (), SearchActivity.class);
+            startActivity (searchActivity);
+            finish ();
         }
-        if(item.getItemId()==R.id.user_favoris){
-            Intent Recipes_list = new Intent(getApplicationContext(), Liste_favoris.class);
-            startActivity(Recipes_list);
-            finish();
+        if (item.getItemId () == R.id.user_favoris) {
+            Intent Recipes_list = new Intent (getApplicationContext (), favorisActivity.class);
+            startActivity (Recipes_list);
+            finish ();
         }
-        if(item.getItemId()==R.id.user_settings){
-            Intent searchActivity = new Intent(getApplicationContext(),MainActivity.class);
-            startActivity(searchActivity);
-            finish();
+        if (item.getItemId () == R.id.user_settings) {
+            Intent searchActivity = new Intent (getApplicationContext (), MainActivity.class);
+            startActivity (searchActivity);
+            finish ();
         }
-        return super.onOptionsItemSelected(item);
+        return super.onOptionsItemSelected (item);
     }
 }

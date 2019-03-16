@@ -1,4 +1,4 @@
-package com.example.andrespiraquive.recettes;
+package com.example.andrespiraquive.recettes.Models;
 
 import android.graphics.Point;
 
@@ -58,9 +58,6 @@ public class Recipes {
         this.title = title;
         this.imageId = images;
     }
-    //public byte[] getImages() {
-        //return images;
-    //}
 
     public String getImage() { return imageId; }
 
