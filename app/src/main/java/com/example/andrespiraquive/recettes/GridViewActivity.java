@@ -63,7 +63,7 @@ public class GridViewActivity extends AppCompatActivity {
                                         (double) document.get (NOTE_KEY), document.get (POSITION_KEY).toString (), document.getId ()));
                             }
                             RecyclerView myrv = findViewById (R.id.recycle_view_id);
-                            GridViewAdapter myAdapter = new GridViewAdapter (lsRecipe, getApplicationContext ());
+                            GridViewAdapter myAdapter = new GridViewAdapter (lsRecipe, getApplicationContext (),false);
                             if (getResources ().getConfiguration ().orientation == Configuration.ORIENTATION_PORTRAIT) {
                                 if (getResources ().getConfiguration ().screenWidthDp >= 600) {
                                     myrv.setLayoutManager (new GridLayoutManager (getApplicationContext (), 3));

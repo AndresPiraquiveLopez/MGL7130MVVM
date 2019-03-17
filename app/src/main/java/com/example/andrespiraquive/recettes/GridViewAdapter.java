@@ -21,12 +21,13 @@ import java.util.List;
 public class GridViewAdapter extends RecyclerView.Adapter <GridViewAdapter.MyViewHolder> {
 
     private List<Recipes> mData;
-
     private Context mContext;
+    private boolean isFavorie;
 
-    public GridViewAdapter(List<Recipes> mData, Context mContext) {
+    public GridViewAdapter(List<Recipes> mData, Context mContext, boolean isFavorie) {
         this.mData = mData;
         this.mContext = mContext;
+        this.isFavorie = isFavorie;
     }
 
 
@@ -57,6 +58,7 @@ public class GridViewAdapter extends RecyclerView.Adapter <GridViewAdapter.MyVie
                 intent.putExtra("Ingredient",mData.get(position).getIngredients());
                 intent.putExtra("Preparation",mData.get(position).getPreparations());
                 intent.putExtra ("Document",mData.get(position).getDocument ());
+                intent.putExtra ("isFavorie",isFavorie);
                 mContext.startActivity(intent);
             }
         });

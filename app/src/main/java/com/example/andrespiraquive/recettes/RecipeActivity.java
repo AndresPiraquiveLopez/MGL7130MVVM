@@ -54,6 +54,7 @@ public class RecipeActivity extends AppCompatActivity {
 
         //Recieve data
         Intent intent = getIntent ();
+        boolean IsFavorie =intent.getExtras ().getBoolean ("isFavorie");
         String Title = intent.getExtras ().getString ("Title");
         double Note = intent.getExtras ().getDouble ("Note");
         String Description = intent.getExtras ().getString ("Description");
@@ -68,9 +69,15 @@ public class RecipeActivity extends AppCompatActivity {
         tvdescription.setText (Description);
         tvingredient.setText (Ingredient);
         tvpreparation.setText (Preparation);
-        addListenerOnRatingBar (Document);
 
-        AjoutBaseDonnees();
+        if(!IsFavorie){
+            addListenerOnRatingBar (Document);
+            AjoutBaseDonnees();
+        }
+        else{
+            note.setEnabled (false);
+            btnAImage.setEnabled (false);
+        }
     }
 
     public void addListenerOnRatingBar(final String documentId) {
