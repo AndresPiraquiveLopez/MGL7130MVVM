@@ -58,7 +58,7 @@ public class favorisActivity extends AppCompatActivity {
         }
 
         RecyclerView resultSearchView = affichageRecette;
-        GridViewAdapter myAdapter = new GridViewAdapter (lsRecipe, getApplicationContext ());
+        GridViewAdapter myAdapter = new GridViewAdapter (lsRecipe, getApplicationContext (),true);
         resultSearchView.setLayoutManager (new GridLayoutManager (getApplicationContext (), 2));
         resultSearchView.setAdapter (myAdapter);
 

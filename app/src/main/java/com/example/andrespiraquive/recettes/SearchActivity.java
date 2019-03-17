@@ -85,7 +85,7 @@ public class SearchActivity extends AppCompatActivity {
                                         (double) document.get(NOTE_KEY), document.get(POSITION_KEY).toString(),document.getId ()));
                             }
                             RecyclerView resultSearchView = affichageRecette;
-                            GridViewAdapter myAdapter = new GridViewAdapter(lsRecipe, getApplicationContext());
+                            GridViewAdapter myAdapter = new GridViewAdapter(lsRecipe, getApplicationContext(),false);
                             resultSearchView.setLayoutManager(new GridLayoutManager(getApplicationContext(),2));
                             resultSearchView.setAdapter(myAdapter);
                         }else {
