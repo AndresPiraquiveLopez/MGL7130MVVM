@@ -14,6 +14,7 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.andrespiraquive.recettes.Data.Database.DataBase;
 import com.example.andrespiraquive.recettes.Views.MainActivity;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;

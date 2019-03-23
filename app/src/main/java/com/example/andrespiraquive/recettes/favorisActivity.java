@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.example.andrespiraquive.recettes.Data.Database.DataBase;
 import com.example.andrespiraquive.recettes.Models.Recipes;
 import com.example.andrespiraquive.recettes.Views.MainActivity;
 

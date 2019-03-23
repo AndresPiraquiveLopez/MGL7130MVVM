@@ -1,4 +1,4 @@
-package com.example.andrespiraquive.recettes;
+package com.example.andrespiraquive.recettes.Data.Database;
 
 import android.content.ContentValues;
 import android.content.Context;
