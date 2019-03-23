@@ -8,13 +8,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.andrespiraquive.recettes.Views.MainActivity;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
@@ -157,7 +157,7 @@ public class RecipeActivity extends AppCompatActivity {
         }
 
         if (item.getItemId () == R.id.add_recipe) {
-            Intent addRecipe = new Intent (getApplicationContext (), AddRecipe.class);
+            Intent addRecipe = new Intent (getApplicationContext (), AddRecipeActivity.class);
             startActivity (addRecipe);
             finish ();
         }

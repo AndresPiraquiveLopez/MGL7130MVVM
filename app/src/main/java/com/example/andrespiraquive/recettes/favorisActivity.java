@@ -9,9 +9,9 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.GridView;
 
 import com.example.andrespiraquive.recettes.Models.Recipes;
+import com.example.andrespiraquive.recettes.Views.MainActivity;
 
 import java.util.ArrayList;
 
@@ -91,7 +91,7 @@ public class favorisActivity extends AppCompatActivity {
         }
 
         if (item.getItemId () == R.id.add_recipe) {
-            Intent addRecipe = new Intent (getApplicationContext (), AddRecipe.class);
+            Intent addRecipe = new Intent (getApplicationContext (), AddRecipeActivity.class);
             startActivity (addRecipe);
             finish ();
         }

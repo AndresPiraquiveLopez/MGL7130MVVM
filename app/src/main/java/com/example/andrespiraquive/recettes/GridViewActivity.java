@@ -13,6 +13,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.example.andrespiraquive.recettes.Models.Recipes;
+import com.example.andrespiraquive.recettes.Views.MainActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -100,7 +101,7 @@ public class GridViewActivity extends AppCompatActivity {
         }
 
         if (item.getItemId () == R.id.add_recipe) {
-            Intent addRecipe = new Intent (getApplicationContext (), AddRecipe.class);
+            Intent addRecipe = new Intent (getApplicationContext (), AddRecipeActivity.class);
             startActivity (addRecipe);
             finish ();
         }

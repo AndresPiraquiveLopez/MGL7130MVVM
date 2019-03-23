@@ -13,12 +13,13 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.andrespiraquive.recettes.Models.Recipes;
+import com.example.andrespiraquive.recettes.Views.MainActivity;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-public class AddRecipe extends AppCompatActivity {
+public class AddRecipeActivity extends AppCompatActivity {
 
     private static final String TITRE_KEY = "titre";
     private static final String INGREDIENT_KEY = "ingredient";
@@ -69,10 +70,10 @@ public class AddRecipe extends AppCompatActivity {
                 .addOnSuccessListener (new OnSuccessListener<Void> () {
                     @Override
                     public void onSuccess(Void aVoid) {
-                        Toast.makeText (AddRecipe.this, "Recipe Registered",
+                        Toast.makeText (AddRecipeActivity.this, "Recipe Registered",
                                 Toast.LENGTH_SHORT).show ();
 
-                        Intent intent = new Intent (AddRecipe.this, GridViewActivity.class);
+                        Intent intent = new Intent (AddRecipeActivity.this, GridViewActivity.class);
                         startActivity (intent);
                         finish ();
                     }
@@ -80,7 +81,7 @@ public class AddRecipe extends AppCompatActivity {
                 .addOnFailureListener (new OnFailureListener () {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Toast.makeText (AddRecipe.this, "ERROR" + e.toString (),
+                        Toast.makeText (AddRecipeActivity.this, "ERROR" + e.toString (),
                                 Toast.LENGTH_SHORT).show ();
                         Log.d ("TAG", e.toString ());
                     }
@@ -102,7 +103,7 @@ public class AddRecipe extends AppCompatActivity {
         }
 
         if (item.getItemId () == R.id.add_recipe) {
-            Intent addRecipe = new Intent (getApplicationContext (), AddRecipe.class);
+            Intent addRecipe = new Intent (getApplicationContext (), AddRecipeActivity.class);
             startActivity (addRecipe);
             finish ();
         }
