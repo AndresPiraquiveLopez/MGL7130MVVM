@@ -13,6 +13,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.example.andrespiraquive.recettes.Models.Recipes;
+import com.example.andrespiraquive.recettes.ViewModels.GridViewModel;
 import com.example.andrespiraquive.recettes.Views.MainActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -37,7 +38,7 @@ public class GridViewActivity extends AppCompatActivity {
 
     private GridViewAdapter adapter;
 
-    List<Recipes> lsRecipe;
+    List<Recipes> mRecipe;
 
     FirebaseFirestore db;
 
@@ -46,44 +47,47 @@ public class GridViewActivity extends AppCompatActivity {
         super.onCreate (savedInstanceState);
         setContentView (R.layout.activity_grid_view);
 
-        db = FirebaseFirestore.getInstance ();
-        lsRecipe = new ArrayList<> ();
+        mRecipe = new ArrayList<> ();
 
         //Data from firestore
-        db.collection ("Recipes")
-                .orderBy (TITLE_KEY)
-                .get ()
-                .addOnCompleteListener (new OnCompleteListener<QuerySnapshot> () {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful ()) {
-                            for (QueryDocumentSnapshot document : task.getResult ()) {
-                                lsRecipe.add (new Recipes (document.get (IMAGE_KEY).toString (),
-                                        document.get (TITLE_KEY).toString (), document.get (INGREDIENTS_KEY).toString (),
-                                        document.get (DESCRIPTION_KEY).toString (), document.get (PREPARATIONS_KEY).toString (),
-                                        (double) document.get (NOTE_KEY), document.get (POSITION_KEY).toString (), document.getId ()));
-                            }
-                            RecyclerView myrv = findViewById (R.id.recycle_view_id);
-                            GridViewAdapter myAdapter = new GridViewAdapter (lsRecipe, getApplicationContext (),false);
-                            if (getResources ().getConfiguration ().orientation == Configuration.ORIENTATION_PORTRAIT) {
-                                if (getResources ().getConfiguration ().screenWidthDp >= 600) {
-                                    myrv.setLayoutManager (new GridLayoutManager (getApplicationContext (), 3));
-                                } else {
-                                    myrv.setLayoutManager (new GridLayoutManager (getApplicationContext (), 2));
-                                }
-                            } else if (getResources ().getConfiguration ().orientation == Configuration.ORIENTATION_LANDSCAPE) {
-                                if (getResources ().getConfiguration ().screenWidthDp >= 921) {
-                                    myrv.setLayoutManager (new GridLayoutManager (getApplicationContext (), 5));
-                                } else {
-                                    myrv.setLayoutManager (new GridLayoutManager (getApplicationContext (), 4));
-                                }
-                            }
-                            myrv.setAdapter (myAdapter);
-                        } else {
-                            Log.d ("TAG", "Error getting documents: ", task.getException ());
-                        }
-                    }
-                });
+        GridViewModel model = new GridViewModel ();
+        List<Recipes> mRecipes = model.getRecipes ();
+
+
+        RecyclerView mRv = findViewById (R.id.recycle_view_id);
+        GridViewAdapter myAdapter = new GridViewAdapter (mRecipes, getApplicationContext (), false);
+
+        switch (getResources ().getConfiguration ().orientation) {
+            case Configuration.ORIENTATION_PORTRAIT:
+
+                int mWidthPortraitDp = getResources ().getConfiguration ().screenWidthDp >= 600 ? 1 : 0;
+                switch (mWidthPortraitDp) {
+                    case 1:
+                        mRv.setLayoutManager (new GridLayoutManager (getApplicationContext (), 3));
+                        break;
+                    default:
+                        mRv.setLayoutManager (new GridLayoutManager (getApplicationContext (), 2));
+                }
+                break;
+
+            case Configuration.ORIENTATION_LANDSCAPE:
+
+                int mWidthLandscapeDp = getResources ().getConfiguration ().screenWidthDp >= 921 ? 1 : 0;
+                switch (mWidthLandscapeDp) {
+                    case 1:
+                        mRv.setLayoutManager (new GridLayoutManager (getApplicationContext (), 5));
+                        break;
+                    default:
+                        mRv.setLayoutManager (new GridLayoutManager (getApplicationContext (), 4));
+                }
+
+            default:
+                mRv.setLayoutManager (new GridLayoutManager (getApplicationContext (), 2));
+                break;
+        }
+
+        mRv.setAdapter (myAdapter);
+
     }
 
     @Override
