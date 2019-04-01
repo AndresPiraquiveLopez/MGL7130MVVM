@@ -28,7 +28,7 @@ public class GridViewActivity extends AppCompatActivity {
 
     List<Recipes> mRecipe;
 
-    GridViewModel mGridViewModel = new GridViewModel();
+    GridViewModel mGridViewModel = new GridViewModel ();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -37,43 +37,45 @@ public class GridViewActivity extends AppCompatActivity {
 
         mRecipe = new ArrayList<> ();
 
-        mGridViewModel.getAllRecipes(new GridViewModel.FirestoreCallback() {
+        mGridViewModel.getAllRecipes (new GridViewModel.FirestoreCallback () {
             @Override
             public void onCallback(List<Recipes> listRecipes) {
 
-            RecyclerView mRv = findViewById (R.id.recycle_view_id);
-            GridViewAdapter myAdapter = new GridViewAdapter (listRecipes, getApplicationContext (), false);
+                RecyclerView mRv = findViewById (R.id.recycle_view_id);
+                GridViewAdapter myAdapter = new GridViewAdapter (listRecipes, getApplicationContext (), false);
 
-            switch (getResources ().getConfiguration ().orientation) {
-                case Configuration.ORIENTATION_PORTRAIT:
+                switch (getResources ().getConfiguration ().orientation) {
+                    case Configuration.ORIENTATION_PORTRAIT:
 
-                    int mWidthPortraitDp = getResources ().getConfiguration ().screenWidthDp >= 600 ? 1 : 0;
-                    switch (mWidthPortraitDp) {
-                        case 1:
-                            mRv.setLayoutManager (new GridLayoutManager (getApplicationContext (), 3));
-                            break;
-                        default:
-                            mRv.setLayoutManager (new GridLayoutManager (getApplicationContext (), 2));
-                    }
-                    break;
+                        int mWidthPortraitDp = getResources ().getConfiguration ().screenWidthDp >= 600 ? 1 : 0;
+                        switch (mWidthPortraitDp) {
+                            case 1:
+                                mRv.setLayoutManager (new GridLayoutManager (getApplicationContext (), 3));
+                                break;
+                            case 0:
+                                mRv.setLayoutManager (new GridLayoutManager (getApplicationContext (), 2));
+                                break;
+                        }
+                        break;
 
-                case Configuration.ORIENTATION_LANDSCAPE:
+                    case Configuration.ORIENTATION_LANDSCAPE:
 
-                    int mWidthLandscapeDp = getResources ().getConfiguration ().screenWidthDp >= 921 ? 1 : 0;
-                    switch (mWidthLandscapeDp) {
-                        case 1:
-                            mRv.setLayoutManager (new GridLayoutManager (getApplicationContext (), 5));
-                            break;
-                        default:
-                            mRv.setLayoutManager (new GridLayoutManager (getApplicationContext (), 4));
-                    }
+                        int mWidthLandscapeDp = getResources ().getConfiguration ().screenWidthDp >= 921 ? 1 : 0;
+                        switch (mWidthLandscapeDp) {
+                            case 1:
+                                mRv.setLayoutManager (new GridLayoutManager (getApplicationContext (), 5));
+                                break;
+                            case 0:
+                                mRv.setLayoutManager (new GridLayoutManager (getApplicationContext (), 4));
+                                break;
+                        }
+                        break;
 
-                default:
-                    mRv.setLayoutManager (new GridLayoutManager (getApplicationContext (), 2));
-                    break;
-            }
+                    default:
+                        break;
+                }
 
-            mRv.setAdapter (myAdapter);
+                mRv.setAdapter (myAdapter);
             }
         });
     }
