@@ -1,6 +1,7 @@
 package com.example.andrespiraquive.recettes.Models;
 
-import android.graphics.Point;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Recipes {
 
@@ -13,9 +14,11 @@ public class Recipes {
     private String position;
     private String document;
     //private byte[] images;
-
-
     private String test;
+    private List<Recipes> mRecipes = new ArrayList<>();
+
+    public Recipes() {
+    }
 
     public Recipes(String imageId, String title, String ingredients, String description, String preparations, double note, String position, String document) {
         this.imageId = imageId;
@@ -125,4 +128,5 @@ public class Recipes {
     public void setDocument(String document) {
         this.document = document;
     }
+
 }

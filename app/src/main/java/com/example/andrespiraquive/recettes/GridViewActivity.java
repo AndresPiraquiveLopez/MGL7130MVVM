@@ -26,21 +26,9 @@ import java.util.List;
 
 public class GridViewActivity extends AppCompatActivity {
 
-    private static final String IMAGE_KEY = "image";
-    private static final String TITLE_KEY = "title";
-    private static final String NOTE_KEY = "note";
-    private static final String DESCRIPTION_KEY = "description";
-    private static final String INGREDIENTS_KEY = "ingredients";
-    private static final String PREPARATIONS_KEY = "preparations";
-    private static final String POSITION_KEY = "position";
-
-    private RecyclerView recyclerView;
-
-    private GridViewAdapter adapter;
-
     List<Recipes> mRecipe;
 
-    FirebaseFirestore db;
+    GridViewModel mGridViewModel = new GridViewModel();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -49,45 +37,45 @@ public class GridViewActivity extends AppCompatActivity {
 
         mRecipe = new ArrayList<> ();
 
-        //Data from firestore
-        GridViewModel model = new GridViewModel ();
-        List<Recipes> mRecipes = model.getRecipes ();
+        mGridViewModel.getAllRecipes(new GridViewModel.FirestoreCallback() {
+            @Override
+            public void onCallback(List<Recipes> listRecipes) {
 
+            RecyclerView mRv = findViewById (R.id.recycle_view_id);
+            GridViewAdapter myAdapter = new GridViewAdapter (listRecipes, getApplicationContext (), false);
 
-        RecyclerView mRv = findViewById (R.id.recycle_view_id);
-        GridViewAdapter myAdapter = new GridViewAdapter (mRecipes, getApplicationContext (), false);
+            switch (getResources ().getConfiguration ().orientation) {
+                case Configuration.ORIENTATION_PORTRAIT:
 
-        switch (getResources ().getConfiguration ().orientation) {
-            case Configuration.ORIENTATION_PORTRAIT:
+                    int mWidthPortraitDp = getResources ().getConfiguration ().screenWidthDp >= 600 ? 1 : 0;
+                    switch (mWidthPortraitDp) {
+                        case 1:
+                            mRv.setLayoutManager (new GridLayoutManager (getApplicationContext (), 3));
+                            break;
+                        default:
+                            mRv.setLayoutManager (new GridLayoutManager (getApplicationContext (), 2));
+                    }
+                    break;
 
-                int mWidthPortraitDp = getResources ().getConfiguration ().screenWidthDp >= 600 ? 1 : 0;
-                switch (mWidthPortraitDp) {
-                    case 1:
-                        mRv.setLayoutManager (new GridLayoutManager (getApplicationContext (), 3));
-                        break;
-                    default:
-                        mRv.setLayoutManager (new GridLayoutManager (getApplicationContext (), 2));
-                }
-                break;
+                case Configuration.ORIENTATION_LANDSCAPE:
 
-            case Configuration.ORIENTATION_LANDSCAPE:
+                    int mWidthLandscapeDp = getResources ().getConfiguration ().screenWidthDp >= 921 ? 1 : 0;
+                    switch (mWidthLandscapeDp) {
+                        case 1:
+                            mRv.setLayoutManager (new GridLayoutManager (getApplicationContext (), 5));
+                            break;
+                        default:
+                            mRv.setLayoutManager (new GridLayoutManager (getApplicationContext (), 4));
+                    }
 
-                int mWidthLandscapeDp = getResources ().getConfiguration ().screenWidthDp >= 921 ? 1 : 0;
-                switch (mWidthLandscapeDp) {
-                    case 1:
-                        mRv.setLayoutManager (new GridLayoutManager (getApplicationContext (), 5));
-                        break;
-                    default:
-                        mRv.setLayoutManager (new GridLayoutManager (getApplicationContext (), 4));
-                }
+                default:
+                    mRv.setLayoutManager (new GridLayoutManager (getApplicationContext (), 2));
+                    break;
+            }
 
-            default:
-                mRv.setLayoutManager (new GridLayoutManager (getApplicationContext (), 2));
-                break;
-        }
-
-        mRv.setAdapter (myAdapter);
-
+            mRv.setAdapter (myAdapter);
+            }
+        });
     }
 
     @Override
