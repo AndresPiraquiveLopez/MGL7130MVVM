@@ -27,12 +27,12 @@ import java.io.ByteArrayOutputStream;
 public class RecipeActivity extends AppCompatActivity {
 
     private TextView tvtitle, tvdescription, tvingredient, tvpreparation;
-    private ImageView img;
+    private ImageView img, modifyImg, deleteImg;
     private RatingBar note;
     private RatingBar ratingBar;
-    FirebaseFirestore db;
-    ImageButton btnAImage;
-    DataBase baseRecette;
+    private FirebaseFirestore db;
+    private ImageButton btnAImage;
+    private DataBase baseRecette;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +48,8 @@ public class RecipeActivity extends AppCompatActivity {
         tvingredient = (TextView) findViewById (R.id.recipe_details_ingredient_id);
         tvpreparation = (TextView) findViewById (R.id.recipe_details_preparation_id);
         btnAImage=(ImageButton )findViewById(R.id.btnImage);
+        modifyImg=findViewById(R.id.modifyImageId);
+        deleteImg=findViewById(R.id.deleteImageId);
 
         Picasso.get ()
                 .load ("https://firebasestorage.googleapis.com/v0/b/recettes-bb215.appspot.com/o/image_plat_base_free.jpg?alt=media&token=29c46ebf-a107-45f8-9957-25b103108dd1")
@@ -55,13 +57,13 @@ public class RecipeActivity extends AppCompatActivity {
 
         //Recieve data
         Intent intent = getIntent ();
-        boolean IsFavorie =intent.getExtras ().getBoolean ("isFavorie");
-        String Title = intent.getExtras ().getString ("Title");
-        double Note = intent.getExtras ().getDouble ("Note");
-        String Description = intent.getExtras ().getString ("Description");
-        String Ingredient = intent.getExtras ().getString ("Ingredient");
-        String Preparation = intent.getExtras ().getString ("Preparation");
-        String Document = intent.getExtras ().getString ("Document");
+        final boolean IsFavorie =intent.getExtras ().getBoolean ("isFavorie");
+        final String Title = intent.getExtras ().getString ("Title");
+        final double Note = intent.getExtras ().getDouble ("Note");
+        final String Description = intent.getExtras ().getString ("Description");
+        final String Ingredient = intent.getExtras ().getString ("Ingredient");
+        final String Preparation = intent.getExtras ().getString ("Preparation");
+        final String Document = intent.getExtras ().getString ("Document");
 
 
         //settings values
@@ -79,6 +81,20 @@ public class RecipeActivity extends AppCompatActivity {
             note.setEnabled (false);
             btnAImage.setEnabled (false);
         }
+
+        modifyImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(RecipeActivity.this, ModifyRecipeActivity.class);
+                intent.setFlags (Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.putExtra("Title",Title);
+                intent.putExtra("Description",Description);
+                intent.putExtra("Ingredient",Ingredient);
+                intent.putExtra("Preparation",Preparation);
+                intent.putExtra("DocumentId", Document);
+                startActivity(intent);
+            }
+        });
     }
 
     public void addListenerOnRatingBar(final String documentId) {
@@ -95,7 +111,6 @@ public class RecipeActivity extends AppCompatActivity {
 
     public void AjoutBaseDonnees()
     {
-
         btnAImage.setOnClickListener(
                 new View.OnClickListener() {
                     @Override

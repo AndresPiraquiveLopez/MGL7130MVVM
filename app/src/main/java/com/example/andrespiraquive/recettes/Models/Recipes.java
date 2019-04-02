@@ -49,9 +49,8 @@ public class Recipes {
         this.preparations = preparations;
     }
 
-    public Recipes(String title, String ingredients, String description, String preparations, String position) {
+    public Recipes(String title, String ingredients, String description, String preparations) {
         this.title = title;
-        this.position = position;
         this.ingredients = ingredients;
         this.description = description;
         this.preparations = preparations;
