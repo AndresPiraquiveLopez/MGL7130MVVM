@@ -62,7 +62,7 @@ public class ModifyRecipeActivity extends AppCompatActivity {
             public void onClick(View v) {
                 // Code here executes on main thread after user presses button
 
-                updateRecipe (DocumentId, titre.getText().toString());
+                updateRecipe(DocumentId, titre.getText().toString());
             }
         });
 
@@ -82,10 +82,9 @@ public class ModifyRecipeActivity extends AppCompatActivity {
                     public void onSuccess(Void aVoid) {
                         Toast.makeText (ModifyRecipeActivity.this, "Recipe Updated",
                                 Toast.LENGTH_SHORT).show ();
-
-                        Intent intent = new Intent (ModifyRecipeActivity.this, RecipeActivity.class);
-                        startActivity (intent);
-                        finish ();
+                        //Intent intent = new Intent (ModifyRecipeActivity.this, RecipeActivity.class);
+                        //startActivity (intent);
+                        //finish ();
                     }
                 })
                 .addOnFailureListener (new OnFailureListener() {
