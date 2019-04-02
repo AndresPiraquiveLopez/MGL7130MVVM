@@ -15,6 +15,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.andrespiraquive.recettes.Data.Database.DataBase;
+import com.example.andrespiraquive.recettes.Models.Recipes;
+import com.example.andrespiraquive.recettes.ViewModels.RecipeViewModel;
 import com.example.andrespiraquive.recettes.Views.MainActivity;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -23,6 +25,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.squareup.picasso.Picasso;
 
 import java.io.ByteArrayOutputStream;
+import java.util.List;
 
 public class RecipeActivity extends AppCompatActivity {
 
@@ -33,6 +36,7 @@ public class RecipeActivity extends AppCompatActivity {
     private FirebaseFirestore db;
     private ImageButton btnAImage;
     private DataBase baseRecette;
+    private RecipeViewModel recipeViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +54,7 @@ public class RecipeActivity extends AppCompatActivity {
         btnAImage=(ImageButton )findViewById(R.id.btnImage);
         modifyImg=findViewById(R.id.modifyImageId);
         deleteImg=findViewById(R.id.deleteImageId);
+        recipeViewModel = new RecipeViewModel();
 
         Picasso.get ()
                 .load ("https://firebasestorage.googleapis.com/v0/b/recettes-bb215.appspot.com/o/image_plat_base_free.jpg?alt=media&token=29c46ebf-a107-45f8-9957-25b103108dd1")
@@ -58,12 +63,21 @@ public class RecipeActivity extends AppCompatActivity {
         //Recieve data
         Intent intent = getIntent ();
         final boolean IsFavorie =intent.getExtras ().getBoolean ("isFavorie");
-        final String Title = intent.getExtras ().getString ("Title");
-        final double Note = intent.getExtras ().getDouble ("Note");
-        final String Description = intent.getExtras ().getString ("Description");
-        final String Ingredient = intent.getExtras ().getString ("Ingredient");
-        final String Preparation = intent.getExtras ().getString ("Preparation");
+        //final String Title = intent.getExtras ().getString ("Title");
+        //final double Note = intent.getExtras ().getDouble ("Note");
+        //final String Description = intent.getExtras ().getString ("Description");
+        //final String Ingredient = intent.getExtras ().getString ("Ingredient");
+        //final String Preparation = intent.getExtras ().getString ("Preparation");
         final String Document = intent.getExtras ().getString ("Document");
+        recipeViewModel.getRecipes(new RecipeViewModel.FirestoreCallback() {
+            @Override
+            public void onCallback(Recipes mRecipes) {
+                final String Title = mRecipes.getTitle();
+                final double Note = mRecipes.getNote();
+                final String Description = mRecipes.getDescription();
+                final String Ingredient = mRecipes.getIngredients();
+                final String Preparation = mRecipes.getPreparations();
+
 
 
         //settings values
@@ -95,6 +109,8 @@ public class RecipeActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        }
+    },Document);
     }
 
     public void addListenerOnRatingBar(final String documentId) {

@@ -82,9 +82,9 @@ public class ModifyRecipeActivity extends AppCompatActivity {
                     public void onSuccess(Void aVoid) {
                         Toast.makeText (ModifyRecipeActivity.this, "Recipe Updated",
                                 Toast.LENGTH_SHORT).show ();
-                        //Intent intent = new Intent (ModifyRecipeActivity.this, RecipeActivity.class);
-                        //startActivity (intent);
-                        //finish ();
+                        Intent intent = new Intent (ModifyRecipeActivity.this, RecipeActivity.class);
+                        startActivity (intent);
+                        finish ();
                     }
                 })
                 .addOnFailureListener (new OnFailureListener() {
