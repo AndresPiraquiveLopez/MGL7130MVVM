@@ -85,42 +85,37 @@ public class favorisActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId () == R.id.list_recipes) {
-            Intent listRecipes = new Intent (getApplicationContext (), GridViewActivity.class);
-            startActivity (listRecipes);
-            finish ();
+        switch (item.getItemId()){
+            case R.id.list_recipes:
+                Intent listRecipes = new Intent (getApplicationContext (), GridViewActivity.class);
+                startActivity (listRecipes);
+                finish ();
+                return true;
+            case R.id.add_recipe:
+                Intent addRecipe = new Intent (getApplicationContext (), AddRecipeActivity.class);
+                startActivity (addRecipe);
+                finish ();
+                return true;
+            case R.id.search_recipe:
+                Intent searchActivity = new Intent (getApplicationContext (), SearchActivity.class);
+                startActivity (searchActivity);
+                finish ();
+                return true;
+            case R.id.user_favoris:
+                Intent Recipes_list = new Intent(getApplicationContext(), favorisActivity.class);
+                startActivity(Recipes_list);
+                finish();
+                return true;
+            case R.id.user_settings:
+                Intent userSettings = new Intent (getApplicationContext (), MainActivity.class);
+                startActivity (userSettings);
+                finish ();
+                return true;
+            default:
+                return super.onOptionsItemSelected (item);
         }
-
-        if (item.getItemId () == R.id.add_recipe) {
-            Intent addRecipe = new Intent (getApplicationContext (), AddRecipeActivity.class);
-            startActivity (addRecipe);
-            finish ();
         }
-        if (item.getItemId () == R.id.search_recipe) {
-            Intent searchActivity = new Intent (getApplicationContext (), SearchActivity.class);
-            startActivity (searchActivity);
-            finish ();
-        }
-        if (item.getItemId () == R.id.user_favoris) {
-
-            Intent Recipes_list = new Intent (getApplicationContext (), favorisActivity.class);
-            startActivity (Recipes_list);
-            finish ();
-        }
-        if (item.getItemId () == R.id.user_settings) {
-            Intent searchActivity = new Intent (getApplicationContext (), MainActivity.class);
-            startActivity (searchActivity);
-            finish ();
-        }
-        if (item.getItemId () == R.id.list_recipes) {
-            Intent recipeActivity = new Intent (getApplicationContext (), GridViewActivity.class);
-            startActivity (recipeActivity);
-            finish ();
-        }
-        return super.onOptionsItemSelected (item);
     }
-
-}
 
 
 

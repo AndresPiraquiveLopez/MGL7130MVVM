@@ -12,6 +12,9 @@
     <string name="title_login">Login</string>
     <string name="error">Error</string>
     <string name="title_recipe">Recipe</string>
+    <string name="title_favorite">Favorite</string>
+    <string name="title_delete">Delete</string>
+    <string name="title_modift">Modify</string>
     <string name="minimum_password">You need to enter minimum 6 characters!</string>
     <string name="auth_failed">Authentication failed, check your email and password</string>
     <string name="Google_API_Key">AIzaSyCpbkohzY-cgJN1zVUhlMfVSFhg7h0vUTo</string>

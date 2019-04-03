@@ -32,7 +32,12 @@
             android:label="@string/title_add_recipe" />
         <activity
             android:name=".SearchActivity"
-            android:label="@string/title_search_recipe" />
+            android:label="@string/title_search_recipe"
+            android:parentActivityName=".GridViewActivity"/>
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".GridViewActivity" />
+
         <activity
             android:name=".RecipeActivity"
             android:label="@string/title_recipe" />

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/action_delete"
+        android:icon="@drawable/trash_white_256"
+        android:title="@string/title_delete"
+        app:showAsAction="ifRoom"/>
+
+    <item
+        android:id="@+id/action_modify"
+        android:icon="@drawable/pencil_white_192x192"
+        android:title="@string/title_delete"
+        app:showAsAction="ifRoom"/>
+
+    <item
+        android:id="@+id/list_recipes"
+        android:title="@string/title_list_recipes" />
+
+    <item
+        android:id="@+id/add_recipe"
+        android:title="@string/title_add_recipe" />
+    <item
+        android:id="@+id/user_favoris"
+        android:title="Favoris" />
+    <item
+        android:id="@+id/search_recipe"
+        android:title="@string/title_search_recipe" />
+
+    <item
+        android:id="@+id/user_settings"
+        android:title="@string/title_user_settings" />
+
+
+</menu>
