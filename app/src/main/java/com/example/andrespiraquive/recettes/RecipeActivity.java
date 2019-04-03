@@ -1,9 +1,11 @@
 package com.example.andrespiraquive.recettes;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -152,11 +154,11 @@ public class RecipeActivity extends AppCompatActivity {
                                 btnImageFavorite.setImageResource(R.drawable.favorite_yes);
 
                         if(isInserted==true) {
-                            Toast.makeText(RecipeActivity.this, "Sauvegarde effectuée!!", Toast.LENGTH_LONG).show();
+                            Toast.makeText(RecipeActivity.this, "" + Title + " has been add to your Favorites!!", Toast.LENGTH_SHORT).show();
 
                         }
                         else
-                            Toast.makeText(RecipeActivity.this , "Sauvegarde non effectuée!", Toast.LENGTH_LONG).show();
+                            Toast.makeText(RecipeActivity.this , "Not saved to your Favorites!", Toast.LENGTH_SHORT).show();
                     }
                 }
 
@@ -188,6 +190,29 @@ public class RecipeActivity extends AppCompatActivity {
         return null;
     }
 
+    public void deleteRecipe(final String DocumentId, final String Title){
+        AlertDialog.Builder alertDeleteRecipe = new AlertDialog.Builder(this);
+        alertDeleteRecipe.setTitle("Confirmation delete !");
+        alertDeleteRecipe.setMessage("You are about to delete the recipe named : " + Title + ". Do you really want to proceed?");
+        alertDeleteRecipe.setCancelable(false);
+        alertDeleteRecipe.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                db.collection("Recipes").document(DocumentId).delete();
+                Intent intentGridViewActivity = new Intent(RecipeActivity.this, GridViewActivity.class);
+                startActivity(intentGridViewActivity);
+                Toast.makeText(getApplicationContext(), "" + Title + " Has been deleted", Toast.LENGTH_SHORT).show();
+            }
+        });
+        alertDeleteRecipe.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                Toast.makeText(getApplicationContext(), "Nothing has changed!!!", Toast.LENGTH_SHORT).show();
+            }
+        });
+        alertDeleteRecipe.show();
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater ().inflate (R.menu.recipe_menu, menu);
@@ -198,18 +223,19 @@ public class RecipeActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case R.id.action_delete:
-
+                deleteRecipe(Document,Title);
                 return true;
             case R.id.action_modify:
-                Intent intent = new Intent(RecipeActivity.this, ModifyRecipeActivity.class);
-                intent.setFlags (Intent.FLAG_ACTIVITY_NEW_TASK);
-                intent.putExtra("Title",Title);
-                intent.putExtra("Description",Description);
-                intent.putExtra("Ingredient",Ingredient);
-                intent.putExtra("Preparation",Preparation);
-                intent.putExtra("DocumentId", Document);
-                intent.putExtra("isFavorie", IsFavorie);
-                startActivity(intent);
+                Intent intentModifyViewActivity = new Intent(RecipeActivity.this, ModifyRecipeActivity.class);
+                intentModifyViewActivity.setFlags (Intent.FLAG_ACTIVITY_NEW_TASK);
+                intentModifyViewActivity.putExtra("Title",Title);
+                intentModifyViewActivity.putExtra("Description",Description);
+                intentModifyViewActivity.putExtra("Ingredient",Ingredient);
+                intentModifyViewActivity.putExtra("Preparation",Preparation);
+                intentModifyViewActivity.putExtra("DocumentId", Document);
+                intentModifyViewActivity.putExtra("isFavorie", IsFavorie);
+                startActivity(intentModifyViewActivity);
+                finish();
                 return true;
             case R.id.list_recipes:
                 Intent listRecipes = new Intent (getApplicationContext (), GridViewActivity.class);
