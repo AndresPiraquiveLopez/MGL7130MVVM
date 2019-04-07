@@ -79,5 +79,12 @@ public class DataBase extends SQLiteOpenHelper {
         return res;
 
     }
+    public Cursor geDataById(int id){
+
+        SQLiteDatabase db=this.getWritableDatabase();
+        Cursor res=db.rawQuery("select * from " + Table_Name + " where ID = " + id, null);
+        return res;
+
+    }
 }
 

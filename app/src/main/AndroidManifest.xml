@@ -2,6 +2,13 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.andrespiraquive.recettes">
 
+    <uses-permission android:name="android.permission.CAMERA"></uses-permission>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+                        android:maxSdkVersion="18"></uses-permission>
+    <uses-feature android:name="android.hardware.camera"
+                  android:required="true">
+    </uses-feature>
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/icone_recipes"
@@ -47,6 +54,15 @@
         <activity
             android:name=".favorisActivity"
             android:label="Favoris" />
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="com.example.andrespiraquive.recettes.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths"></meta-data>
+        </provider>
     </application>
 
 </manifest>

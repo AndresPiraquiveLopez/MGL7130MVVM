@@ -1,7 +1,13 @@
 package com.example.andrespiraquive.recettes;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
+import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -10,14 +16,29 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.andrespiraquive.recettes.Models.Recipes;
 import com.example.andrespiraquive.recettes.Views.MainActivity;
+import com.google.android.gms.tasks.Continuation;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class AddRecipeActivity extends AppCompatActivity {
 
@@ -27,11 +48,17 @@ public class AddRecipeActivity extends AppCompatActivity {
     private static final String PREPARATION_KEY = "preparation";
     private static final String POSITION_KEY = "position";
 
-    FirebaseFirestore db;
-    EditText editTitre;
-    EditText editIngredient;
-    EditText editDescription;
-    EditText editPreparation;
+    private static final int REQUEST_IMAGE_CAPTURE = 1;
+
+    private FirebaseFirestore db;
+    private EditText editTitre;
+    private EditText editIngredient;
+    private EditText editDescription;
+    private EditText editPreparation;
+    private ImageView imageRecipe;
+    private String currentPhotoPath;
+    private Uri photoURI;
+    private StorageReference mStorageRef;
 
 
     @Override
@@ -39,11 +66,17 @@ public class AddRecipeActivity extends AppCompatActivity {
         super.onCreate (savedInstanceState);
         setContentView (R.layout.activity_add_recipe);
 
+        // Hide ActionBar
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().hide();
+        }
+
         db = FirebaseFirestore.getInstance ();
         editTitre = findViewById (R.id.titre);
         editIngredient = findViewById (R.id.editIngredient);
         editDescription = findViewById (R.id.editDescription);
         editPreparation = findViewById (R.id.editPreparation);
+        imageRecipe = findViewById(R.id.imageRecipe);
 
 
         final Button buttonSave = findViewById (R.id.saveRecipeButton);
@@ -52,16 +85,127 @@ public class AddRecipeActivity extends AppCompatActivity {
         buttonSave.setOnClickListener (new View.OnClickListener () {
             public void onClick(View v) {
                 // Code here executes on main thread after user presses button
-                addNewRecipe ();
+                uploadImage();
             }
+        });
+        buttonCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent (AddRecipeActivity.this, GridViewActivity.class);
+                startActivity (intent);
+                finish ();
+            }
+        });
+
+        imageRecipe.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dispatchPictureTakerAction();
+            }
+
+
         });
 
     }
 
+    private File createImageFile() throws IOException {
+        // Create an image file name
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String imageFileName = "JPEG_" + timeStamp + "_";
+        File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        File image = File.createTempFile(
+                imageFileName,  /* prefix */
+                ".jpg",         /* suffix */
+                storageDir      /* directory */
+        );
 
-    private void addNewRecipe() {
+        // Save a file: path for use with ACTION_VIEW intents
+        currentPhotoPath = image.getAbsolutePath();
+        return image;
+    }
+    private void dispatchPictureTakerAction() {
+        Intent takePicture = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if(takePicture.resolveActivity(getPackageManager()) != null){
+            //Photo will go in this file
+            File photoFile = null;
+            try {
+                photoFile = createImageFile();
+            } catch (IOException ex) {
+                // Error occurred while creating the File
+                Log.d("CAM_TAG", ex.toString());
+            }
+            // If the File was created
+            if (photoFile != null) {
+                photoURI = FileProvider.getUriForFile(this, "com.example.andrespiraquive.recettes.fileprovider", photoFile);
+                takePicture.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+                startActivityForResult(takePicture, REQUEST_IMAGE_CAPTURE);
+            }
+        }
+    }
 
-        Recipes recetteAjouter = new Recipes ("IMAGE", editTitre.getText ().toString (),
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+            Bitmap imageBitmap = BitmapFactory.decodeFile(currentPhotoPath);
+            imageRecipe.setImageBitmap(imageBitmap);
+        }
+    }
+
+    private String uploadImage(){
+        UploadTask uploadTask;
+        InputStream imageStream = null;
+
+        try {
+            imageStream = getContentResolver().openInputStream(photoURI);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        Bitmap bitmapimage = BitmapFactory.decodeStream(imageStream);
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bitmapimage.compress(Bitmap.CompressFormat.JPEG,30,baos);
+        byte [] bitmapData = baos.toByteArray();
+        try {
+            baos.flush();
+            baos.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+        mStorageRef = FirebaseStorage.getInstance().getReference();
+        final StorageReference ref = mStorageRef.child(photoURI.getLastPathSegment());
+        uploadTask = ref.putBytes(bitmapData);
+
+        Task<Uri> urlTask = uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+            @Override
+            public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+                if (!task.isSuccessful()) {
+                    throw task.getException();
+                }
+
+                // Continue with the task to get the download URL
+                return ref.getDownloadUrl();
+
+            }
+        }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+            @Override
+            public void onComplete(@NonNull Task<Uri> task) {
+                if (task.isSuccessful()) {
+                    Uri downloadUri = task.getResult();
+                    addNewRecipe(downloadUri.toString());
+                } else {
+                    // Handle failures
+                    // ...
+                }
+            }
+        });
+        return mStorageRef.getDownloadUrl().toString();
+    }
+
+    private void addNewRecipe(String urlImageUpload) {
+
+        Recipes recetteAjouter = new Recipes (urlImageUpload, editTitre.getText ().toString (),
                 editIngredient.getText ().toString (), editDescription.getText ().toString (),
                 editPreparation.getText ().toString (), 0.0, "45.462252,-73.437309", "");
 
@@ -72,7 +216,6 @@ public class AddRecipeActivity extends AppCompatActivity {
                     public void onSuccess(Void aVoid) {
                         Toast.makeText (AddRecipeActivity.this, "Recipe Registered",
                                 Toast.LENGTH_SHORT).show ();
-
                         Intent intent = new Intent (AddRecipeActivity.this, GridViewActivity.class);
                         startActivity (intent);
                         finish ();

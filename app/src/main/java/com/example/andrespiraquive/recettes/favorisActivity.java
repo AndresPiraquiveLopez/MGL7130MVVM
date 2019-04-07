@@ -12,13 +12,16 @@ import android.view.MenuItem;
 
 import com.example.andrespiraquive.recettes.Data.Database.DataBase;
 import com.example.andrespiraquive.recettes.Models.Recipes;
+import com.example.andrespiraquive.recettes.ViewModels.FavorisViewModel;
 import com.example.andrespiraquive.recettes.Views.MainActivity;
 
+import java.sql.Blob;
 import java.util.ArrayList;
 
 public class favorisActivity extends AppCompatActivity {
 
-    ArrayList<Recipes> lsRecipe;
+    //ArrayList<Recipes> lsRecipe;
+    ArrayList<FavorisViewModel> lsRecipe;
     DataBase baseRecette;
     RecipesListAdapter adapter = null;
     RecyclerView affichageRecette;
@@ -31,7 +34,9 @@ public class favorisActivity extends AppCompatActivity {
 
 
         baseRecette = new DataBase (this);
+        //lsRecipe = new ArrayList<> ();
         lsRecipe = new ArrayList<> ();
+
 
         affichageRecette = findViewById (R.id.favorite_recycle_view);
 
@@ -44,7 +49,8 @@ public class favorisActivity extends AppCompatActivity {
             StringBuffer buffer = new StringBuffer ();
             while (res.moveToNext ()) {
                 int id = res.getInt (0);
-                String imageID = "Image";
+                byte[] imageID = res.getBlob(5);
+                //String imageID = "IMAGE";
                 String title = res.getString (1);
                 String preparation = res.getString (2);
                 String ingredient = res.getString (3);
@@ -52,14 +58,14 @@ public class favorisActivity extends AppCompatActivity {
                 String note = String.valueOf (res.getDouble (6));
                 String position = "45.462252,-73.437309";
 
-                lsRecipe.add (new Recipes (imageID, title, ingredient, description, preparation, note, position));
-
+                //lsRecipe.add (new Recipes (imageID, title, ingredient, description, preparation, note, position));
+                lsRecipe.add (new FavorisViewModel (id, imageID, title, ingredient, description, preparation, note, position));
 
             }
         }
 
         RecyclerView resultSearchView = affichageRecette;
-        GridViewAdapter myAdapter = new GridViewAdapter (lsRecipe, getApplicationContext (),true);
+        GridViewAdapter myAdapter = new GridViewAdapter (lsRecipe, getApplicationContext ());
         resultSearchView.setLayoutManager (new GridLayoutManager (getApplicationContext (), 2));
         resultSearchView.setAdapter (myAdapter);
 

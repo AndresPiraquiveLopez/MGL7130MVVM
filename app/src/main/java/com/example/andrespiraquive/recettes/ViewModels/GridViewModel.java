@@ -46,7 +46,6 @@ public class GridViewModel extends ViewModel{
                                         document.get (DESCRIPTION_KEY).toString (), document.get (PREPARATIONS_KEY).toString (),
                                         (double) document.get (NOTE_KEY), document.get (POSITION_KEY).toString (), document.getId ()));
                             }
-                            Log.d("TAG", "mRecipes IN= " + mRecipes.size());
                             firestoreCallback.onCallback(mRecipes);
 
                         } else {

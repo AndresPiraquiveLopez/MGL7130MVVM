@@ -2,11 +2,14 @@ package com.example.andrespiraquive.recettes;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -38,6 +41,8 @@ public class RecipeActivity extends AppCompatActivity {
     private DataBase baseRecette;
     private RecipeViewModel recipeViewModel;
 
+    private int Id;
+    private byte[] ImageId;
     private String Title;
     private double Note;
     private String Description;
@@ -62,26 +67,31 @@ public class RecipeActivity extends AppCompatActivity {
         btnImageFavorite = findViewById(R.id.btn_image_favorite_id);
         recipeViewModel = new RecipeViewModel();
 
-        Picasso.get()
-                .load("https://firebasestorage.googleapis.com/v0/b/recettes-bb215.appspot.com/o/image_plat_base_free.jpg?alt=media&token=29c46ebf-a107-45f8-9957-25b103108dd1")
-                .into(img);
-
         //Recieve data
         Intent intent = getIntent();
         IsFavorie = intent.getExtras().getBoolean("isFavorie");
+        //ImageId = intent.getExtras().getByteArray("ImageId");
         //final String Title = intent.getExtras ().getString ("Title");
         //final double Note = intent.getExtras ().getDouble ("Note");
         //final String Description = intent.getExtras ().getString ("Description");
         //final String Ingredient = intent.getExtras ().getString ("Ingredient");
         //final String Preparation = intent.getExtras ().getString ("Preparation");
         Document = intent.getExtras().getString("Document");
+        Log.d("TAG : ", "DOCUMENT======= " + Document);
         if (Document == null) {
+            Id = intent.getExtras().getInt("Id");
             Title = intent.getExtras().getString("Title");
             Note = intent.getExtras().getDouble("Note");
             Description = intent.getExtras().getString("Description");
             Ingredient = intent.getExtras().getString("Ingredient");
             Preparation = intent.getExtras().getString("Preparation");
 
+            Cursor recipeFavorite = baseRecette.geDataById(Id);
+            if(recipeFavorite.getCount() == 1){
+                recipeFavorite.moveToFirst();
+                ImageId = recipeFavorite.getBlob(5);
+                img.setImageBitmap(BitmapFactory.decodeByteArray(ImageId, 0, ImageId.length));
+            }
             //settings values
             tvtitle.setText(Title);
             note.setRating((float) Note);
@@ -109,6 +119,9 @@ public class RecipeActivity extends AppCompatActivity {
                     Preparation = mRecipes.getPreparations();
 
                     //settings values
+                    Picasso.get()
+                            .load(mRecipes.getImage())
+                            .into(img);
                     tvtitle.setText(Title);
                     note.setRating((float) Note);
                     tvdescription.setText(Description);

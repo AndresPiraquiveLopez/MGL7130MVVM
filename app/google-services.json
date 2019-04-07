@@ -23,8 +23,12 @@
           }
         },
         {
-          "client_id": "401406389889-1vhjiquf0uvb9dkkm4ibk049rrbqcsrp.apps.googleusercontent.com",
-          "client_type": 3
+          "client_id": "401406389889-mpc98112tsgjma7uvau9fn171kfo3qg1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.andrespiraquive.recettes",
+            "certificate_hash": "ae0e5cb013d7f427f1e4d77d84568de0711d7eb1"
+          }
         }
       ],
       "api_key": [
@@ -33,20 +37,13 @@
         }
       ],
       "services": {
-        "analytics_service": {
-          "status": 1
-        },
         "appinvite_service": {
-          "status": 2,
           "other_platform_oauth_client": [
             {
               "client_id": "401406389889-1vhjiquf0uvb9dkkm4ibk049rrbqcsrp.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
-        },
-        "ads_service": {
-          "status": 2
         }
       }
     },
@@ -57,27 +54,20 @@
           "package_name": "recettes.uqam.com"
         }
       },
-      "oauth_client": [
-        {
-          "client_id": "401406389889-1vhjiquf0uvb9dkkm4ibk049rrbqcsrp.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
+      "oauth_client": [],
       "api_key": [
         {
           "current_key": "AIzaSyCpbkohzY-cgJN1zVUhlMfVSFhg7h0vUTo"
         }
       ],
       "services": {
-        "analytics_service": {
-          "status": 1
-        },
         "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
-        },
-        "ads_service": {
-          "status": 2
+          "other_platform_oauth_client": [
+            {
+              "client_id": "401406389889-1vhjiquf0uvb9dkkm4ibk049rrbqcsrp.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }
