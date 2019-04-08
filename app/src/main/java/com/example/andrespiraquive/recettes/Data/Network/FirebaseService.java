@@ -2,8 +2,9 @@ package com.example.andrespiraquive.recettes.Data.Network;
 
 import com.google.firebase.firestore.FirebaseFirestore;
 
-public class FirebaseService {
-    FirebaseFirestore _db;
+public class FirebaseService implements IFirebaseService{
+
+    private FirebaseFirestore _db;
 
     public FirebaseService(){
     }
@@ -12,7 +13,6 @@ public class FirebaseService {
         _db =  FirebaseFirestore.getInstance ();
         return _db;
     }
-
 
 }
 

@@ -20,11 +20,10 @@ import java.util.ArrayList;
 
 public class favorisActivity extends AppCompatActivity {
 
-    //ArrayList<Recipes> lsRecipe;
-    ArrayList<FavorisViewModel> lsRecipe;
-    DataBase baseRecette;
-    RecipesListAdapter adapter = null;
-    RecyclerView affichageRecette;
+    private ArrayList<FavorisViewModel> lsRecipe;
+    private DataBase baseRecette;
+    private RecipesListAdapter adapter = null;
+    private RecyclerView affichageRecette;
 
 
     @Override

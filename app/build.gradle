@@ -31,7 +31,10 @@ dependencies {
     implementation 'com.google.firebase:firebase-firestore:17.1.0'
     implementation 'com.squareup.picasso:picasso:2.71828'
     implementation 'com.google.firebase:firebase-storage:16.0.1'
-    testImplementation 'junit:junit:4.12'
+    testCompile 'junit:junit:4.12'
+    testCompile 'org.powermock:powermock:1.6.5'
+    testCompile 'org.powermock:powermock-module-junit4:1.6.5'
+    testCompile 'org.powermock:powermock-api-mockito:1.6.5'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     implementation 'com.google.android.gms:play-services-auth:15.0.0'
@@ -41,6 +44,7 @@ dependencies {
     def lifecycle_version = "1.1.1"
     implementation 'android.arch.lifecycle:extensions:1.1.1'
     annotationProcessor "android.arch.lifecycle:compiler:$lifecycle_version"
+    androidTestImplementation 'com.android.support.test:rules:1.0.2'
 
 }
 apply plugin: 'com.google.gms.google-services'

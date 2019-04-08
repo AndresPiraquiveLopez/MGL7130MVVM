@@ -17,6 +17,9 @@ public class GridViewModel extends ViewModel{
 
     private List<Recipes> mRecipes = new ArrayList<>();
 
+    public GridViewModel() {
+    }
+
     public void getAllRecipes(final FirestoreCallback firestoreCallback){
 
         final String IMAGE_KEY = "image";
