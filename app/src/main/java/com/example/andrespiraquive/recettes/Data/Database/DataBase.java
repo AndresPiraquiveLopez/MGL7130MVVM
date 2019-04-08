@@ -86,5 +86,13 @@ public class DataBase extends SQLiteOpenHelper {
         return res;
 
     }
+
+    public Integer  deleteData(String Titre)
+    {
+        SQLiteDatabase db=this.getWritableDatabase();
+
+        return  db.delete(Table_Name, "Titre = ?", new String[] {Titre});
+
+    }
 }
 

@@ -102,11 +102,12 @@ public class RecipeActivity extends AppCompatActivity {
             if (!IsFavorie) {
                 btnImageFavorite.setImageResource(R.drawable.favorite_no);
                 addListenerOnRatingBar(Document);
-                AjoutBaseDonnees();
+                FavoriteManager();
             } else {
                 btnImageFavorite.setImageResource(R.drawable.favorite_yes);
                 note.setEnabled(false);
-                btnImageFavorite.setEnabled(false);
+                FavoriteManager();
+                //btnImageFavorite.setEnabled(false);
             }
         } else {
             recipeViewModel.getRecipes(new RecipeViewModel.FirestoreCallback() {
@@ -131,11 +132,12 @@ public class RecipeActivity extends AppCompatActivity {
                     if (!IsFavorie) {
                         btnImageFavorite.setImageResource(R.drawable.favorite_no);
                         addListenerOnRatingBar(Document);
-                        AjoutBaseDonnees();
+                        FavoriteManager();
                     } else {
                         btnImageFavorite.setImageResource(R.drawable.favorite_yes);
                         note.setEnabled(false);
-                        btnImageFavorite.setEnabled(false);
+                        FavoriteManager();
+                        //btnImageFavorite.setEnabled(false);
                     }
                 }
             }, Document);
@@ -154,12 +156,29 @@ public class RecipeActivity extends AppCompatActivity {
         });
     }
 
+
+    public void FavoriteManager(){
+        btnImageFavorite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!IsFavorie) {
+                    Log.d("TAG isFavorite = ","NO");
+                    AjoutBaseDonnees();
+                }
+                else {
+                    Log.d("TAG isFavorite = ","YES");
+                    SupprimerBaseDonnées();
+                }
+            }
+        });
+    }
+
     public void AjoutBaseDonnees()
     {
-        btnImageFavorite.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
+        //btnImageFavorite.setOnClickListener(
+                //new View.OnClickListener() {
+                    //@Override
+                    //public void onClick(View v) {
                         boolean isInserted=baseRecette.insertData(tvtitle.getText().toString(),
                                 tvingredient.getText().toString(),
                                 tvpreparation.getText().toString(),tvdescription.getText().toString(),
@@ -172,12 +191,31 @@ public class RecipeActivity extends AppCompatActivity {
                         }
                         else
                             Toast.makeText(RecipeActivity.this , "Not saved to your Favorites!", Toast.LENGTH_SHORT).show();
-                    }
-                }
-
-        );
+                   // }
+                //}
+       // );
 
     }
+
+    private void SupprimerBaseDonnées() {
+
+        //btnImageFavorite.setOnClickListener(new View.OnClickListener() {
+            //@Override
+            //public void onClick(View view) {
+                int deleteRows = baseRecette.deleteData(tvtitle.getText().toString());
+                if (deleteRows > 0) {
+                    btnImageFavorite.setImageResource(R.drawable.favorite_no);
+                    Toast.makeText(RecipeActivity.this, "Recipe has been deleted from your favorites!!", Toast.LENGTH_LONG).show();
+                    Intent Recipes_list = new Intent(getApplicationContext(), favorisActivity.class);
+                    startActivity(Recipes_list);
+                    finish();
+                } else
+                    Toast.makeText(RecipeActivity.this, "The recipe does not exist in your favorites!!", Toast.LENGTH_LONG).show();
+
+           // }
+        //});
+    }
+
     private byte[] imageViewToByte(ImageView image)
     {
         Bitmap bitmap=((BitmapDrawable)image.getDrawable()).getBitmap();
