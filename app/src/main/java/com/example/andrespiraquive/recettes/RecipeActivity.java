@@ -13,7 +13,6 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -21,7 +20,7 @@ import android.widget.Toast;
 
 import com.example.andrespiraquive.recettes.Data.Database.DataBase;
 import com.example.andrespiraquive.recettes.Models.Recipes;
-import com.example.andrespiraquive.recettes.ViewModels.RecipeViewModel;
+import com.example.andrespiraquive.recettes.Presenter.RecipePresenter;
 import com.example.andrespiraquive.recettes.Views.MainActivity;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -39,7 +38,7 @@ public class RecipeActivity extends AppCompatActivity {
     private RatingBar ratingBar;
     private FirebaseFirestore db;
     private DataBase baseRecette;
-    private RecipeViewModel recipeViewModel;
+    private RecipePresenter recipePresenter;
 
     private int Id;
     private byte[] ImageId;
@@ -65,7 +64,7 @@ public class RecipeActivity extends AppCompatActivity {
         tvingredient = (TextView) findViewById(R.id.recipe_details_ingredient_id);
         tvpreparation = (TextView) findViewById(R.id.recipe_details_preparation_id);
         btnImageFavorite = findViewById(R.id.btn_image_favorite_id);
-        recipeViewModel = new RecipeViewModel();
+        recipePresenter = new RecipePresenter ();
 
         //Recieve data
         Intent intent = getIntent();
@@ -110,7 +109,7 @@ public class RecipeActivity extends AppCompatActivity {
                 //btnImageFavorite.setEnabled(false);
             }
         } else {
-            recipeViewModel.getRecipes(new RecipeViewModel.FirestoreCallback() {
+            recipePresenter.getRecipes(new RecipePresenter.FirestoreCallback() {
                 @Override
                 public void onCallback(Recipes mRecipes) {
                     Title = mRecipes.getTitle();

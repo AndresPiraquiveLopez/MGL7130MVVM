@@ -14,7 +14,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import com.example.andrespiraquive.recettes.Models.Recipes;
-import com.example.andrespiraquive.recettes.ViewModels.SearchViewModel;
+import com.example.andrespiraquive.recettes.Presenter.SearchPresenter;
 import com.example.andrespiraquive.recettes.Views.MainActivity;
 import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.List;
@@ -24,7 +24,7 @@ public class SearchActivity extends AppCompatActivity {
     FirebaseFirestore db;
     RecyclerView affichageRecette;
     EditText searchLine;
-    SearchViewModel mSearchViewModel = new SearchViewModel();
+    SearchPresenter mSearchPresenter = new SearchPresenter ();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +39,7 @@ public class SearchActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 // Code here executes on main thread after user presses button
-                mSearchViewModel.getAllRecipes(new SearchViewModel.FirestoreCallback() {
+                mSearchPresenter.getAllRecipes(new SearchPresenter.FirestoreCallback() {
                     @Override
                     public void onCallback(List<Recipes> listRecipes) {
                         RecyclerView resultSearchView = affichageRecette;

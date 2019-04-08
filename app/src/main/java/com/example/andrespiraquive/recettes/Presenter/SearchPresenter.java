@@ -1,26 +1,24 @@
-package com.example.andrespiraquive.recettes.ViewModels;
+package com.example.andrespiraquive.recettes.Presenter;
 
-import android.arch.lifecycle.ViewModel;
 import android.support.annotation.NonNull;
 import android.util.Log;
+
 import com.example.andrespiraquive.recettes.Data.Network.FirebaseService;
 import com.example.andrespiraquive.recettes.Models.Recipes;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class GridViewModel extends ViewModel{
+public class SearchPresenter {
 
 
     private List<Recipes> mRecipes = new ArrayList<>();
 
-    public GridViewModel() {
-    }
-
-    public void getAllRecipes(final FirestoreCallback firestoreCallback){
+    public void getAllRecipes(final FirestoreCallback firestoreCallback, String searchLine){
 
         final String IMAGE_KEY = "image";
         final String TITLE_KEY = "title";
@@ -37,7 +35,7 @@ public class GridViewModel extends ViewModel{
         db.StartFireBaseService();
 
         db.StartFireBaseService().collection (COLLECTION_PATH)
-                .orderBy (TITLE_KEY)
+                .whereEqualTo("title", searchLine)
                 .get ()
                 .addOnCompleteListener (new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -49,6 +47,7 @@ public class GridViewModel extends ViewModel{
                                         document.get (DESCRIPTION_KEY).toString (), document.get (PREPARATIONS_KEY).toString (),
                                         (double) document.get (NOTE_KEY), document.get (POSITION_KEY).toString (), document.getId ()));
                             }
+                            Log.d("TAG", "mRecipes IN= " + mRecipes.size());
                             firestoreCallback.onCallback(mRecipes);
 
                         } else {
@@ -64,5 +63,7 @@ public class GridViewModel extends ViewModel{
 
         void onCallback(List<Recipes> listRecipes);
     }
+
+
 
 }

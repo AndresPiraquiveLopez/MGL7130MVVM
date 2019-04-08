@@ -1,9 +1,9 @@
-package com.example.andrespiraquive.recettes.ViewModels;
+package com.example.andrespiraquive.recettes.Presenter;
 
 import org.junit.Before;
 
-public class GridViewModelTest {
-    GridViewModel model;
+public class GridPresenterTest {
+    GridPresenter model;
 
     @Before
     public void before() {

@@ -11,16 +11,14 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.example.andrespiraquive.recettes.Data.Database.DataBase;
-import com.example.andrespiraquive.recettes.Models.Recipes;
-import com.example.andrespiraquive.recettes.ViewModels.FavorisViewModel;
+import com.example.andrespiraquive.recettes.Presenter.FavorisPresenter;
 import com.example.andrespiraquive.recettes.Views.MainActivity;
 
-import java.sql.Blob;
 import java.util.ArrayList;
 
 public class favorisActivity extends AppCompatActivity {
 
-    private ArrayList<FavorisViewModel> lsRecipe;
+    private ArrayList<FavorisPresenter> lsRecipe;
     private DataBase baseRecette;
     private RecipesListAdapter adapter = null;
     private RecyclerView affichageRecette;
@@ -58,7 +56,7 @@ public class favorisActivity extends AppCompatActivity {
                 String position = "45.462252,-73.437309";
 
                 //lsRecipe.add (new Recipes (imageID, title, ingredient, description, preparation, note, position));
-                lsRecipe.add (new FavorisViewModel (id, imageID, title, ingredient, description, preparation, note, position));
+                lsRecipe.add (new FavorisPresenter (id, imageID, title, ingredient, description, preparation, note, position));
 
             }
         }

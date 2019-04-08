@@ -1,8 +1,6 @@
-package com.example.andrespiraquive.recettes.ViewModels;
+package com.example.andrespiraquive.recettes.Presenter;
 
-import java.sql.Blob;
-
-public class FavorisViewModel {
+public class FavorisPresenter {
 
     private int id;
     private byte[] imageId;
@@ -14,7 +12,7 @@ public class FavorisViewModel {
     private String position;
     private String document;
 
-    public FavorisViewModel(int id, byte[] imageId, String title, String ingredients, String description, String preparations, String note, String position) {
+    public FavorisPresenter(int id, byte[] imageId, String title, String ingredients, String description, String preparations, String note, String position) {
         this.id = id;
         this.imageId = imageId;
         this.title = title;

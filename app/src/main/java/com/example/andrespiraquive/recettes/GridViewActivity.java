@@ -3,24 +3,16 @@ package com.example.andrespiraquive.recettes;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.example.andrespiraquive.recettes.Models.Recipes;
-import com.example.andrespiraquive.recettes.ViewModels.GridViewModel;
+import com.example.andrespiraquive.recettes.Presenter.GridPresenter;
 import com.example.andrespiraquive.recettes.Views.MainActivity;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,7 +21,7 @@ public class GridViewActivity extends AppCompatActivity {
 
     List<Recipes> mRecipe;
 
-    GridViewModel mGridViewModel = new GridViewModel ();
+    GridPresenter mGridPresenter = new GridPresenter ();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -38,7 +30,7 @@ public class GridViewActivity extends AppCompatActivity {
 
         mRecipe = new ArrayList<> ();
 
-        mGridViewModel.getAllRecipes (new GridViewModel.FirestoreCallback () {
+        mGridPresenter.getAllRecipes (new GridPresenter.FirestoreCallback () {
             @Override
             public void onCallback(List<Recipes> listRecipes) {
 

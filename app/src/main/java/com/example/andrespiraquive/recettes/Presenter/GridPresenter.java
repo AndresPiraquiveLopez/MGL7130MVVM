@@ -1,25 +1,26 @@
-package com.example.andrespiraquive.recettes.ViewModels;
+package com.example.andrespiraquive.recettes.Presenter;
 
+import android.arch.lifecycle.ViewModel;
 import android.support.annotation.NonNull;
 import android.util.Log;
-
 import com.example.andrespiraquive.recettes.Data.Network.FirebaseService;
 import com.example.andrespiraquive.recettes.Models.Recipes;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
-
 import java.util.ArrayList;
 import java.util.List;
 
-public class RecipeViewModel {
+public class GridPresenter extends ViewModel{
 
-    private Recipes mRecipes = new Recipes();
 
-    public void getRecipes(final RecipeViewModel.FirestoreCallback firestoreCallback, String DocumentId){
+    private List<Recipes> mRecipes = new ArrayList<>();
+
+    public GridPresenter() {
+    }
+
+    public void getAllRecipes(final FirestoreCallback firestoreCallback){
 
         final String IMAGE_KEY = "image";
         final String TITLE_KEY = "title";
@@ -33,19 +34,21 @@ public class RecipeViewModel {
 
 
         FirebaseService db = new FirebaseService();
-        //db.StartFireBaseService();
+        db.StartFireBaseService();
 
-        DocumentReference dr = db.StartFireBaseService().collection ("Recipes").document(DocumentId);
-                dr.get().addOnCompleteListener (new OnCompleteListener<DocumentSnapshot>() {
+        db.StartFireBaseService().collection (COLLECTION_PATH)
+                .orderBy (TITLE_KEY)
+                .get ()
+                .addOnCompleteListener (new OnCompleteListener<QuerySnapshot>() {
                     @Override
-                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                        DocumentSnapshot document = task.getResult();
-                        if (document.exists ()) {
-                                mRecipes = new Recipes (document.get (IMAGE_KEY).toString (),
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful ()) {
+                            for (QueryDocumentSnapshot document : task.getResult ()) {
+                                mRecipes.add (new Recipes (document.get (IMAGE_KEY).toString (),
                                         document.get (TITLE_KEY).toString (), document.get (INGREDIENTS_KEY).toString (),
                                         document.get (DESCRIPTION_KEY).toString (), document.get (PREPARATIONS_KEY).toString (),
-                                        (double) document.get (NOTE_KEY), document.get (POSITION_KEY).toString (), document.getId ());
-                            //Log.d("TAG", "mRecipes IN= " + mRecipes.size();
+                                        (double) document.get (NOTE_KEY), document.get (POSITION_KEY).toString (), document.getId ()));
+                            }
                             firestoreCallback.onCallback(mRecipes);
 
                         } else {
@@ -59,7 +62,7 @@ public class RecipeViewModel {
 
     public interface  FirestoreCallback {
 
-        void onCallback(Recipes mRecipes);
+        void onCallback(List<Recipes> listRecipes);
     }
 
 }

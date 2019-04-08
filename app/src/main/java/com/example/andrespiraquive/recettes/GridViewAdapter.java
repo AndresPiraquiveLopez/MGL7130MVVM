@@ -16,8 +16,7 @@ import android.widget.TextView;
 
 
 import com.example.andrespiraquive.recettes.Models.Recipes;
-import com.example.andrespiraquive.recettes.ViewModels.FavorisViewModel;
-import com.example.andrespiraquive.recettes.Views.MainActivity;
+import com.example.andrespiraquive.recettes.Presenter.FavorisPresenter;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -25,7 +24,7 @@ import java.util.List;
 public class GridViewAdapter extends RecyclerView.Adapter <GridViewAdapter.MyViewHolder> {
 
     private List<Recipes> mData;
-    private List<FavorisViewModel> mDataFavorite;
+    private List<FavorisPresenter> mDataFavorite;
     private Context mContext;
     private boolean isFavorie;
 
@@ -36,7 +35,7 @@ public class GridViewAdapter extends RecyclerView.Adapter <GridViewAdapter.MyVie
         this.mContext = mContext;
         this.isFavorie = isFavorie;
     }
-    public GridViewAdapter(List<FavorisViewModel> mDataFavorite, Context mContext) {
+    public GridViewAdapter(List<FavorisPresenter> mDataFavorite, Context mContext) {
         this.mDataFavorite = mDataFavorite;
         this.mData = null;
         this.mContext = mContext;
