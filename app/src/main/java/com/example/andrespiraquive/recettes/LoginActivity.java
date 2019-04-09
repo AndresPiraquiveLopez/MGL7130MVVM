@@ -6,8 +6,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -38,6 +36,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     FirebaseAuth firebaseAuth;
     GoogleApiClient mGoogleApiClient;
     private static final String TAG = "";
+    Intent intentService;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -121,7 +120,6 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                         });
             }
         });
-
     }
 
     private void signIn() {
@@ -161,40 +159,6 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main_menu,menu);
-        return super.onCreateOptionsMenu(menu);
-    }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.list_recipes) {
-            Intent listRecipes = new Intent(getApplicationContext(), GridViewActivity.class);
-            startActivity(listRecipes);
-            finish();
-        }
 
-        if(item.getItemId()==R.id.add_recipe){
-            Intent addRecipe = new Intent(getApplicationContext(),AddRecipeActivity.class);
-            startActivity(addRecipe);
-            finish();
-        }
-        if(item.getItemId()==R.id.search_recipe){
-            Intent searchActivity = new Intent(getApplicationContext(),SearchActivity.class);
-            startActivity(searchActivity);
-            finish();
-        }
-        if(item.getItemId()==R.id.user_favoris){
-            Intent Recipes_list = new Intent(getApplicationContext(), favorisActivity.class);
-            startActivity(Recipes_list);
-            finish();
-        }
-        if(item.getItemId()==R.id.user_settings){
-            Intent searchActivity = new Intent(getApplicationContext(),MainActivity.class);
-            startActivity(searchActivity);
-            finish();
-        }
-        return super.onOptionsItemSelected(item);
-    }
 }

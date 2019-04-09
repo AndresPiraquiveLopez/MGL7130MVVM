@@ -40,20 +40,25 @@ public class ModifyRecipeActivity extends AppCompatActivity {
         ingredients = findViewById(R.id.editIngredientModify);
         description = findViewById(R.id.editDescriptionModify);
         preparation = findViewById(R.id.editPreparationModify);
-        Picasso.get ()
-                .load ("https://firebasestorage.googleapis.com/v0/b/recettes-bb215.appspot.com/o/image_plat_base_free.jpg?alt=media&token=29c46ebf-a107-45f8-9957-25b103108dd1")
-                .into (img);
+
 
         //Receive Data
         Intent intent = getIntent ();
         IsFavorie =intent.getExtras ().getBoolean ("isFavorie");
+        final String ImageId = intent.getExtras().getString("ImageId");
         final String Title = intent.getExtras ().getString ("Title");
         final String Description = intent.getExtras ().getString ("Description");
         final String Ingredient = intent.getExtras ().getString ("Ingredient");
         final String Preparation = intent.getExtras ().getString ("Preparation");
         final String Document = intent.getExtras ().getString ("DocumentId");
 
+        Log.d("TAG ","IMAGEID in MODIFY:" + ImageId);
+
+
         //Show Data
+        Picasso.get ()
+                .load (ImageId)
+                .into (img);
         titre.setText(Title);
         ingredients.setText(Ingredient);
         description.setText(Description);

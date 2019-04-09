@@ -1,12 +1,19 @@
 package com.example.andrespiraquive.recettes;
 
+import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -61,19 +68,55 @@ public class AddRecipeActivity extends AppCompatActivity {
     private String currentPhotoPath;
     private Uri photoURI;
     private StorageReference mStorageRef;
+    private LocationManager locationManager;
+    private LocationListener locationListener;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate (savedInstanceState);
-        setContentView (R.layout.activity_add_recipe);
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_add_recipe);
 
         // Hide ActionBar
         if (getSupportActionBar() != null) {
             getSupportActionBar().hide();
         }
 
-        db = FirebaseFirestore.getInstance ();
+        db = FirebaseFirestore.getInstance();
+        locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
+        String locationProvider = LocationManager.NETWORK_PROVIDER;
+        LocationListener locationListener = new LocationListener() {
+            public void onLocationChanged(Location location) {
+                // Called when a new location is found by the network location provider.
+                //Log.d("TAG ","LOCATION = " +location);
+            }
+
+            public void onStatusChanged(String provider, int status, Bundle extras) {
+            }
+
+            public void onProviderEnabled(String provider) {
+            }
+
+            public void onProviderDisabled(String provider) {
+            }
+        };
+
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
+        Location lastKnownLocation = locationManager.getLastKnownLocation(locationProvider);
+            //Log.d("TAG ","LOCATION = " + lastKnownLocation);
+
+
+
+
         editTitre = findViewById (R.id.titre);
         editIngredient = findViewById (R.id.editIngredient);
         editDescription = findViewById (R.id.editDescription);
@@ -87,7 +130,14 @@ public class AddRecipeActivity extends AppCompatActivity {
         buttonSave.setOnClickListener (new View.OnClickListener () {
             public void onClick(View v) {
                 // Code here executes on main thread after user presses button
-                uploadImage();
+                if(editTitre.getText().toString().isEmpty() || editDescription.getText().toString().isEmpty()
+                    || editIngredient.getText().toString().isEmpty() || editPreparation.getText().toString().isEmpty()
+                    || photoURI == null) {
+                    Toast.makeText(AddRecipeActivity.this, "You must fill all the fields...", Toast.LENGTH_LONG).show();
+                }
+                else{
+                    uploadImage();
+                }
             }
         });
         buttonCancel.setOnClickListener(new View.OnClickListener() {
