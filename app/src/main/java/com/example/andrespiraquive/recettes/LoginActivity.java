@@ -11,7 +11,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.andrespiraquive.recettes.Views.GridViewActivity;
 import com.example.andrespiraquive.recettes.Views.MainActivity;
+import com.example.andrespiraquive.recettes.Views.SearchActivity;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;

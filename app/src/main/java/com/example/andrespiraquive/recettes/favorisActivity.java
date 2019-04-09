@@ -12,7 +12,9 @@ import android.view.MenuItem;
 
 import com.example.andrespiraquive.recettes.Data.Database.DataBase;
 import com.example.andrespiraquive.recettes.Presenter.FavorisPresenter;
+import com.example.andrespiraquive.recettes.Views.GridViewActivity;
 import com.example.andrespiraquive.recettes.Views.MainActivity;
+import com.example.andrespiraquive.recettes.Views.SearchActivity;
 
 import java.util.ArrayList;
 
