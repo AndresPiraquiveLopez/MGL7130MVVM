@@ -70,6 +70,7 @@ public class AddRecipeActivity extends AppCompatActivity {
     private StorageReference mStorageRef;
     private LocationManager locationManager;
     private LocationListener locationListener;
+    private String gpsPosition, countryPosition;
 
 
     @Override
@@ -81,42 +82,8 @@ public class AddRecipeActivity extends AppCompatActivity {
         if (getSupportActionBar() != null) {
             getSupportActionBar().hide();
         }
-
+        gpsPosition = getLocation();
         db = FirebaseFirestore.getInstance();
-        locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
-        String locationProvider = LocationManager.NETWORK_PROVIDER;
-        LocationListener locationListener = new LocationListener() {
-            public void onLocationChanged(Location location) {
-                // Called when a new location is found by the network location provider.
-                //Log.d("TAG ","LOCATION = " +location);
-            }
-
-            public void onStatusChanged(String provider, int status, Bundle extras) {
-            }
-
-            public void onProviderEnabled(String provider) {
-            }
-
-            public void onProviderDisabled(String provider) {
-            }
-        };
-
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-            return;
-        }
-        Location lastKnownLocation = locationManager.getLastKnownLocation(locationProvider);
-            //Log.d("TAG ","LOCATION = " + lastKnownLocation);
-
-
-
-
         editTitre = findViewById (R.id.titre);
         editIngredient = findViewById (R.id.editIngredient);
         editDescription = findViewById (R.id.editDescription);
@@ -281,6 +248,33 @@ public class AddRecipeActivity extends AppCompatActivity {
                         Log.d ("TAG", e.toString ());
                     }
                 });
+    }
+
+    private String getLocation(){
+        locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
+        String locationProvider = LocationManager.NETWORK_PROVIDER;
+        LocationListener locationListener = new LocationListener() {
+            public void onLocationChanged(Location location) {
+                // Called when a new location is found by the network location provider.
+                //Log.d("TAG ","LOCATION = " +location);
+            }
+
+            public void onStatusChanged(String provider, int status, Bundle extras) {
+            }
+
+            public void onProviderEnabled(String provider) {
+            }
+
+            public void onProviderDisabled(String provider) {
+            }
+        };
+
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+        }
+        Location lastKnownLocation = locationManager.getLastKnownLocation(locationProvider);
+        Log.d("TAG ","LOCATION = " + lastKnownLocation);
+
+        return lastKnownLocation.toString();
     }
 
     @Override
