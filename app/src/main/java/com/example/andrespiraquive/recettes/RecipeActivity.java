@@ -42,6 +42,7 @@ public class RecipeActivity extends AppCompatActivity {
 
     private int Id;
     private byte[] ImageId;
+    private String image;
     private String Title;
     private double Note;
     private String Description;
@@ -69,6 +70,8 @@ public class RecipeActivity extends AppCompatActivity {
         //Recieve data
         Intent intent = getIntent();
         IsFavorie = intent.getExtras().getBoolean("isFavorie");
+        //image = intent.getExtras().getString("ImageId");
+        //Log.d("TAG", "IMAGEID in RECIPE :" + image);
         //ImageId = intent.getExtras().getByteArray("ImageId");
         //final String Title = intent.getExtras ().getString ("Title");
         //final double Note = intent.getExtras ().getDouble ("Note");
@@ -76,7 +79,6 @@ public class RecipeActivity extends AppCompatActivity {
         //final String Ingredient = intent.getExtras ().getString ("Ingredient");
         //final String Preparation = intent.getExtras ().getString ("Preparation");
         Document = intent.getExtras().getString("Document");
-        Log.d("TAG : ", "DOCUMENT======= " + Document);
         if (Document == null) {
             Id = intent.getExtras().getInt("Id");
             Title = intent.getExtras().getString("Title");
@@ -112,6 +114,7 @@ public class RecipeActivity extends AppCompatActivity {
             recipePresenter.getRecipes(new RecipePresenter.FirestoreCallback() {
                 @Override
                 public void onCallback(Recipes mRecipes) {
+                    image = mRecipes.getImage();
                     Title = mRecipes.getTitle();
                     Note = mRecipes.getNote();
                     Description = mRecipes.getDescription();
@@ -278,6 +281,7 @@ public class RecipeActivity extends AppCompatActivity {
             case R.id.action_modify:
                 Intent intentModifyViewActivity = new Intent(RecipeActivity.this, ModifyRecipeActivity.class);
                 intentModifyViewActivity.setFlags (Intent.FLAG_ACTIVITY_NEW_TASK);
+                intentModifyViewActivity.putExtra("ImageId",image);
                 intentModifyViewActivity.putExtra("Title",Title);
                 intentModifyViewActivity.putExtra("Description",Description);
                 intentModifyViewActivity.putExtra("Ingredient",Ingredient);

@@ -62,14 +62,12 @@ public class GridViewAdapter extends RecyclerView.Adapter <GridViewAdapter.MyVie
                 .into(holder.img_recipe_thumbnaild);
             holder.tv_recipe_title.setText(mData.get(position).getTitle());
             holder.note.setRating ((float) mData.get(position).getNote ());
-
-            Log.d("TAG : ", "DOCUMENT mData non null");
             holder.cardView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(mContext, RecipeActivity.class);
                     intent.setFlags (Intent.FLAG_ACTIVITY_NEW_TASK);
-                    intent.putExtra("ImageId", mData.get(position).getImage());
+                    intent.putExtra("ImageId", mData.get(position).toString());
                     intent.putExtra("Title",mData.get(position).getTitle());
                     intent.putExtra("Note",mData.get(position).getNote());
                     intent.putExtra("Description",mData.get(position).getDescription());
@@ -87,15 +85,6 @@ public class GridViewAdapter extends RecyclerView.Adapter <GridViewAdapter.MyVie
                     mDataFavorite.get(position).getImageId().length));
             holder.tv_recipe_title.setText(mDataFavorite.get(position).getTitle());
             holder.note.setRating ((float) mDataFavorite.get(position).getNote ());
-
-            //Log.d("TAG : ", "DOCUMENT = " + mDataFavorite.get(position).getDocument());
-            Log.d("TAG : ", "ID = " + mDataFavorite.get(position).getId());
-            Log.d("TAG : ", "Title = " + mDataFavorite.get(position).getTitle());
-            Log.d("TAG : ", "Note = " + mDataFavorite.get(position).getNote());
-            Log.d("TAG : ", "Descritption = " + mDataFavorite.get(position).getDescription());
-            Log.d("TAG : ", "Preparation = " + mDataFavorite.get(position).getPreparations());
-            Log.d("TAG : ", "Ingredient = " + mDataFavorite.get(position).getIngredients());
-            Log.d("TAG : ", "DOCUMENT mData null = " + mDataFavorite.get(position).getDocument());
             holder.cardView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -107,7 +96,6 @@ public class GridViewAdapter extends RecyclerView.Adapter <GridViewAdapter.MyVie
                     intent.putExtra("Description",mDataFavorite.get(position).getDescription());
                     intent.putExtra("Ingredient",mDataFavorite.get(position).getIngredients());
                     intent.putExtra("Preparation",mDataFavorite.get(position).getPreparations());
-                    //intent.putExtra ("Document",mDataFavorite.get(position).getDocument ());
                     intent.putExtra ("isFavorie",isFavorie);
                     mContext.startActivity(intent);
                 }
@@ -135,9 +123,6 @@ public class GridViewAdapter extends RecyclerView.Adapter <GridViewAdapter.MyVie
             super(itemView);
 
             img_recipe_thumbnaild = (ImageView) itemView.findViewById(R.id.recipe_image_id);
-            //Picasso.get()
-              //      .load("https://firebasestorage.googleapis.com/v0/b/recettes-bb215.appspot.com/o/image_plat_base_free.jpg?alt=media&token=29c46ebf-a107-45f8-9957-25b103108dd1")
-                //    .into(img_recipe_thumbnaild);
             tv_recipe_title = (TextView) itemView.findViewById(R.id.recipe_title_id);
             cardView = (CardView) itemView.findViewById(R.id.cardView_id);
             note = (RatingBar) itemView.findViewById (R.id.recipe_ratingBar_id);
