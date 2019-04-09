@@ -12,11 +12,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.andrespiraquive.recettes.AddRecipeActivity;
-import com.example.andrespiraquive.recettes.GridViewActivity;
 import com.example.andrespiraquive.recettes.LoginActivity;
 import com.example.andrespiraquive.recettes.R;
 import com.example.andrespiraquive.recettes.RegisterActivity;
-import com.example.andrespiraquive.recettes.SearchActivity;
 import com.example.andrespiraquive.recettes.favorisActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;

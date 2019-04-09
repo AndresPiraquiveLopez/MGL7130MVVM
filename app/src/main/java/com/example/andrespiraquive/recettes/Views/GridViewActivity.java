@@ -1,4 +1,4 @@
-package com.example.andrespiraquive.recettes;
+package com.example.andrespiraquive.recettes.Views;
 
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -10,9 +10,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.example.andrespiraquive.recettes.AddRecipeActivity;
+import com.example.andrespiraquive.recettes.GridViewAdapter;
 import com.example.andrespiraquive.recettes.Models.Recipes;
 import com.example.andrespiraquive.recettes.Presenter.GridPresenter;
-import com.example.andrespiraquive.recettes.Views.MainActivity;
+import com.example.andrespiraquive.recettes.R;
+import com.example.andrespiraquive.recettes.favorisActivity;
 
 import java.util.ArrayList;
 import java.util.List;

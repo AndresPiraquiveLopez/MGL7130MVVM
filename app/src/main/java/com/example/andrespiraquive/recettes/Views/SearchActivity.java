@@ -1,4 +1,4 @@
-package com.example.andrespiraquive.recettes;
+package com.example.andrespiraquive.recettes.Views;
 
 import android.content.Context;
 import android.content.Intent;
@@ -13,26 +13,28 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+
+import com.example.andrespiraquive.recettes.AddRecipeActivity;
+import com.example.andrespiraquive.recettes.GridViewAdapter;
 import com.example.andrespiraquive.recettes.Models.Recipes;
 import com.example.andrespiraquive.recettes.Presenter.SearchPresenter;
-import com.example.andrespiraquive.recettes.Views.MainActivity;
-import com.google.firebase.firestore.FirebaseFirestore;
+import com.example.andrespiraquive.recettes.R;
+import com.example.andrespiraquive.recettes.favorisActivity;
+
 import java.util.List;
 
 public class SearchActivity extends AppCompatActivity {
 
-    FirebaseFirestore db;
-    RecyclerView affichageRecette;
-    EditText searchLine;
-    SearchPresenter mSearchPresenter = new SearchPresenter ();
+    private RecyclerView displayRecipe;
+    private EditText searchLine;
+    private SearchPresenter mSearchPresenter = new SearchPresenter ();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
 
-        db = FirebaseFirestore.getInstance();
-        affichageRecette = findViewById(R.id.search_recycle_view);
+        displayRecipe = findViewById(R.id.search_recycle_view);
         searchLine = findViewById(R.id.editSearch);
 
         Button button = findViewById(R.id.searchButton);
@@ -42,7 +44,7 @@ public class SearchActivity extends AppCompatActivity {
                 mSearchPresenter.getAllRecipes(new SearchPresenter.FirestoreCallback() {
                     @Override
                     public void onCallback(List<Recipes> listRecipes) {
-                        RecyclerView resultSearchView = affichageRecette;
+                        RecyclerView resultSearchView = displayRecipe;
                         GridViewAdapter myAdapter = new GridViewAdapter(listRecipes, getApplicationContext(),false);
                         resultSearchView.setLayoutManager(new GridLayoutManager(getApplicationContext(),2));
                         resultSearchView.setAdapter(myAdapter);
