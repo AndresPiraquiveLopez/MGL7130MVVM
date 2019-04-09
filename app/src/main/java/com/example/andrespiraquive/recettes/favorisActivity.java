@@ -1,6 +1,7 @@
 package com.example.andrespiraquive.recettes;
 
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
@@ -65,9 +66,47 @@ public class favorisActivity extends AppCompatActivity {
 
         RecyclerView resultSearchView = affichageRecette;
         GridViewAdapter myAdapter = new GridViewAdapter (lsRecipe, getApplicationContext ());
-        resultSearchView.setLayoutManager (new GridLayoutManager (getApplicationContext (), 2));
+        setLayout (resultSearchView);
+        //resultSearchView.setLayoutManager (new GridLayoutManager (getApplicationContext (), 2));
         resultSearchView.setAdapter (myAdapter);
 
+    }
+
+    private void setLayout(RecyclerView mRv) {
+        switch (getResources ().getConfiguration ().orientation) {
+            case Configuration.ORIENTATION_PORTRAIT:
+
+                int mWidthPortraitDp = getResources ().getConfiguration ().screenWidthDp >= 600 ? 1 : 0;
+                switch (mWidthPortraitDp) {
+                    case 0:
+                        mRv.setLayoutManager (new GridLayoutManager (getApplicationContext (), 2));
+                        break;
+
+                    case 1:
+                        mRv.setLayoutManager (new GridLayoutManager (getApplicationContext (), 3));
+                        break;
+                }
+                break;
+
+            case Configuration.ORIENTATION_LANDSCAPE:
+
+                int mWidthLandscapeDp = getResources ().getConfiguration ().screenWidthDp >= 921 ? 1 : 0;
+
+                switch (mWidthLandscapeDp) {
+                    case 0:
+                        mRv.setLayoutManager (new GridLayoutManager (getApplicationContext (), 4));
+                        break;
+
+                    case 1:
+                        mRv.setLayoutManager (new GridLayoutManager (getApplicationContext (), 5));
+                        break;
+
+                }
+                break;
+
+            default:
+                break;
+        }
     }
 
     public void ShowMessage(String title, String Message) {

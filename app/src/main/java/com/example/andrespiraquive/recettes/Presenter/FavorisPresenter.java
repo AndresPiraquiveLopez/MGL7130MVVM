@@ -1,5 +1,12 @@
 package com.example.andrespiraquive.recettes.Presenter;
 
+import java.util.ArrayList;
+
+import android.content.Context;
+import android.database.Cursor;
+
+import com.example.andrespiraquive.recettes.Data.Database.DataBase;
+
 public class FavorisPresenter {
 
     private int id;
@@ -11,6 +18,12 @@ public class FavorisPresenter {
     private double note;
     private String position;
     private String document;
+    private DataBase dataBaseRecipe;
+    private ArrayList<FavorisPresenter> lsRecipe;
+
+    public FavorisPresenter(){
+    }
+
 
     public FavorisPresenter(int id, byte[] imageId, String title, String ingredients, String description, String preparations, String note, String position) {
         this.id = id;
@@ -93,5 +106,13 @@ public class FavorisPresenter {
 
     public void setDocument(String document) {
         this.document = document;
+    }
+
+    public Cursor getAllData(Context context) {
+        lsRecipe = new ArrayList<> ();
+        dataBaseRecipe = new DataBase (context);
+        Cursor recipes = dataBaseRecipe.getAllData ();
+
+        return recipes;
     }
 }
