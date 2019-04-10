@@ -17,6 +17,7 @@ import com.example.andrespiraquive.recettes.Models.Recipes;
 import com.example.andrespiraquive.recettes.R;
 import com.example.andrespiraquive.recettes.Views.MainActivity;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
@@ -73,10 +74,32 @@ public class RecipeService extends IntentService {
                     Log.d("TAG", e.toString());
                     return;
                 }
-                for (QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
+                for (DocumentChange documentSnapshot : queryDocumentSnapshots.getDocumentChanges()) {
 
-                    Recipes recipes = documentSnapshot.toObject(Recipes.class);
-                    Log.d("TAG", "Titre =" + recipes.getTitle());
+
+                    switch (documentSnapshot.getType()) {
+                        case ADDED:
+                            String title = documentSnapshot.getDocument().get("title").toString();
+                            Notification nb = new NotificationCompat.Builder(getApplicationContext(), CHANNEL_ID)
+                                    .setSmallIcon(R.mipmap.icone_recipes)
+                                    .setContentTitle("New Recipes")
+                                    .setContentText(title)
+                                    .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                                    .build();
+
+                            NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(getApplicationContext());
+                            notificationManagerCompat.notify(1, nb);
+                            Log.d("TAG", "New recipe: " + documentSnapshot.getDocument().getData());
+                            break;
+                        case MODIFIED:
+                            Log.d("TAG", "Modified recipe: " + documentSnapshot.getDocument().getData());
+                            break;
+                        case REMOVED:
+                            Log.d("TAG", "Removed recipe: " + documentSnapshot.getDocument().getData());
+                            break;
+                    }
+                    //Recipes recipes = documentSnapshot.toObject(Recipes.class);
+                    //Log.d("TAG", "Titre =" + recipes.getTitle());
                 }
 
             }
