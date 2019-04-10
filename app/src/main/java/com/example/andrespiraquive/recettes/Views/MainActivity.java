@@ -15,6 +15,7 @@ import com.example.andrespiraquive.recettes.AddRecipeActivity;
 import com.example.andrespiraquive.recettes.LoginActivity;
 import com.example.andrespiraquive.recettes.R;
 import com.example.andrespiraquive.recettes.RegisterActivity;
+import com.example.andrespiraquive.recettes.Services.RecipeService;
 import com.example.andrespiraquive.recettes.favorisActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -120,20 +121,5 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        firebaseAuth.addAuthStateListener(authStateListener);
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        if(authStateListener!=null){
-            firebaseAuth.removeAuthStateListener(authStateListener);
-        }
-    }
-
 
 }

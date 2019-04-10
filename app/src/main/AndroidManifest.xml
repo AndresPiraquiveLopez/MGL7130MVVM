@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.example.andrespiraquive.recettes">
 
     <uses-permission android:name="android.permission.CAMERA"></uses-permission>
@@ -13,12 +14,14 @@
     <uses-feature android:name="android.hardware.location.gps"></uses-feature>
 
     <application
+        android:name=".Applications.App"
         android:allowBackup="true"
         android:icon="@mipmap/icone_recipes"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/icone_recipes"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        tools:ignore="GoogleAppIndexingWarning">
         <activity
             android:name=".LoginActivity"
             android:label="@string/app_name">
@@ -66,6 +69,9 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths"></meta-data>
         </provider>
+        <service
+            android:name=".Services.RecipeService"
+            android:exported="false" />
     </application>
 
 </manifest>

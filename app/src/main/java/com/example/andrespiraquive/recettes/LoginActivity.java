@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.andrespiraquive.recettes.Services.RecipeService;
 import com.example.andrespiraquive.recettes.Views.GridViewActivity;
 import com.example.andrespiraquive.recettes.Views.MainActivity;
 import com.example.andrespiraquive.recettes.Views.SearchActivity;
@@ -42,6 +43,9 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        Intent intent = new Intent(this, RecipeService.class);
+        startService(intent);
 
         // Hide ActionBar
         if (getSupportActionBar() != null) {
