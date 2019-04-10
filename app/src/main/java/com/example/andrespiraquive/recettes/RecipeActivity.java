@@ -34,7 +34,7 @@ import java.io.ByteArrayOutputStream;
 
 public class RecipeActivity extends AppCompatActivity {
 
-    private TextView tvtitle, tvdescription, tvingredient, tvpreparation;
+    private TextView tvtitle, tvdescription, tvingredient, tvpreparation, tvposition;
     private ImageView img, btnImageFavorite;
     private RatingBar note;
     private RatingBar ratingBar;
@@ -50,6 +50,7 @@ public class RecipeActivity extends AppCompatActivity {
     private String Description;
     private String Ingredient;
     private String Preparation;
+    private String Position;
     private String Document;
     private boolean IsFavorie;
 
@@ -67,6 +68,7 @@ public class RecipeActivity extends AppCompatActivity {
         tvingredient = (TextView) findViewById(R.id.recipe_details_ingredient_id);
         tvpreparation = (TextView) findViewById(R.id.recipe_details_preparation_id);
         btnImageFavorite = findViewById(R.id.btn_image_favorite_id);
+        tvposition = findViewById(R.id.position_id);
         recipePresenter = new RecipePresenter ();
 
         //Recieve data
@@ -88,6 +90,7 @@ public class RecipeActivity extends AppCompatActivity {
             Description = intent.getExtras().getString("Description");
             Ingredient = intent.getExtras().getString("Ingredient");
             Preparation = intent.getExtras().getString("Preparation");
+            Position = intent.getExtras().getString("Position");
 
             Cursor recipeFavorite = baseRecette.geDataById(Id);
             if(recipeFavorite.getCount() == 1){
@@ -101,6 +104,7 @@ public class RecipeActivity extends AppCompatActivity {
             tvdescription.setText(Description);
             tvingredient.setText(Ingredient);
             tvpreparation.setText(Preparation);
+            tvposition.setText(Position);
 
             if (!IsFavorie) {
                 btnImageFavorite.setImageResource(R.drawable.favorite_no);
@@ -122,6 +126,7 @@ public class RecipeActivity extends AppCompatActivity {
                     Description = mRecipes.getDescription();
                     Ingredient = mRecipes.getIngredients();
                     Preparation = mRecipes.getPreparations();
+                    Position = mRecipes.getPosition();
 
                     //settings values
                     Picasso.get()
@@ -132,6 +137,7 @@ public class RecipeActivity extends AppCompatActivity {
                     tvdescription.setText(Description);
                     tvingredient.setText(Ingredient);
                     tvpreparation.setText(Preparation);
+                    tvposition.setText(Position);
 
                     if (!IsFavorie) {
                         btnImageFavorite.setImageResource(R.drawable.favorite_no);
@@ -186,7 +192,7 @@ public class RecipeActivity extends AppCompatActivity {
                         boolean isInserted=baseRecette.insertData(tvtitle.getText().toString(),
                                 tvingredient.getText().toString(),
                                 tvpreparation.getText().toString(),tvdescription.getText().toString(),
-                                imageViewToByte(img), String.valueOf (note.getRating()));
+                                imageViewToByte(img), String.valueOf (note.getRating()), tvposition.getText().toString());
                                 btnImageFavorite.setImageResource(R.drawable.favorite_yes);
 
                         if(isInserted==true) {
@@ -194,7 +200,7 @@ public class RecipeActivity extends AppCompatActivity {
 
                         }
                         else
-                            Toast.makeText(RecipeActivity.this , "Not saved to your Favorites!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(RecipeActivity.this , "The recipes already exist in your favorites!", Toast.LENGTH_SHORT).show();
                    // }
                 //}
        // );
@@ -290,6 +296,7 @@ public class RecipeActivity extends AppCompatActivity {
                 intentModifyViewActivity.putExtra("Preparation",Preparation);
                 intentModifyViewActivity.putExtra("DocumentId", Document);
                 intentModifyViewActivity.putExtra("isFavorie", IsFavorie);
+                intentModifyViewActivity.putExtra("Position", Position);
                 startActivity(intentModifyViewActivity);
                 finish();
                 return true;

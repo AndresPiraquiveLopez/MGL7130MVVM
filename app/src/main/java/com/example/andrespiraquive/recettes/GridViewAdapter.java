@@ -62,6 +62,7 @@ public class GridViewAdapter extends RecyclerView.Adapter <GridViewAdapter.MyVie
                 .into(holder.img_recipe_thumbnaild);
             holder.tv_recipe_title.setText(mData.get(position).getTitle());
             holder.note.setRating ((float) mData.get(position).getNote ());
+            holder.tv_recipe_position.setText(mData.get(position).getPosition());
             holder.cardView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -73,6 +74,7 @@ public class GridViewAdapter extends RecyclerView.Adapter <GridViewAdapter.MyVie
                     intent.putExtra("Description",mData.get(position).getDescription());
                     intent.putExtra("Ingredient",mData.get(position).getIngredients());
                     intent.putExtra("Preparation",mData.get(position).getPreparations());
+                    intent.putExtra("Position",mData.get(position).getPosition());
                     intent.putExtra ("Document",mData.get(position).getDocument ());
                     intent.putExtra ("isFavorie",isFavorie);
                     mContext.startActivity(intent);
@@ -85,6 +87,7 @@ public class GridViewAdapter extends RecyclerView.Adapter <GridViewAdapter.MyVie
                     mDataFavorite.get(position).getImageId().length));
             holder.tv_recipe_title.setText(mDataFavorite.get(position).getTitle());
             holder.note.setRating ((float) mDataFavorite.get(position).getNote ());
+            holder.tv_recipe_position.setText(mDataFavorite.get(position).getPosition());
             holder.cardView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -96,6 +99,7 @@ public class GridViewAdapter extends RecyclerView.Adapter <GridViewAdapter.MyVie
                     intent.putExtra("Description",mDataFavorite.get(position).getDescription());
                     intent.putExtra("Ingredient",mDataFavorite.get(position).getIngredients());
                     intent.putExtra("Preparation",mDataFavorite.get(position).getPreparations());
+                    intent.putExtra("Position",mDataFavorite.get(position).getPosition());
                     intent.putExtra ("isFavorie",isFavorie);
                     mContext.startActivity(intent);
                 }
@@ -117,6 +121,7 @@ public class GridViewAdapter extends RecyclerView.Adapter <GridViewAdapter.MyVie
         ImageView img_recipe_thumbnaild;
         TextView tv_recipe_title;
         RatingBar note;
+        TextView tv_recipe_position;
         CardView cardView;
 
         public MyViewHolder(View itemView){
@@ -126,6 +131,7 @@ public class GridViewAdapter extends RecyclerView.Adapter <GridViewAdapter.MyVie
             tv_recipe_title = (TextView) itemView.findViewById(R.id.recipe_title_id);
             cardView = (CardView) itemView.findViewById(R.id.cardView_id);
             note = (RatingBar) itemView.findViewById (R.id.recipe_ratingBar_id);
+            tv_recipe_position = itemView.findViewById(R.id.recipe_position_id);
         }
     }
 }

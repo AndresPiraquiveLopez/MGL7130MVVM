@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -48,6 +50,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
+import java.util.Locale;
 
 public class AddRecipeActivity extends AppCompatActivity {
 
@@ -70,7 +74,7 @@ public class AddRecipeActivity extends AppCompatActivity {
     private StorageReference mStorageRef;
     private LocationManager locationManager;
     private LocationListener locationListener;
-    private String gpsPosition, countryPosition;
+    private String gpsPosition, position;
 
 
     @Override
@@ -226,7 +230,7 @@ public class AddRecipeActivity extends AppCompatActivity {
 
         Recipes recetteAjouter = new Recipes (urlImageUpload, editTitre.getText ().toString (),
                 editIngredient.getText ().toString (), editDescription.getText ().toString (),
-                editPreparation.getText ().toString (), 0.0, "45.462252,-73.437309", "");
+                editPreparation.getText ().toString (), 0.0, position, "");
 
         DocumentReference newRecipeRef = db.collection ("Recipes").document ();
         newRecipeRef.set (recetteAjouter)
@@ -272,7 +276,24 @@ public class AddRecipeActivity extends AppCompatActivity {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
         }
         Location lastKnownLocation = locationManager.getLastKnownLocation(locationProvider);
-        Log.d("TAG ","LOCATION = " + lastKnownLocation);
+        //Log.d("TAG ","LONGITUDE = " + lastKnownLocation.getLongitude());
+        //Log.d("TAG ","LATITUDE = " + lastKnownLocation.getLatitude());
+
+        Geocoder geocoder = new Geocoder(this, Locale.getDefault());
+        List<Address> addresses = null;
+        try {
+            addresses = geocoder.getFromLocation(lastKnownLocation.getLatitude(),lastKnownLocation.getLongitude(),1);
+        } catch (IOException e) {
+            Log.d("TAG ", "e = " + e);
+        }
+        if(addresses != null){
+            //Log.d("ADDRESS","Pays :" + addresses.get(0).getCountryName());
+            //Log.d("ADDRESS","Ville :" + addresses.get(0).getLocality());
+            position = addresses.get(0).getLocality() + ", " + addresses.get(0).getCountryName();
+        }
+        else
+            Log.e("TAG", "No address find");
+
 
         return lastKnownLocation.toString();
     }

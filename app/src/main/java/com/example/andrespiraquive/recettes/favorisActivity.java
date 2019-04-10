@@ -43,7 +43,7 @@ public class favorisActivity extends AppCompatActivity {
         Cursor res = baseRecette.getAllData ();
 
         if (res.getCount () == 0) {
-            ShowMessage ("Message", "Les favoris sont vides");
+            ShowMessage ("Message", "You have no favorites");
             return;
         } else {
             StringBuffer buffer = new StringBuffer ();
@@ -56,7 +56,7 @@ public class favorisActivity extends AppCompatActivity {
                 String ingredient = res.getString (3);
                 String description = res.getString(4);
                 String note = String.valueOf (res.getDouble (6));
-                String position = "45.462252,-73.437309";
+                String position = res.getString(7);
 
                 //lsRecipe.add (new Recipes (imageID, title, ingredient, description, preparation, note, position));
                 lsRecipe.add (new FavorisPresenter (id, imageID, title, ingredient, description, preparation, note, position));
