@@ -1,15 +1,12 @@
-package com.example.andrespiraquive.recettes;
+package com.example.andrespiraquive.recettes.Views;
 
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
-import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,19 +15,14 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.andrespiraquive.recettes.AddRecipeActivity;
 import com.example.andrespiraquive.recettes.Data.Database.DataBase;
 import com.example.andrespiraquive.recettes.Models.Recipes;
 import com.example.andrespiraquive.recettes.Presenter.RecipePresenter;
-import com.example.andrespiraquive.recettes.Views.GridViewActivity;
-import com.example.andrespiraquive.recettes.Views.MainActivity;
-import com.example.andrespiraquive.recettes.Views.SearchActivity;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.DocumentReference;
+import com.example.andrespiraquive.recettes.R;
+import com.example.andrespiraquive.recettes.favorisActivity;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.squareup.picasso.Picasso;
-
-import java.io.ByteArrayOutputStream;
 
 public class RecipeActivity extends AppCompatActivity {
 
@@ -74,15 +66,8 @@ public class RecipeActivity extends AppCompatActivity {
         //Recieve data
         Intent intent = getIntent();
         IsFavorie = intent.getExtras().getBoolean("isFavorie");
-        //image = intent.getExtras().getString("ImageId");
-        //Log.d("TAG", "IMAGEID in RECIPE :" + image);
-        //ImageId = intent.getExtras().getByteArray("ImageId");
-        //final String Title = intent.getExtras ().getString ("Title");
-        //final double Note = intent.getExtras ().getDouble ("Note");
-        //final String Description = intent.getExtras ().getString ("Description");
-        //final String Ingredient = intent.getExtras ().getString ("Ingredient");
-        //final String Preparation = intent.getExtras ().getString ("Preparation");
         Document = intent.getExtras().getString("Document");
+
         if (Document == null) {
             Id = intent.getExtras().getInt("Id");
             Title = intent.getExtras().getString("Title");
@@ -92,13 +77,13 @@ public class RecipeActivity extends AppCompatActivity {
             Preparation = intent.getExtras().getString("Preparation");
             Position = intent.getExtras().getString("Position");
 
-            Cursor recipeFavorite = baseRecette.geDataById(Id);
+            Cursor recipeFavorite = baseRecette.geDataById(Id); //Get photo from SQLLITE
             if(recipeFavorite.getCount() == 1){
                 recipeFavorite.moveToFirst();
                 ImageId = recipeFavorite.getBlob(5);
                 img.setImageBitmap(BitmapFactory.decodeByteArray(ImageId, 0, ImageId.length));
             }
-            //settings values
+            //settings values from intent
             tvtitle.setText(Title);
             note.setRating((float) Note);
             tvdescription.setText(Description);
@@ -117,7 +102,7 @@ public class RecipeActivity extends AppCompatActivity {
                 //btnImageFavorite.setEnabled(false);
             }
         } else {
-            recipePresenter.getRecipes(new RecipePresenter.FirestoreCallback() {
+            recipePresenter.getRecipes(new RecipePresenter.FirestoreGetRecipeCallback() { //From Firestore
                 @Override
                 public void onCallback(Recipes mRecipes) {
                     image = mRecipes.getImage();
@@ -154,14 +139,19 @@ public class RecipeActivity extends AppCompatActivity {
         }
     }
 
-    public void addListenerOnRatingBar(final String documentId) {
+    public void addListenerOnRatingBar(final String DocumentId) {
 
         ratingBar = (RatingBar) findViewById (R.id.recipe_details_raiting_id);
 
         ratingBar.setOnRatingBarChangeListener (new RatingBar.OnRatingBarChangeListener () {
             public void onRatingChanged(RatingBar ratingBar, float rating,
                                         boolean fromUser) {
-                addRating (rating,documentId);
+                recipePresenter.addRating(new RecipePresenter.FirestoreRatingRecipeCallback() {
+                    @Override
+                    public void onCallback(Boolean deleted) {
+
+                    }
+                }, getApplicationContext(), rating, DocumentId);
             }
         });
     }
@@ -172,83 +162,22 @@ public class RecipeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (!IsFavorie) {
-                    Log.d("TAG isFavorite = ","NO");
-                    AjoutBaseDonnees();
+                    //AjoutBaseDonnees();
+                    recipePresenter.AjoutBaseDonnees(getApplicationContext(), tvtitle.getText().toString(),
+                            tvingredient.getText().toString(),
+                            tvpreparation.getText().toString(),tvdescription.getText().toString(),
+                            recipePresenter.imageViewToByte(img), String.valueOf (note.getRating()), tvposition.getText().toString());
+                    btnImageFavorite.setImageResource(R.drawable.favorite_yes);
                 }
                 else {
-                    Log.d("TAG isFavorite = ","YES");
-                    SupprimerBaseDonnées();
-                }
-            }
-        });
-    }
-
-    public void AjoutBaseDonnees()
-    {
-        //btnImageFavorite.setOnClickListener(
-                //new View.OnClickListener() {
-                    //@Override
-                    //public void onClick(View v) {
-                        boolean isInserted=baseRecette.insertData(tvtitle.getText().toString(),
-                                tvingredient.getText().toString(),
-                                tvpreparation.getText().toString(),tvdescription.getText().toString(),
-                                imageViewToByte(img), String.valueOf (note.getRating()), tvposition.getText().toString());
-                                btnImageFavorite.setImageResource(R.drawable.favorite_yes);
-
-                        if(isInserted==true) {
-                            Toast.makeText(RecipeActivity.this, "" + Title + " has been add to your Favorites!!", Toast.LENGTH_SHORT).show();
-
-                        }
-                        else
-                            Toast.makeText(RecipeActivity.this , "The recipes already exist in your favorites!", Toast.LENGTH_SHORT).show();
-                   // }
-                //}
-       // );
-
-    }
-
-    private void SupprimerBaseDonnées() {
-
-        //btnImageFavorite.setOnClickListener(new View.OnClickListener() {
-            //@Override
-            //public void onClick(View view) {
-                int deleteRows = baseRecette.deleteData(tvtitle.getText().toString());
-                if (deleteRows > 0) {
+                    recipePresenter.SupprimerBaseDonnées(getApplicationContext(), tvtitle.getText().toString());
                     btnImageFavorite.setImageResource(R.drawable.favorite_no);
-                    Toast.makeText(RecipeActivity.this, "Recipe has been deleted from your favorites!!", Toast.LENGTH_LONG).show();
                     Intent Recipes_list = new Intent(getApplicationContext(), favorisActivity.class);
                     startActivity(Recipes_list);
                     finish();
-                } else
-                    Toast.makeText(RecipeActivity.this, "The recipe does not exist in your favorites!!", Toast.LENGTH_LONG).show();
-
-           // }
-        //});
-    }
-
-    private byte[] imageViewToByte(ImageView image)
-    {
-        Bitmap bitmap=((BitmapDrawable)image.getDrawable()).getBitmap();
-        ByteArrayOutputStream stream=new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG,100, stream);
-        byte[] byteArray=stream.toByteArray();
-        return  byteArray;
-
-    }
-
-    private Task<Void> addRating(final float rating, String documentId) {
-
-        DocumentReference newRecipeRef = db.collection ("Recipes").document (documentId);
-        newRecipeRef.update("note", rating)
-                .addOnSuccessListener(new OnSuccessListener < Void > () {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        Toast.makeText(RecipeActivity.this, "Updated Successfully",
-                                Toast.LENGTH_SHORT).show();
-                    }
-                });
-
-        return null;
+                }
+            }
+        });
     }
 
     public void deleteRecipe(final String DocumentId, final String Title){
@@ -259,10 +188,15 @@ public class RecipeActivity extends AppCompatActivity {
         alertDeleteRecipe.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                db.collection("Recipes").document(DocumentId).delete();
-                Intent intentGridViewActivity = new Intent(RecipeActivity.this, GridViewActivity.class);
-                startActivity(intentGridViewActivity);
-                Toast.makeText(getApplicationContext(), "" + Title + " Has been deleted", Toast.LENGTH_SHORT).show();
+
+                recipePresenter.deleteRecipe(new RecipePresenter.FirestoreDeleteRecipeCallback() {
+                    @Override
+                    public void onCallback(Boolean deleted) {
+                        Intent intentGridViewActivity = new Intent(RecipeActivity.this, GridViewActivity.class);
+                        startActivity(intentGridViewActivity);
+                        Toast.makeText(getApplicationContext(), "" + Title + " Has been deleted", Toast.LENGTH_SHORT).show();
+                    }
+                }, DocumentId);
             }
         });
         alertDeleteRecipe.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -284,7 +218,7 @@ public class RecipeActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case R.id.action_delete:
-                deleteRecipe(Document,Title);
+                    deleteRecipe(Document, Title);
                 return true;
             case R.id.action_modify:
                 Intent intentModifyViewActivity = new Intent(RecipeActivity.this, ModifyRecipeActivity.class);

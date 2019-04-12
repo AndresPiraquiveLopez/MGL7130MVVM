@@ -52,10 +52,10 @@
                 android:value=".Views.GridViewActivity" />
 
         <activity
-            android:name=".RecipeActivity"
+            android:name=".Views.RecipeActivity"
             android:label="@string/title_recipe" />
         <activity
-            android:name=".ModifyRecipeActivity"
+            android:name=".Views.ModifyRecipeActivity"
             android:label="@string/title_modify_recipe" />
         <activity
             android:name=".favorisActivity"

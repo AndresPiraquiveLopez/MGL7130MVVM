@@ -47,7 +47,7 @@ public class DataBase extends SQLiteOpenHelper {
      *
      * @return
      */
-    public boolean insertData( String titre, String ingredient, String preparation, String description, byte[]image, String note, String position){
+    public boolean insertData(String titre, String ingredient, String preparation, String description, byte[]image, String note, String position){
 
         SQLiteDatabase db=this.getWritableDatabase();
 

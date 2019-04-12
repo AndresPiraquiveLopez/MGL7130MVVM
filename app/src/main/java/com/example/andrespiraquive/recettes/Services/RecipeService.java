@@ -30,9 +30,6 @@ import static com.example.andrespiraquive.recettes.Applications.App.CHANNEL_ID;
 
 public class RecipeService extends IntentService {
 
-
-
-
     public RecipeService() {
         super("RecipesService");
     }
@@ -65,6 +62,7 @@ public class RecipeService extends IntentService {
         }
  */
         FirebaseFirestore db = FirebaseFirestore.getInstance ();
+
         CollectionReference myref = db.collection("Recipes");
         myref.addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
@@ -74,47 +72,36 @@ public class RecipeService extends IntentService {
                     Log.d("TAG", e.toString());
                     return;
                 }
-                for (DocumentChange documentSnapshot : queryDocumentSnapshots.getDocumentChanges()) {
 
+                    Log.d("TAG", "SIZE QUERY = " + queryDocumentSnapshots.size());
+                    for (DocumentChange documentSnapshot : queryDocumentSnapshots.getDocumentChanges()) {
+                        switch (documentSnapshot.getType()) {
+                            case ADDED:
+                                String title = documentSnapshot.getDocument().get("title").toString();
+                                Notification nb = new NotificationCompat.Builder(getApplicationContext(), CHANNEL_ID)
+                                        .setSmallIcon(R.mipmap.icone_recipes)
+                                        .setContentTitle("New Recipes")
+                                        .setContentText(title)
+                                        .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                                        .build();
 
-                    switch (documentSnapshot.getType()) {
-                        case ADDED:
-                            String title = documentSnapshot.getDocument().get("title").toString();
-                            Notification nb = new NotificationCompat.Builder(getApplicationContext(), CHANNEL_ID)
-                                    .setSmallIcon(R.mipmap.icone_recipes)
-                                    .setContentTitle("New Recipes")
-                                    .setContentText(title)
-                                    .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-                                    .build();
-
-                            NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(getApplicationContext());
-                            notificationManagerCompat.notify(1, nb);
-                            Log.d("TAG", "New recipe: " + documentSnapshot.getDocument().getData());
-                            break;
-                        case MODIFIED:
-                            Log.d("TAG", "Modified recipe: " + documentSnapshot.getDocument().getData());
-                            break;
-                        case REMOVED:
-                            Log.d("TAG", "Removed recipe: " + documentSnapshot.getDocument().getData());
-                            break;
+                                NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(getApplicationContext());
+                                notificationManagerCompat.notify(1, nb);
+                                Log.d("TAG", "New recipe: " + documentSnapshot.getDocument().getData());
+                                break;
+                            case MODIFIED:
+                                Log.d("TAG", "Modified recipe: " + documentSnapshot.getDocument().getData());
+                                break;
+                            case REMOVED:
+                                Log.d("TAG", "Removed recipe: " + documentSnapshot.getDocument().getData());
+                                break;
+                        }
+                        //Recipes recipes = documentSnapshot.toObject(Recipes.class);
+                        //Log.d("TAG", "Titre =" + recipes.getTitle());
                     }
-                    //Recipes recipes = documentSnapshot.toObject(Recipes.class);
-                    //Log.d("TAG", "Titre =" + recipes.getTitle());
-                }
-
+                
             }
         });
-
-        Notification nb = new NotificationCompat.Builder(this, CHANNEL_ID)
-                .setSmallIcon(R.mipmap.icone_recipes)
-                .setContentTitle("New Recipes")
-                .setContentText("Pizza on the go!!!")
-                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-                .build();
-
-        NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(this);
-        notificationManagerCompat.notify(1, nb);
-
     }
 
     @Override
