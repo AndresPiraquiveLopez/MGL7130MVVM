@@ -109,38 +109,7 @@ public class ModifyRecipeActivity extends AppCompatActivity {
         });
 
     }
-/**
-    private void updateRecipe(final String DocumentId, String titre, String ingredients, String description, String preparation) {
 
-        //Recipes recetteAjouter = new Recipes (titre.getText ().toString (),
-                //ingredients.getText ().toString (), description.getText ().toString (),
-                //preparation.getText ().toString ());
-
-        DocumentReference newRecipeRef = db.collection ("Recipes").document (DocumentId);
-        newRecipeRef.update ("title", titre, "ingredients", ingredients, "description", description, "preparations", preparation)
-                .addOnSuccessListener (new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        Toast.makeText (ModifyRecipeActivity.this, "Recipe Updated",
-                                Toast.LENGTH_SHORT).show ();
-                        Intent intent = new Intent (getApplicationContext(), RecipeActivity.class);
-                        intent.setFlags (Intent.FLAG_ACTIVITY_NEW_TASK);
-                        intent.putExtra("Document", DocumentId);
-                        intent.putExtra("isFavorie", IsFavorie);
-                        startActivity (intent);
-                        finish ();
-                    }
-                })
-                .addOnFailureListener (new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Toast.makeText (ModifyRecipeActivity.this, "ERROR" + e.toString (),
-                                Toast.LENGTH_SHORT).show ();
-                        Log.d ("TAG", e.toString ());
-                    }
-                });
-    }
- */
 
 
 }

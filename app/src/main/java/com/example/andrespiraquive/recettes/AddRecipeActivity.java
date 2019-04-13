@@ -64,6 +64,7 @@ public class AddRecipeActivity extends AppCompatActivity {
     private Uri photoURI;
     private StorageReference mStorageRef;
     private String gpsPosition, position;
+    private Uri downloadUri;
 
     private AddRecipePresenter addRecipePresenter;
 
@@ -87,6 +88,7 @@ public class AddRecipeActivity extends AppCompatActivity {
         editDescription = findViewById(R.id.editDescription);
         editPreparation = findViewById(R.id.editPreparation);
         imageRecipe = findViewById(R.id.imageRecipe);
+
 
 
         final Button buttonSave = findViewById(R.id.saveRecipeButton);
@@ -209,8 +211,30 @@ public class AddRecipeActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<Uri> task) {
                 if (task.isSuccessful()) {
-                    Uri downloadUri = task.getResult();
-                    addNewRecipe(downloadUri.toString());
+                    downloadUri = task.getResult();
+                    //addNewRecipe(downloadUri.toString());
+                    Recipes recetteAjouter = new Recipes(downloadUri.toString(), editTitre.getText().toString(),
+                            editIngredient.getText().toString(), editDescription.getText().toString(),
+                            editPreparation.getText().toString(), 0.0, position, "");
+                    addRecipePresenter.addNewRecipe(new AddRecipePresenter.FirestoreCallback() {
+                        @Override
+                        public void onCallback(Boolean addCompleted) {
+
+                            if(addCompleted){
+                                Toast.makeText(AddRecipeActivity.this, "Recipe Registered",
+                                        Toast.LENGTH_SHORT).show();
+                                Intent intent = new Intent(AddRecipeActivity.this, GridViewActivity.class);
+                                startActivity(intent);
+                                finish();
+                            }
+                            else {
+                                Toast.makeText(AddRecipeActivity.this, "ERROR : Recipe not created",
+                                        Toast.LENGTH_SHORT).show();
+                                Log.d("TAG", "Error : Created the recipe");
+                            }
+                        }
+                    }, downloadUri.toString(), recetteAjouter);
+
                 } else {
                     // Handle failures
                     // ...
@@ -219,7 +243,7 @@ public class AddRecipeActivity extends AppCompatActivity {
         });
         return mStorageRef.getDownloadUrl().toString();
     }
-
+/**
     private void addNewRecipe(String urlImageUpload) {
 
         Recipes recetteAjouter = new Recipes(urlImageUpload, editTitre.getText().toString(),
@@ -247,7 +271,7 @@ public class AddRecipeActivity extends AppCompatActivity {
                     }
                 });
     }
-
+*/
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main_menu, menu);

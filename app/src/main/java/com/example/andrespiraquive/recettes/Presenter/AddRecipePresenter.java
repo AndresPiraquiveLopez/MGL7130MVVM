@@ -2,6 +2,7 @@ package com.example.andrespiraquive.recettes.Presenter;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
@@ -9,12 +10,24 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.util.Log;
+import android.widget.Toast;
+
+import com.example.andrespiraquive.recettes.AddRecipeActivity;
+import com.example.andrespiraquive.recettes.Models.Recipes;
+import com.example.andrespiraquive.recettes.Views.GridViewActivity;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
+
+import static android.support.v4.content.ContextCompat.startActivity;
 
 public class AddRecipePresenter {
 
@@ -61,11 +74,35 @@ public class AddRecipePresenter {
             } else
                 Log.e("TAG", "No address find");
 
-        }
-        else{
-            position = "International, International";
+        } else {
+            position = "International";
         }
         return position;
+    }
+
+    public void addNewRecipe(final FirestoreCallback firestoreCallback, String urlImageUpload, Recipes recetteAjouter) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        DocumentReference newRecipeRef = db.collection("Recipes").document();
+        newRecipeRef.set(recetteAjouter)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        firestoreCallback.onCallback(true);
+
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        firestoreCallback.onCallback(false);
+                    }
+                });
+    }
+
+
+    public interface FirestoreCallback {
+
+        void onCallback(Boolean addCompleted);
     }
 
 }
