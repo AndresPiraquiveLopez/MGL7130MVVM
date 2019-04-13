@@ -9,7 +9,7 @@ public class RepositoryFactory {
 
     public static IRepository<Recipes> getRecipesRepository(Context context) {
         if (_recipesRepository == null) {
-            _recipesRepository = new FakeRepository<Recipes>(context);
+            _recipesRepository = new Repository<Recipes> (context);
         }
         return _recipesRepository;
     }

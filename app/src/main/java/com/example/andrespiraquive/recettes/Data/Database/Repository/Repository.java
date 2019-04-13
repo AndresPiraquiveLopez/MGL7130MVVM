@@ -6,8 +6,8 @@ import com.example.andrespiraquive.recettes.Models.Recipes;
 
 import java.util.List;
 
-public class FakeRepository<T extends Recipes> implements IRepository<T> {
-    public FakeRepository(Context context) {
+public class Repository<T extends Recipes> implements IRepository<T> {
+    public Repository(Context context) {
     }
 
     @Override
