@@ -25,7 +25,7 @@ public class AddRecipePresenter {
 
     }
 
-    public String getLocation(Context context){
+    public String getLocation(Context context) {
         String position = "";
         locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
         String locationProvider = LocationManager.NETWORK_PROVIDER;
@@ -48,21 +48,23 @@ public class AddRecipePresenter {
                 ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
         }
         Location lastKnownLocation = locationManager.getLastKnownLocation(locationProvider);
+        if (lastKnownLocation != null) {
+            Geocoder geocoder = new Geocoder(context, Locale.getDefault());
+            List<Address> addresses = null;
+            try {
+                addresses = geocoder.getFromLocation(lastKnownLocation.getLatitude(), lastKnownLocation.getLongitude(), 1);
+            } catch (IOException e) {
+                Log.d("TAG ", "e = " + e);
+            }
+            if (addresses != null) {
+                position = addresses.get(0).getLocality() + ", " + addresses.get(0).getCountryName();
+            } else
+                Log.e("TAG", "No address find");
 
-        Geocoder geocoder = new Geocoder(context, Locale.getDefault());
-        List<Address> addresses = null;
-        try {
-            addresses = geocoder.getFromLocation(lastKnownLocation.getLatitude(),lastKnownLocation.getLongitude(),1);
-        } catch (IOException e) {
-            Log.d("TAG ", "e = " + e);
         }
-        if(addresses != null){
-            position = addresses.get(0).getLocality() + ", " + addresses.get(0).getCountryName();
+        else{
+            position = "International, International";
         }
-        else
-            Log.e("TAG", "No address find");
-
-
         return position;
     }
 

@@ -92,25 +92,24 @@ public class AddRecipeActivity extends AppCompatActivity {
         position = addRecipePresenter.getLocation(getApplicationContext());
 
 
-        editTitre = findViewById (R.id.titre);
-        editIngredient = findViewById (R.id.editIngredient);
-        editDescription = findViewById (R.id.editDescription);
-        editPreparation = findViewById (R.id.editPreparation);
+        editTitre = findViewById(R.id.titre);
+        editIngredient = findViewById(R.id.editIngredient);
+        editDescription = findViewById(R.id.editDescription);
+        editPreparation = findViewById(R.id.editPreparation);
         imageRecipe = findViewById(R.id.imageRecipe);
 
 
-        final Button buttonSave = findViewById (R.id.saveRecipeButton);
-        final Button buttonCancel = findViewById (R.id.cancelRecipeButton);
+        final Button buttonSave = findViewById(R.id.saveRecipeButton);
+        final Button buttonCancel = findViewById(R.id.cancelRecipeButton);
 
-        buttonSave.setOnClickListener (new View.OnClickListener () {
+        buttonSave.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 // Code here executes on main thread after user presses button
-                if(editTitre.getText().toString().isEmpty() || editDescription.getText().toString().isEmpty()
-                    || editIngredient.getText().toString().isEmpty() || editPreparation.getText().toString().isEmpty()
-                    || photoURI == null) {
+                if (editTitre.getText().toString().isEmpty() || editDescription.getText().toString().isEmpty()
+                        || editIngredient.getText().toString().isEmpty() || editPreparation.getText().toString().isEmpty()
+                        || photoURI == null) {
                     Toast.makeText(AddRecipeActivity.this, "You must fill all the fields...", Toast.LENGTH_LONG).show();
-                }
-                else{
+                } else {
                     uploadImage();
                 }
             }
@@ -118,9 +117,9 @@ public class AddRecipeActivity extends AppCompatActivity {
         buttonCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent (AddRecipeActivity.this, GridViewActivity.class);
-                startActivity (intent);
-                finish ();
+                Intent intent = new Intent(AddRecipeActivity.this, GridViewActivity.class);
+                startActivity(intent);
+                finish();
             }
         });
 
@@ -150,9 +149,10 @@ public class AddRecipeActivity extends AppCompatActivity {
         currentPhotoPath = image.getAbsolutePath();
         return image;
     }
+
     private void dispatchPictureTakerAction() {
         Intent takePicture = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        if(takePicture.resolveActivity(getPackageManager()) != null){
+        if (takePicture.resolveActivity(getPackageManager()) != null) {
             //Photo will go in this file
             File photoFile = null;
             try {
@@ -178,7 +178,7 @@ public class AddRecipeActivity extends AppCompatActivity {
         }
     }
 
-    private String uploadImage(){
+    private String uploadImage() {
         UploadTask uploadTask;
         InputStream imageStream = null;
 
@@ -190,8 +190,8 @@ public class AddRecipeActivity extends AppCompatActivity {
 
         Bitmap bitmapimage = BitmapFactory.decodeStream(imageStream);
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        bitmapimage.compress(Bitmap.CompressFormat.JPEG,30,baos);
-        byte [] bitmapData = baos.toByteArray();
+        bitmapimage.compress(Bitmap.CompressFormat.JPEG, 30, baos);
+        byte[] bitmapData = baos.toByteArray();
         try {
             baos.flush();
             baos.close();
@@ -232,36 +232,36 @@ public class AddRecipeActivity extends AppCompatActivity {
 
     private void addNewRecipe(String urlImageUpload) {
 
-        Recipes recetteAjouter = new Recipes (urlImageUpload, editTitre.getText ().toString (),
-                editIngredient.getText ().toString (), editDescription.getText ().toString (),
-                editPreparation.getText ().toString (), 0.0, position, "");
+        Recipes recetteAjouter = new Recipes(urlImageUpload, editTitre.getText().toString(),
+                editIngredient.getText().toString(), editDescription.getText().toString(),
+                editPreparation.getText().toString(), 0.0, position, "");
 
-        DocumentReference newRecipeRef = db.collection ("Recipes").document ();
-        newRecipeRef.set (recetteAjouter)
-                .addOnSuccessListener (new OnSuccessListener<Void> () {
+        DocumentReference newRecipeRef = db.collection("Recipes").document();
+        newRecipeRef.set(recetteAjouter)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-                        Toast.makeText (AddRecipeActivity.this, "Recipe Registered",
-                                Toast.LENGTH_SHORT).show ();
-                        Intent intent = new Intent (AddRecipeActivity.this, GridViewActivity.class);
-                        startActivity (intent);
-                        finish ();
+                        Toast.makeText(AddRecipeActivity.this, "Recipe Registered",
+                                Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(AddRecipeActivity.this, GridViewActivity.class);
+                        startActivity(intent);
+                        finish();
                     }
                 })
-                .addOnFailureListener (new OnFailureListener () {
+                .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Toast.makeText (AddRecipeActivity.this, "ERROR" + e.toString (),
-                                Toast.LENGTH_SHORT).show ();
-                        Log.d ("TAG", e.toString ());
+                        Toast.makeText(AddRecipeActivity.this, "ERROR" + e.toString(),
+                                Toast.LENGTH_SHORT).show();
+                        Log.d("TAG", e.toString());
                     }
                 });
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater ().inflate (R.menu.main_menu, menu);
-        return super.onCreateOptionsMenu (menu);
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+        return super.onCreateOptionsMenu(menu);
     }
 
     @Override
@@ -297,4 +297,4 @@ public class AddRecipeActivity extends AppCompatActivity {
         }
     }
 
-    }
+}
