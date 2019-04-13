@@ -31,12 +31,10 @@ public class GridPresenter extends ViewModel{
         final String POSITION_KEY = "position";
         final String COLLECTION_PATH = "Recipes";
 
+        FirebaseService mDb = new FirebaseService();
+        mDb.StartFireBaseService();
 
-
-        FirebaseService db = new FirebaseService();
-        db.StartFireBaseService();
-
-        db.StartFireBaseService().collection (COLLECTION_PATH)
+        mDb.StartFireBaseService().collection (COLLECTION_PATH)
                 .orderBy (TITLE_KEY)
                 .get ()
                 .addOnCompleteListener (new OnCompleteListener<QuerySnapshot>() {
