@@ -14,7 +14,6 @@ import android.widget.Toast;
 import com.example.andrespiraquive.recettes.Data.Network.FirebaseAuthRecipes;
 import com.example.andrespiraquive.recettes.Presenter.LoginPresenter;
 import com.example.andrespiraquive.recettes.R;
-import com.example.andrespiraquive.recettes.RegisterActivity;
 import com.example.andrespiraquive.recettes.Services.RecipeService;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
