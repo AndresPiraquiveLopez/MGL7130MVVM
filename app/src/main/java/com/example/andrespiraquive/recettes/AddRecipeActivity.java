@@ -29,6 +29,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.andrespiraquive.recettes.Models.Recipes;
+import com.example.andrespiraquive.recettes.Presenter.AddRecipePresenter;
 import com.example.andrespiraquive.recettes.Views.GridViewActivity;
 import com.example.andrespiraquive.recettes.Views.MainActivity;
 import com.example.andrespiraquive.recettes.Views.SearchActivity;
@@ -72,21 +73,25 @@ public class AddRecipeActivity extends AppCompatActivity {
     private String currentPhotoPath;
     private Uri photoURI;
     private StorageReference mStorageRef;
-    private LocationManager locationManager;
     private String gpsPosition, position;
+
+    private AddRecipePresenter addRecipePresenter;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_recipe);
+        addRecipePresenter = new AddRecipePresenter();
+        db = FirebaseFirestore.getInstance();
 
         // Hide ActionBar
         if (getSupportActionBar() != null) {
             getSupportActionBar().hide();
         }
-        gpsPosition = getLocation();
-        db = FirebaseFirestore.getInstance();
+        position = addRecipePresenter.getLocation(getApplicationContext());
+
+
         editTitre = findViewById (R.id.titre);
         editIngredient = findViewById (R.id.editIngredient);
         editDescription = findViewById (R.id.editDescription);
@@ -251,50 +256,6 @@ public class AddRecipeActivity extends AppCompatActivity {
                         Log.d ("TAG", e.toString ());
                     }
                 });
-    }
-
-    private String getLocation(){
-        locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
-        String locationProvider = LocationManager.NETWORK_PROVIDER;
-        LocationListener locationListener = new LocationListener() {
-            public void onLocationChanged(Location location) {
-                // Called when a new location is found by the network location provider.
-                //Log.d("TAG ","LOCATION = " +location);
-            }
-
-            public void onStatusChanged(String provider, int status, Bundle extras) {
-            }
-
-            public void onProviderEnabled(String provider) {
-            }
-
-            public void onProviderDisabled(String provider) {
-            }
-        };
-
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-        }
-        Location lastKnownLocation = locationManager.getLastKnownLocation(locationProvider);
-        //Log.d("TAG ","LONGITUDE = " + lastKnownLocation.getLongitude());
-        //Log.d("TAG ","LATITUDE = " + lastKnownLocation.getLatitude());
-
-        Geocoder geocoder = new Geocoder(this, Locale.getDefault());
-        List<Address> addresses = null;
-        try {
-            addresses = geocoder.getFromLocation(lastKnownLocation.getLatitude(),lastKnownLocation.getLongitude(),1);
-        } catch (IOException e) {
-            Log.d("TAG ", "e = " + e);
-        }
-        if(addresses != null){
-            //Log.d("ADDRESS","Pays :" + addresses.get(0).getCountryName());
-            //Log.d("ADDRESS","Ville :" + addresses.get(0).getLocality());
-            position = addresses.get(0).getLocality() + ", " + addresses.get(0).getCountryName();
-        }
-        else
-            Log.e("TAG", "No address find");
-
-
-        return lastKnownLocation.toString();
     }
 
     @Override
