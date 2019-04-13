@@ -1,21 +1,12 @@
 package com.example.andrespiraquive.recettes;
 
-import android.Manifest;
-import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.location.Address;
-import android.location.Geocoder;
-import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -33,6 +24,7 @@ import com.example.andrespiraquive.recettes.Presenter.AddRecipePresenter;
 import com.example.andrespiraquive.recettes.Views.GridViewActivity;
 import com.example.andrespiraquive.recettes.Views.MainActivity;
 import com.example.andrespiraquive.recettes.Views.SearchActivity;
+import com.example.andrespiraquive.recettes.Views.favorisActivity;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -51,8 +43,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
-import java.util.Locale;
 
 public class AddRecipeActivity extends AppCompatActivity {
 

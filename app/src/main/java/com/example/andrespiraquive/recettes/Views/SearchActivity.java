@@ -19,7 +19,6 @@ import com.example.andrespiraquive.recettes.GridViewAdapter;
 import com.example.andrespiraquive.recettes.Models.Recipes;
 import com.example.andrespiraquive.recettes.Presenter.SearchPresenter;
 import com.example.andrespiraquive.recettes.R;
-import com.example.andrespiraquive.recettes.favorisActivity;
 
 import java.util.List;
 

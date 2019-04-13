@@ -1,4 +1,4 @@
-package com.example.andrespiraquive.recettes;
+package com.example.andrespiraquive.recettes.Views;
 
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -11,20 +11,21 @@ import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.example.andrespiraquive.recettes.AddRecipeActivity;
 import com.example.andrespiraquive.recettes.Data.Database.DataBase;
+import com.example.andrespiraquive.recettes.GridViewAdapter;
 import com.example.andrespiraquive.recettes.Presenter.FavorisPresenter;
-import com.example.andrespiraquive.recettes.Views.GridViewActivity;
-import com.example.andrespiraquive.recettes.Views.MainActivity;
-import com.example.andrespiraquive.recettes.Views.SearchActivity;
+import com.example.andrespiraquive.recettes.R;
+import com.example.andrespiraquive.recettes.RecipesListAdapter;
 
 import java.util.ArrayList;
 
 public class favorisActivity extends AppCompatActivity {
 
-    private ArrayList<FavorisPresenter> lsRecipe;
-    private DataBase baseRecette;
+    private ArrayList<FavorisPresenter> mLsRecipe;
+    private DataBase mBaseRecette;
     private RecipesListAdapter adapter = null;
-    private RecyclerView affichageRecette;
+    private RecyclerView mAffichageRecette;
 
 
     @Override
@@ -33,14 +34,14 @@ public class favorisActivity extends AppCompatActivity {
         setContentView (R.layout.activity_liste_favoris);
 
 
-        baseRecette = new DataBase (this);
-        //lsRecipe = new ArrayList<> ();
-        lsRecipe = new ArrayList<> ();
+        mBaseRecette = new DataBase (this);
+
+       mLsRecipe = new ArrayList<> ();
 
 
-        affichageRecette = findViewById (R.id.favorite_recycle_view);
+        mAffichageRecette = findViewById (R.id.favorite_recycle_view);
 
-        Cursor res = baseRecette.getAllData ();
+        Cursor res = mBaseRecette.getAllData ();
 
         if (res.getCount () == 0) {
             ShowMessage ("Message", "You have no favorites");
@@ -58,14 +59,14 @@ public class favorisActivity extends AppCompatActivity {
                 String note = String.valueOf (res.getDouble (6));
                 String position = res.getString(7);
 
-                //lsRecipe.add (new Recipes (imageID, title, ingredient, description, preparation, note, position));
-                lsRecipe.add (new FavorisPresenter (id, imageID, title, ingredient, description, preparation, note, position));
+
+                mLsRecipe.add (new FavorisPresenter (id, imageID, title, ingredient, description, preparation, note, position));
 
             }
         }
 
-        RecyclerView resultSearchView = affichageRecette;
-        GridViewAdapter myAdapter = new GridViewAdapter (lsRecipe, getApplicationContext ());
+        RecyclerView resultSearchView = mAffichageRecette;
+        GridViewAdapter myAdapter = new GridViewAdapter (mLsRecipe, getApplicationContext ());
         setLayout (resultSearchView);
         //resultSearchView.setLayoutManager (new GridLayoutManager (getApplicationContext (), 2));
         resultSearchView.setAdapter (myAdapter);

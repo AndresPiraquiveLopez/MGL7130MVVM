@@ -58,7 +58,7 @@
             android:name=".Views.ModifyRecipeActivity"
             android:label="@string/title_modify_recipe" />
         <activity
-            android:name=".favorisActivity"
+            android:name=".Views.favorisActivity"
             android:label="Favoris" />
         <provider
             android:name="android.support.v4.content.FileProvider"

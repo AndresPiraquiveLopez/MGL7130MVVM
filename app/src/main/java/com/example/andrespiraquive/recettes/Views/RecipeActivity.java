@@ -20,7 +20,6 @@ import com.example.andrespiraquive.recettes.Data.Database.DataBase;
 import com.example.andrespiraquive.recettes.Models.Recipes;
 import com.example.andrespiraquive.recettes.Presenter.RecipePresenter;
 import com.example.andrespiraquive.recettes.R;
-import com.example.andrespiraquive.recettes.favorisActivity;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.squareup.picasso.Picasso;
 
