@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:app="http://schemas.android.com/apk/res-auto"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorBackground">
@@ -23,7 +23,7 @@
         <EditText
             android:id="@+id/titre"
             android:layout_width="0dp"
-            android:layout_height="40dp"
+            android:layout_height="60dp"
             android:layout_marginTop="16dp"
             android:ems="10"
             android:hint="Title"
@@ -39,12 +39,15 @@
         <EditText
             android:id="@+id/editIngredient"
             android:layout_width="0dp"
-            android:layout_height="40dp"
+            android:layout_height="80dp"
             android:layout_marginTop="16dp"
             android:ems="10"
-            android:padding="10dp"
+            android:gravity="top|left"
             android:hint="Ingredient"
-            android:inputType="text"
+            android:inputType="textMultiLine"
+            android:maxLines="3"
+            android:padding="10dp"
+            android:singleLine="false"
             android:textColor="@color/colorPrimaryDark"
             android:textColorHint="@color/colorPrimaryDark"
             app:layout_constraintEnd_toEndOf="parent"
@@ -59,10 +62,11 @@
             android:layout_marginTop="16dp"
             android:background="@color/white"
             android:ems="10"
-            android:padding="10dp"
             android:gravity="top|left"
             android:hint="Description"
-            android:inputType="textPersonName"
+            android:inputType="textMultiLine"
+            android:maxLines="3"
+            android:padding="10dp"
             android:singleLine="false"
             android:text=""
             android:textColorHint="@color/colorPrimaryDark"
@@ -77,10 +81,12 @@
             android:layout_marginTop="16dp"
             android:background="@color/white"
             android:ems="10"
-            android:padding="10dp"
             android:gravity="top|left"
             android:hint="Preparation"
-            android:inputType="textPersonName"
+            android:inputType="textMultiLine"
+            android:maxLines="3"
+            android:padding="10dp"
+            android:singleLine="false"
             android:text=""
             android:textColorHint="@color/colorPrimaryDark"
             app:layout_constraintEnd_toEndOf="parent"
@@ -113,7 +119,6 @@
             android:textColor="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/editPreparation" />
-
 
 
     </android.support.constraint.ConstraintLayout>
