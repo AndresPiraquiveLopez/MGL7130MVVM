@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.andrespiraquive.recettes.Views.LoginActivity;
 import com.example.andrespiraquive.recettes.Views.MainActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -29,10 +30,10 @@ public class RegisterActivity extends AppCompatActivity {
 
         FirebaseApp.initializeApp(this);
 
-        emaill = (EditText) findViewById(R.id.uyeEmail);
-        passwordd = (EditText) findViewById(R.id.password);
-        registerButton = (Button) findViewById(R.id.newMemberButton);
-        loginButton = (Button) findViewById(R.id.alreadyMemberButton);
+        emaill = findViewById(R.id.uyeEmail);
+        passwordd = findViewById(R.id.password);
+        registerButton = findViewById(R.id.newMemberButton);
+        loginButton = findViewById(R.id.alreadyMemberButton);
 
         firebaseAuth = FirebaseAuth.getInstance();
 

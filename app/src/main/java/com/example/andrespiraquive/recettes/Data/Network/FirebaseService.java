@@ -4,14 +4,14 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 public class FirebaseService implements IFirebaseService{
 
-    private FirebaseFirestore _db;
+    private FirebaseFirestore mDb;
 
     public FirebaseService(){
     }
 
     public FirebaseFirestore StartFireBaseService(){
-        _db =  FirebaseFirestore.getInstance ();
-        return _db;
+        mDb =  FirebaseFirestore.getInstance ();
+        return mDb;
     }
 
 }
