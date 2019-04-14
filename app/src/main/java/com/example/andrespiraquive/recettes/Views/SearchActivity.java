@@ -14,7 +14,6 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.example.andrespiraquive.recettes.AddRecipeActivity;
 import com.example.andrespiraquive.recettes.GridViewAdapter;
 import com.example.andrespiraquive.recettes.Models.Recipes;
 import com.example.andrespiraquive.recettes.Presenter.SearchPresenter;

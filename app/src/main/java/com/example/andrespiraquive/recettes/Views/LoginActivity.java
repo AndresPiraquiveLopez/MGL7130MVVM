@@ -1,9 +1,13 @@
 package com.example.andrespiraquive.recettes.Views;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.View;
@@ -29,6 +33,9 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.GoogleAuthProvider;
 
 public class LoginActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
+
+    private static final int REQUEST_CODE_PERMISSION = 1;
+
     private EditText loginEmail, loginPassword;
     private Button loginButton, registerButton, newPassButton, uyeOlButton;
     private static final int RC_SIGN_IN = 9001;
@@ -44,7 +51,10 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         setContentView(R.layout.activity_login);
         Intent intent = new Intent(this, RecipeService.class);
         startService(intent);
+        verifyPermission();
 
+    }
+    private void LoginWorldRecipes(){
         // Hide ActionBar
         if (getSupportActionBar() != null) {
             getSupportActionBar().hide();
@@ -57,7 +67,11 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         signInButton = (SignInButton) findViewById(R.id.sign_in_button);
         newPassButton = (Button) findViewById(R.id.newPasswordButton);
 
-        mAuth = new FirebaseAuthRecipes ();
+        mAuth = new FirebaseAuthRecipes();
+
+
+
+
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(mIdToken)
@@ -143,6 +157,43 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+
+        switch (requestCode){
+            case REQUEST_CODE_PERMISSION : {
+                if(grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED){
+                    LoginWorldRecipes();
+                }
+                else{
+                    Toast.makeText(this, "Permission was not granted", Toast.LENGTH_SHORT).show();
+                    verifyPermission();
+                }
+                return;
+            }
+            default: {
+                verifyPermission();
+            }
+        }
+    }
+
+    private void verifyPermission() {
+        String[] permissions = {Manifest.permission.CAMERA,
+                Manifest.permission.ACCESS_COARSE_LOCATION};
+
+        if (ContextCompat.checkSelfPermission(this.getApplicationContext(),
+                permissions[0]) == PackageManager.PERMISSION_GRANTED
+                && ContextCompat.checkSelfPermission(this.getApplicationContext(),
+                permissions[1]) == PackageManager.PERMISSION_GRANTED) {
+            LoginWorldRecipes();
+        }
+        else {
+            ActivityCompat.requestPermissions(LoginActivity.this, permissions, REQUEST_CODE_PERMISSION);
+        }
+
 
     }
 }
