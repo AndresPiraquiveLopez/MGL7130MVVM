@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -44,37 +45,34 @@ public class GridViewActivity extends AppCompatActivity {
     }
 
     private void setLayout(RecyclerView mRv) {
-        switch (getResources ().getConfiguration ().orientation) {
+        switch (getResources().getConfiguration().orientation) {
             case Configuration.ORIENTATION_PORTRAIT:
 
-                int mWidthPortraitDp = getResources ().getConfiguration ().screenWidthDp >= 600 ? 1 : 0;
-                switch (mWidthPortraitDp) {
-                    case 0:
-                        mRv.setLayoutManager (new GridLayoutManager (getApplicationContext (), 2));
-                        break;
 
-                    case 1:
-                        mRv.setLayoutManager (new GridLayoutManager (getApplicationContext (), 3));
-                        break;
+                //Log.d("TAG", "WIDTH_PORTRAIT : " + getResources().getConfiguration().screenWidthDp);
+                if (getResources().getConfiguration().screenWidthDp >= 600) {
+                    mRv.setLayoutManager(new GridLayoutManager(getApplicationContext(), 3));
+                }
+                if (getResources().getConfiguration().screenWidthDp <= 599 && getResources().getConfiguration().screenWidthDp >= 355) {
+                    mRv.setLayoutManager(new GridLayoutManager(getApplicationContext(), 2));
+                }
+                if (getResources().getConfiguration().screenWidthDp <= 354) {
+                    mRv.setLayoutManager(new GridLayoutManager(getApplicationContext(), 1));
                 }
                 break;
-
             case Configuration.ORIENTATION_LANDSCAPE:
 
-                int mWidthLandscapeDp = getResources ().getConfiguration ().screenWidthDp >= 921 ? 1 : 0;
-
-                switch (mWidthLandscapeDp) {
-                    case 0:
-                        mRv.setLayoutManager (new GridLayoutManager (getApplicationContext (), 4));
-                        break;
-
-                    case 1:
-                        mRv.setLayoutManager (new GridLayoutManager (getApplicationContext (), 5));
-                        break;
-
+                //Log.d("TAG", "WIDTH_LANDSCAPE : " + getResources().getConfiguration().screenWidthDp);
+                if (getResources().getConfiguration().screenWidthDp >= 921) {
+                    mRv.setLayoutManager(new GridLayoutManager(getApplicationContext(), 5));
+                }
+                if (getResources().getConfiguration().screenWidthDp <= 920 && getResources().getConfiguration().screenWidthDp >= 601) {
+                    mRv.setLayoutManager(new GridLayoutManager(getApplicationContext(), 4));
+                }
+                if (getResources().getConfiguration().screenWidthDp <= 600) {
+                    mRv.setLayoutManager(new GridLayoutManager(getApplicationContext(), 3));
                 }
                 break;
-
             default:
                 break;
         }
