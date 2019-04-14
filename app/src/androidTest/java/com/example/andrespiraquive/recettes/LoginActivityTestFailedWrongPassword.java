@@ -143,6 +143,8 @@ public class LoginActivityTestFailedWrongPassword {
                                 2),
                         isDisplayed ()));
         appCompatEditText8.perform (closeSoftKeyboard ());
+
+
     }
 
     private static Matcher<View> childAtPosition(
