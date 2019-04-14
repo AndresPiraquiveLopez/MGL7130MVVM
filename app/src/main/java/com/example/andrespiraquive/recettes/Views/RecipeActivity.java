@@ -42,6 +42,7 @@ public class RecipeActivity extends AppCompatActivity {
     private String Preparation;
     private String Position;
     private String Document;
+    private String fromFavorite;
     private boolean IsFavorie;
 
     @Override
@@ -208,60 +209,101 @@ public class RecipeActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater ().inflate (R.menu.recipe_menu, menu);
-        return super.onCreateOptionsMenu (menu);
+        Intent intent = getIntent();
+        fromFavorite = intent.getExtras().getString("Document");
+        if(fromFavorite == null){
+            getMenuInflater ().inflate (R.menu.main_menu, menu);
+            return super.onCreateOptionsMenu (menu);
+        }
+        else{
+            getMenuInflater ().inflate (R.menu.recipe_menu, menu);
+            return super.onCreateOptionsMenu (menu);
+        }
+
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
-            case R.id.action_delete:
-                    deleteRecipe(Document, Title);
-                return true;
-            case R.id.action_modify:
-                Intent intentModifyViewActivity = new Intent(RecipeActivity.this, ModifyRecipeActivity.class);
-                intentModifyViewActivity.setFlags (Intent.FLAG_ACTIVITY_NEW_TASK);
-                intentModifyViewActivity.putExtra("ImageId",image);
-                intentModifyViewActivity.putExtra("Title",Title);
-                intentModifyViewActivity.putExtra("Description",Description);
-                intentModifyViewActivity.putExtra("Ingredient",Ingredient);
-                intentModifyViewActivity.putExtra("Preparation",Preparation);
-                intentModifyViewActivity.putExtra("DocumentId", Document);
-                intentModifyViewActivity.putExtra("isFavorie", IsFavorie);
-                intentModifyViewActivity.putExtra("Position", Position);
-                startActivity(intentModifyViewActivity);
-                finish();
-                return true;
-            case R.id.list_recipes:
-                Intent listRecipes = new Intent (getApplicationContext (), GridViewActivity.class);
-                startActivity (listRecipes);
-                finish ();
-                return true;
-            case R.id.add_recipe:
-                Intent addRecipe = new Intent (getApplicationContext (), AddRecipeActivity.class);
-                startActivity (addRecipe);
-                finish ();
-                return true;
-            case R.id.search_recipe:
-                Intent searchActivity = new Intent (getApplicationContext (), SearchActivity.class);
-                startActivity (searchActivity);
-                finish ();
-                return true;
-            case R.id.user_favoris:
-                Intent Recipes_list = new Intent(getApplicationContext(), favorisActivity.class);
-                startActivity(Recipes_list);
-                finish();
-                return true;
-            case R.id.user_settings:
-                Intent userSettings = new Intent (getApplicationContext (), MainActivity.class);
-                startActivity (userSettings);
-                finish ();
-                return true;
-            default:
-                return super.onOptionsItemSelected (item);
+        if(fromFavorite == null){
+            switch (item.getItemId()) {
+                case R.id.list_recipes:
+                    Intent listRecipes = new Intent(getApplicationContext(), GridViewActivity.class);
+                    startActivity(listRecipes);
+                    finish();
+                    return true;
+                case R.id.add_recipe:
+                    Intent addRecipe = new Intent(getApplicationContext(), AddRecipeActivity.class);
+                    startActivity(addRecipe);
+                    finish();
+                    return true;
+                case R.id.search_recipe:
+                    Intent searchActivity = new Intent(getApplicationContext(), SearchActivity.class);
+                    startActivity(searchActivity);
+                    finish();
+                    return true;
+                case R.id.user_favoris:
+                    Intent Recipes_list = new Intent(getApplicationContext(), favorisActivity.class);
+                    startActivity(Recipes_list);
+                    finish();
+                    return true;
+                case R.id.user_settings:
+                    Intent userSettings = new Intent(getApplicationContext(), MainActivity.class);
+                    startActivity(userSettings);
+                    finish();
+                    return true;
+                default:
+                    return super.onOptionsItemSelected(item);
+            }
         }
+        else {
+            switch (item.getItemId()) {
+                case R.id.action_delete:
+                    deleteRecipe(Document, Title);
+                    return true;
+                case R.id.action_modify:
+                    Intent intentModifyViewActivity = new Intent(RecipeActivity.this, ModifyRecipeActivity.class);
+                    intentModifyViewActivity.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    intentModifyViewActivity.putExtra("ImageId", image);
+                    intentModifyViewActivity.putExtra("Title", Title);
+                    intentModifyViewActivity.putExtra("Description", Description);
+                    intentModifyViewActivity.putExtra("Ingredient", Ingredient);
+                    intentModifyViewActivity.putExtra("Preparation", Preparation);
+                    intentModifyViewActivity.putExtra("DocumentId", Document);
+                    intentModifyViewActivity.putExtra("isFavorie", IsFavorie);
+                    intentModifyViewActivity.putExtra("Position", Position);
+                    startActivity(intentModifyViewActivity);
+                    finish();
+                    return true;
+                case R.id.list_recipes:
+                    Intent listRecipes = new Intent(getApplicationContext(), GridViewActivity.class);
+                    startActivity(listRecipes);
+                    finish();
+                    return true;
+                case R.id.add_recipe:
+                    Intent addRecipe = new Intent(getApplicationContext(), AddRecipeActivity.class);
+                    startActivity(addRecipe);
+                    finish();
+                    return true;
+                case R.id.search_recipe:
+                    Intent searchActivity = new Intent(getApplicationContext(), SearchActivity.class);
+                    startActivity(searchActivity);
+                    finish();
+                    return true;
+                case R.id.user_favoris:
+                    Intent Recipes_list = new Intent(getApplicationContext(), favorisActivity.class);
+                    startActivity(Recipes_list);
+                    finish();
+                    return true;
+                case R.id.user_settings:
+                    Intent userSettings = new Intent(getApplicationContext(), MainActivity.class);
+                    startActivity(userSettings);
+                    finish();
+                    return true;
+                default:
+                    return super.onOptionsItemSelected(item);
+            }
 
-
+        }
 
 
     }
