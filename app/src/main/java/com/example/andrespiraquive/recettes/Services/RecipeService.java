@@ -49,18 +49,7 @@ public class RecipeService extends IntentService {
 
     @Override
     protected void onHandleIntent(@Nullable Intent intent) {
-/**
 
-        for(int i=0;i<30;i++){
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            Log.d("TAG ", "i = " +i);
-
-        }
- */
         FirebaseFirestore db = FirebaseFirestore.getInstance ();
 
         CollectionReference myref = db.collection("Recipes");
@@ -96,8 +85,6 @@ public class RecipeService extends IntentService {
                                 Log.d("TAG", "Removed recipe: " + documentSnapshot.getDocument().getData());
                                 break;
                         }
-                        //Recipes recipes = documentSnapshot.toObject(Recipes.class);
-                        //Log.d("TAG", "Titre =" + recipes.getTitle());
                     }
                 
             }
