@@ -1,5 +1,6 @@
 package com.example.andrespiraquive.recettes;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -8,6 +9,7 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v4.content.FileProvider;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -17,6 +19,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.andrespiraquive.recettes.Models.Recipes;
@@ -46,12 +49,6 @@ import java.util.Date;
 
 public class AddRecipeActivity extends AppCompatActivity {
 
-    private static final String TITRE_KEY = "titre";
-    private static final String INGREDIENT_KEY = "ingredient";
-    private static final String DESCRIPTION_KEY = "description";
-    private static final String PREPARATION_KEY = "preparation";
-    private static final String POSITION_KEY = "position";
-
     private static final int REQUEST_IMAGE_CAPTURE = 1;
 
     private FirebaseFirestore db;
@@ -65,8 +62,8 @@ public class AddRecipeActivity extends AppCompatActivity {
     private StorageReference mStorageRef;
     private String gpsPosition, position;
     private Uri downloadUri;
-
     private AddRecipePresenter addRecipePresenter;
+    private ProgressDialog progressDialog;
 
 
     @Override
@@ -96,6 +93,7 @@ public class AddRecipeActivity extends AppCompatActivity {
 
         buttonSave.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                showProgessBar();
                 // Code here executes on main thread after user presses button
                 if (editTitre.getText().toString().isEmpty() || editDescription.getText().toString().isEmpty()
                         || editIngredient.getText().toString().isEmpty() || editPreparation.getText().toString().isEmpty()
@@ -223,6 +221,7 @@ public class AddRecipeActivity extends AppCompatActivity {
                             if(addCompleted){
                                 Toast.makeText(AddRecipeActivity.this, "Recipe Registered",
                                         Toast.LENGTH_SHORT).show();
+                                progressDialog.dismiss();
                                 Intent intent = new Intent(AddRecipeActivity.this, GridViewActivity.class);
                                 startActivity(intent);
                                 finish();
@@ -243,35 +242,18 @@ public class AddRecipeActivity extends AppCompatActivity {
         });
         return mStorageRef.getDownloadUrl().toString();
     }
-/**
-    private void addNewRecipe(String urlImageUpload) {
 
-        Recipes recetteAjouter = new Recipes(urlImageUpload, editTitre.getText().toString(),
-                editIngredient.getText().toString(), editDescription.getText().toString(),
-                editPreparation.getText().toString(), 0.0, position, "");
+    private void showProgessBar(){
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setTitle("Please Wait..");
+        progressDialog.setMessage("Saving recipe...");
+        progressDialog.setIndeterminate(true);
+        progressDialog.setCanceledOnTouchOutside(false);
+        progressDialog.show();
 
-        DocumentReference newRecipeRef = db.collection("Recipes").document();
-        newRecipeRef.set(recetteAjouter)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        Toast.makeText(AddRecipeActivity.this, "Recipe Registered",
-                                Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(AddRecipeActivity.this, GridViewActivity.class);
-                        startActivity(intent);
-                        finish();
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(AddRecipeActivity.this, "ERROR" + e.toString(),
-                                Toast.LENGTH_SHORT).show();
-                        Log.d("TAG", e.toString());
-                    }
-                });
     }
-*/
+
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main_menu, menu);
