@@ -3,24 +3,26 @@ package com.example.andrespiraquive.recettes.Presenter;
 import android.arch.lifecycle.ViewModel;
 import android.support.annotation.NonNull;
 import android.util.Log;
+
 import com.example.andrespiraquive.recettes.Data.Network.FirebaseService;
 import com.example.andrespiraquive.recettes.Models.Recipes;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class GridPresenter extends ViewModel{
+public class GridPresenter extends ViewModel {
 
 
-    private List<Recipes> mRecipes = new ArrayList<>();
+    private List<Recipes> mRecipes = new ArrayList<> ();
 
     public GridPresenter() {
     }
 
-    public void getAllRecipes(final FirestoreCallback firestoreCallback){
+    public void getAllRecipes(final FirestoreCallback firestoreCallback) {
 
         final String IMAGE_KEY = "image";
         final String TITLE_KEY = "title";
@@ -31,13 +33,13 @@ public class GridPresenter extends ViewModel{
         final String POSITION_KEY = "position";
         final String COLLECTION_PATH = "Recipes";
 
-        FirebaseService mDb = new FirebaseService();
-        mDb.StartFireBaseService();
+        FirebaseService mDb = new FirebaseService ();
+        mDb.StartFireBaseService ();
 
-        mDb.StartFireBaseService().collection (COLLECTION_PATH)
+        mDb.StartFireBaseService ().collection (COLLECTION_PATH)
                 .orderBy (TITLE_KEY)
                 .get ()
-                .addOnCompleteListener (new OnCompleteListener<QuerySnapshot>() {
+                .addOnCompleteListener (new OnCompleteListener<QuerySnapshot> () {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful ()) {
@@ -47,7 +49,7 @@ public class GridPresenter extends ViewModel{
                                         document.get (DESCRIPTION_KEY).toString (), document.get (PREPARATIONS_KEY).toString (),
                                         (double) document.get (NOTE_KEY), document.get (POSITION_KEY).toString (), document.getId ()));
                             }
-                            firestoreCallback.onCallback(mRecipes);
+                            firestoreCallback.onCallback (mRecipes);
 
                         } else {
                             Log.d ("TAG", "Error getting documents: ", task.getException ());
@@ -58,7 +60,7 @@ public class GridPresenter extends ViewModel{
                 });
     }
 
-    public interface  FirestoreCallback {
+    public interface FirestoreCallback {
 
         void onCallback(List<Recipes> listRecipes);
     }

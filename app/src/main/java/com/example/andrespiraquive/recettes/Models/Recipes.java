@@ -13,9 +13,8 @@ public class Recipes {
     private double note;
     private String position;
     private String document;
-    //private byte[] images;
     private String test;
-    private List<Recipes> mRecipes = new ArrayList<>();
+    private List<Recipes> mRecipes = new ArrayList<> ();
 
     public Recipes() {
     }

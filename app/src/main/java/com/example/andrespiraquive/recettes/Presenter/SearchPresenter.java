@@ -16,9 +16,9 @@ import java.util.List;
 public class SearchPresenter {
 
 
-    private List<Recipes> mRecipes = new ArrayList<>();
+    private List<Recipes> mRecipes = new ArrayList<> ();
 
-    public void getAllRecipes(final FirestoreCallback firestoreCallback, String searchLine){
+    public void getAllRecipes(final FirestoreCallback firestoreCallback, String searchLine) {
 
         final String IMAGE_KEY = "image";
         final String TITLE_KEY = "title";
@@ -30,14 +30,13 @@ public class SearchPresenter {
         final String COLLECTION_PATH = "Recipes";
 
 
+        FirebaseService db = new FirebaseService ();
+        db.StartFireBaseService ();
 
-        FirebaseService db = new FirebaseService();
-        db.StartFireBaseService();
-
-        db.StartFireBaseService().collection (COLLECTION_PATH)
-                .whereEqualTo("title", searchLine)
+        db.StartFireBaseService ().collection (COLLECTION_PATH)
+                .whereEqualTo ("title", searchLine)
                 .get ()
-                .addOnCompleteListener (new OnCompleteListener<QuerySnapshot>() {
+                .addOnCompleteListener (new OnCompleteListener<QuerySnapshot> () {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful ()) {
@@ -47,7 +46,7 @@ public class SearchPresenter {
                                         document.get (DESCRIPTION_KEY).toString (), document.get (PREPARATIONS_KEY).toString (),
                                         (double) document.get (NOTE_KEY), document.get (POSITION_KEY).toString (), document.getId ()));
                             }
-                            firestoreCallback.onCallback(mRecipes);
+                            firestoreCallback.onCallback (mRecipes);
 
                         } else {
                             Log.d ("TAG", "Error getting documents: ", task.getException ());
@@ -58,11 +57,10 @@ public class SearchPresenter {
                 });
     }
 
-    public interface  FirestoreCallback {
+    public interface FirestoreCallback {
 
         void onCallback(List<Recipes> listRecipes);
     }
-
 
 
 }

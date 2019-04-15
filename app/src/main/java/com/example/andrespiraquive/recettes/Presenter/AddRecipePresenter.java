@@ -34,9 +34,9 @@ public class AddRecipePresenter {
 
     public String getLocation(Context context) {
         String position = "";
-        locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
+        locationManager = (LocationManager) context.getSystemService (Context.LOCATION_SERVICE);
         String locationProvider = LocationManager.NETWORK_PROVIDER;
-        LocationListener locationListener = new LocationListener() {
+        LocationListener locationListener = new LocationListener () {
             public void onLocationChanged(Location location) {
                 // Called when a new location is found by the network location provider.
             }
@@ -51,22 +51,22 @@ public class AddRecipePresenter {
             }
         };
 
-        if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
-                ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+        if (ActivityCompat.checkSelfPermission (context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
+                ActivityCompat.checkSelfPermission (context, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
         }
-        Location lastKnownLocation = locationManager.getLastKnownLocation(locationProvider);
+        Location lastKnownLocation = locationManager.getLastKnownLocation (locationProvider);
         if (lastKnownLocation != null) {
-            Geocoder geocoder = new Geocoder(context, Locale.getDefault());
+            Geocoder geocoder = new Geocoder (context, Locale.getDefault ());
             List<Address> addresses = null;
             try {
-                addresses = geocoder.getFromLocation(lastKnownLocation.getLatitude(), lastKnownLocation.getLongitude(), 1);
+                addresses = geocoder.getFromLocation (lastKnownLocation.getLatitude (), lastKnownLocation.getLongitude (), 1);
             } catch (IOException e) {
-                Log.d("TAG ", "e = " + e);
+                Log.d ("TAG ", "e = " + e);
             }
             if (addresses != null) {
-                position = addresses.get(0).getLocality() + ", " + addresses.get(0).getCountryName();
+                position = addresses.get (0).getLocality () + ", " + addresses.get (0).getCountryName ();
             } else
-                Log.e("TAG", "No address find");
+                Log.e ("TAG", "No address find");
 
         } else {
             position = "International";
@@ -75,20 +75,20 @@ public class AddRecipePresenter {
     }
 
     public void addNewRecipe(final FirestoreCallback firestoreCallback, String urlImageUpload, Recipes recetteAjouter) {
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        DocumentReference newRecipeRef = db.collection("Recipes").document();
-        newRecipeRef.set(recetteAjouter)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
+        FirebaseFirestore db = FirebaseFirestore.getInstance ();
+        DocumentReference newRecipeRef = db.collection ("Recipes").document ();
+        newRecipeRef.set (recetteAjouter)
+                .addOnSuccessListener (new OnSuccessListener<Void> () {
                     @Override
                     public void onSuccess(Void aVoid) {
-                        firestoreCallback.onCallback(true);
+                        firestoreCallback.onCallback (true);
 
                     }
                 })
-                .addOnFailureListener(new OnFailureListener() {
+                .addOnFailureListener (new OnFailureListener () {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        firestoreCallback.onCallback(false);
+                        firestoreCallback.onCallback (false);
                     }
                 });
     }

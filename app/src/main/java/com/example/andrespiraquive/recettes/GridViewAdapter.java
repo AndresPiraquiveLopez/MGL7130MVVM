@@ -21,7 +21,7 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-public class GridViewAdapter extends RecyclerView.Adapter <GridViewAdapter.MyViewHolder> {
+public class GridViewAdapter extends RecyclerView.Adapter<GridViewAdapter.MyViewHolder> {
 
     private List<Recipes> mData;
     private List<FavorisPresenter> mDataFavorite;
@@ -35,6 +35,7 @@ public class GridViewAdapter extends RecyclerView.Adapter <GridViewAdapter.MyVie
         this.mContext = mContext;
         this.isFavorie = isFavorie;
     }
+
     public GridViewAdapter(List<FavorisPresenter> mDataFavorite, Context mContext) {
         this.mDataFavorite = mDataFavorite;
         this.mData = null;
@@ -43,65 +44,63 @@ public class GridViewAdapter extends RecyclerView.Adapter <GridViewAdapter.MyVie
     }
 
 
-
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
         View view;
-        LayoutInflater mInflater = LayoutInflater.from(mContext);
-        view = mInflater.inflate(R.layout.item_grid,viewGroup,false);
-        return new MyViewHolder(view);
+        LayoutInflater mInflater = LayoutInflater.from (mContext);
+        view = mInflater.inflate (R.layout.item_grid, viewGroup, false);
+        return new MyViewHolder (view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, final int position) {
 
-        if(mData != null){
-            Picasso.get()
-                  .load(mData.get(position).getImage())
-                .into(holder.img_recipe_thumbnaild);
-            holder.tv_recipe_title.setText(mData.get(position).getTitle());
-            holder.note.setRating ((float) mData.get(position).getNote ());
-            holder.tv_recipe_position.setText(mData.get(position).getPosition());
-            holder.cardView.setOnClickListener(new View.OnClickListener() {
+        if (mData != null) {
+            Picasso.get ()
+                    .load (mData.get (position).getImage ())
+                    .into (holder.img_recipe_thumbnaild);
+            holder.tv_recipe_title.setText (mData.get (position).getTitle ());
+            holder.note.setRating ((float) mData.get (position).getNote ());
+            holder.tv_recipe_position.setText (mData.get (position).getPosition ());
+            holder.cardView.setOnClickListener (new View.OnClickListener () {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(mContext, RecipeActivity.class);
+                    Intent intent = new Intent (mContext, RecipeActivity.class);
                     intent.setFlags (Intent.FLAG_ACTIVITY_NEW_TASK);
-                    intent.putExtra("ImageId", mData.get(position).toString());
-                    intent.putExtra("Title",mData.get(position).getTitle());
-                    intent.putExtra("Note",mData.get(position).getNote());
-                    intent.putExtra("Description",mData.get(position).getDescription());
-                    intent.putExtra("Ingredient",mData.get(position).getIngredients());
-                    intent.putExtra("Preparation",mData.get(position).getPreparations());
-                    intent.putExtra("Position",mData.get(position).getPosition());
-                    intent.putExtra ("Document",mData.get(position).getDocument ());
-                    intent.putExtra ("isFavorie",isFavorie);
-                    mContext.startActivity(intent);
+                    intent.putExtra ("ImageId", mData.get (position).toString ());
+                    intent.putExtra ("Title", mData.get (position).getTitle ());
+                    intent.putExtra ("Note", mData.get (position).getNote ());
+                    intent.putExtra ("Description", mData.get (position).getDescription ());
+                    intent.putExtra ("Ingredient", mData.get (position).getIngredients ());
+                    intent.putExtra ("Preparation", mData.get (position).getPreparations ());
+                    intent.putExtra ("Position", mData.get (position).getPosition ());
+                    intent.putExtra ("Document", mData.get (position).getDocument ());
+                    intent.putExtra ("isFavorie", isFavorie);
+                    mContext.startActivity (intent);
                 }
             });
-        }
-        else{
-            holder.img_recipe_thumbnaild.setImageBitmap(BitmapFactory.decodeByteArray(mDataFavorite.get(position).getImageId(),
+        } else {
+            holder.img_recipe_thumbnaild.setImageBitmap (BitmapFactory.decodeByteArray (mDataFavorite.get (position).getImageId (),
                     0,
-                    mDataFavorite.get(position).getImageId().length));
-            holder.tv_recipe_title.setText(mDataFavorite.get(position).getTitle());
-            holder.note.setRating ((float) mDataFavorite.get(position).getNote ());
-            holder.tv_recipe_position.setText(mDataFavorite.get(position).getPosition());
-            holder.cardView.setOnClickListener(new View.OnClickListener() {
+                    mDataFavorite.get (position).getImageId ().length));
+            holder.tv_recipe_title.setText (mDataFavorite.get (position).getTitle ());
+            holder.note.setRating ((float) mDataFavorite.get (position).getNote ());
+            holder.tv_recipe_position.setText (mDataFavorite.get (position).getPosition ());
+            holder.cardView.setOnClickListener (new View.OnClickListener () {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(mContext, RecipeActivity.class);
+                    Intent intent = new Intent (mContext, RecipeActivity.class);
                     intent.setFlags (Intent.FLAG_ACTIVITY_NEW_TASK);
-                    intent.putExtra("Id", mDataFavorite.get(position).getId());
-                    intent.putExtra("Title",mDataFavorite.get(position).getTitle());
-                    intent.putExtra("Note",mDataFavorite.get(position).getNote());
-                    intent.putExtra("Description",mDataFavorite.get(position).getDescription());
-                    intent.putExtra("Ingredient",mDataFavorite.get(position).getIngredients());
-                    intent.putExtra("Preparation",mDataFavorite.get(position).getPreparations());
-                    intent.putExtra("Position",mDataFavorite.get(position).getPosition());
-                    intent.putExtra ("isFavorie",isFavorie);
-                    mContext.startActivity(intent);
+                    intent.putExtra ("Id", mDataFavorite.get (position).getId ());
+                    intent.putExtra ("Title", mDataFavorite.get (position).getTitle ());
+                    intent.putExtra ("Note", mDataFavorite.get (position).getNote ());
+                    intent.putExtra ("Description", mDataFavorite.get (position).getDescription ());
+                    intent.putExtra ("Ingredient", mDataFavorite.get (position).getIngredients ());
+                    intent.putExtra ("Preparation", mDataFavorite.get (position).getPreparations ());
+                    intent.putExtra ("Position", mDataFavorite.get (position).getPosition ());
+                    intent.putExtra ("isFavorie", isFavorie);
+                    mContext.startActivity (intent);
                 }
             });
 
@@ -110,13 +109,13 @@ public class GridViewAdapter extends RecyclerView.Adapter <GridViewAdapter.MyVie
 
     @Override
     public int getItemCount() {
-        if(mData != null)
-            return mData.size();
+        if (mData != null)
+            return mData.size ();
         else
-            return mDataFavorite.size();
+            return mDataFavorite.size ();
     }
 
-    public static class MyViewHolder extends RecyclerView.ViewHolder{
+    public static class MyViewHolder extends RecyclerView.ViewHolder {
 
         ImageView img_recipe_thumbnaild;
         TextView tv_recipe_title;
@@ -124,14 +123,14 @@ public class GridViewAdapter extends RecyclerView.Adapter <GridViewAdapter.MyVie
         TextView tv_recipe_position;
         CardView cardView;
 
-        public MyViewHolder(View itemView){
-            super(itemView);
+        public MyViewHolder(View itemView) {
+            super (itemView);
 
-            img_recipe_thumbnaild = (ImageView) itemView.findViewById(R.id.recipe_image_id);
-            tv_recipe_title = (TextView) itemView.findViewById(R.id.recipe_title_id);
-            cardView = (CardView) itemView.findViewById(R.id.cardView_id);
+            img_recipe_thumbnaild = (ImageView) itemView.findViewById (R.id.recipe_image_id);
+            tv_recipe_title = (TextView) itemView.findViewById (R.id.recipe_title_id);
+            cardView = (CardView) itemView.findViewById (R.id.cardView_id);
             note = (RatingBar) itemView.findViewById (R.id.recipe_ratingBar_id);
-            tv_recipe_position = itemView.findViewById(R.id.recipe_position_id);
+            tv_recipe_position = itemView.findViewById (R.id.recipe_position_id);
         }
     }
 }

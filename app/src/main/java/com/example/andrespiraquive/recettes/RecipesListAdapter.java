@@ -25,12 +25,12 @@ public class RecipesListAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return repasList.size();
+        return repasList.size ();
     }
 
     @Override
     public Object getItem(int position) {
-        return repasList.get(position);
+        return repasList.get (position);
     }
 
     @Override
@@ -49,25 +49,25 @@ public class RecipesListAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         View row = convertView;
-        viewHolder holder = new viewHolder();
+        viewHolder holder = new viewHolder ();
 
         if (row == null) {
-            LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            row = inflater.inflate(layout, null);
+            LayoutInflater inflater = (LayoutInflater) context.getSystemService (Context.LAYOUT_INFLATER_SERVICE);
+            row = inflater.inflate (layout, null);
 
-            holder.tvtitle = (TextView) row.findViewById(R.id.recipe_title_id);
+            holder.tvtitle = (TextView) row.findViewById (R.id.recipe_title_id);
 
-            holder.image = (ImageView) row.findViewById(R.id.recipe_image_id);
+            holder.image = (ImageView) row.findViewById (R.id.recipe_image_id);
 
-            row.setTag(holder);
+            row.setTag (holder);
         } else {
-            holder = (viewHolder) row.getTag();
+            holder = (viewHolder) row.getTag ();
         }
 
-        Recipes lesrapas = repasList.get(position);
-        holder.tvtitle.setText(lesrapas.getTitle());
+        Recipes lesrapas = repasList.get (position);
+        holder.tvtitle.setText (lesrapas.getTitle ());
 
-        String recipesImage = lesrapas.getImage();
+        String recipesImage = lesrapas.getImage ();
         //Bitmap bitmap = BitmapFactory.decodeByteArray(recipesImage, 0, recipesImage.length);
         //holder.image.setImageBitmap(bitmap);
 

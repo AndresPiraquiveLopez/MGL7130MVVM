@@ -1,11 +1,11 @@
 package com.example.andrespiraquive.recettes.Presenter;
 
-import java.util.ArrayList;
-
 import android.content.Context;
 import android.database.Cursor;
 
 import com.example.andrespiraquive.recettes.Data.Database.DataBase;
+
+import java.util.ArrayList;
 
 public class FavorisPresenter {
 
@@ -21,9 +21,6 @@ public class FavorisPresenter {
     private DataBase dataBaseRecipe;
     private ArrayList<FavorisPresenter> lsRecipe;
 
-    public FavorisPresenter(){
-    }
-
 
     public FavorisPresenter(int id, byte[] imageId, String title, String ingredients, String description, String preparations, String note, String position) {
         this.id = id;
@@ -32,7 +29,7 @@ public class FavorisPresenter {
         this.ingredients = ingredients;
         this.description = description;
         this.preparations = preparations;
-        this.note = Double.parseDouble(note);
+        this.note = Double.parseDouble (note);
         this.position = position;
     }
 

@@ -11,7 +11,6 @@ import android.widget.Toast;
 import com.example.andrespiraquive.recettes.Data.Network.FirebaseAuthRecipes;
 import com.example.andrespiraquive.recettes.R;
 import com.example.andrespiraquive.recettes.Views.GridViewActivity;
-import com.example.andrespiraquive.recettes.Views.MainActivity;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -50,16 +49,16 @@ public class LoginPresenter extends ViewModel {
     }
 
     public void AuthWithGoogle(GoogleSignInAccount account) {
-        AuthCredential credential = GoogleAuthProvider.getCredential(account.getIdToken(), null);
-        mAuth.StartAuthRecipes ().signInWithCredential(credential).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+        AuthCredential credential = GoogleAuthProvider.getCredential (account.getIdToken (), null);
+        mAuth.StartAuthRecipes ().signInWithCredential (credential).addOnCompleteListener (new OnCompleteListener<AuthResult> () {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
-                if (task.isSuccessful()) {
+                if (task.isSuccessful ()) {
                     Intent intent = new Intent (mContex, GridViewActivity.class);
                     mContex.startActivity (intent);
                     ((Activity) mContex).finish ();
                 } else {
-                    Toast.makeText(mContex.getApplicationContext(), "Auth Error", Toast.LENGTH_SHORT).show();
+                    Toast.makeText (mContex.getApplicationContext (), "Auth Error", Toast.LENGTH_SHORT).show ();
                 }
             }
         });
