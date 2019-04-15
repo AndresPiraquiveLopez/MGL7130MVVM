@@ -313,7 +313,6 @@ public class ModifyRecipe1ActivityTest {
                                         withClassName (is ("android.widget.ScrollView")),
                                         0),
                                 5)));
-        appCompatButton3.perform (scrollTo (), click ());
     }
 
     private static Matcher<View> childAtPosition(
