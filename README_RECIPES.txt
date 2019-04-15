@@ -10,7 +10,7 @@ MGL7130
 
 Nom : World Recipes
 
-1.0) Repos sur GitHub au besoin : https://github.com/AndresPiraquiveLopez/MGL7130.git
+1.0) Repos sur GitHub au besoin : https://github.com/AndresPiraquiveLopez/MGL7130MVVM.git
 
 1) Pour ouvrir l'application cliquer sur l'icon de cuillière et fourchette
 
@@ -23,7 +23,8 @@ Nom : World Recipes
 			Cliquer sur Login
 	2.2)Pour créer un compte cliquer sur Register!
 			Compléter le formulaire
-3)En entrant dans l'application vous êtes dans la page principale. Elle se nomme "Wolrd Recipes". Elle affiche toutes les recettescontenu dans la base de donnée.
+3)En entrant dans l'application vous êtes dans la page principale. Elle se nomme "Wolrd Recipes".
+  Elle affiche toutes les recettes contenu dans la base de donnée.
 
 4)Les 3 petits points en haut représentent le menu de l'application.
 	4.1)Options :
